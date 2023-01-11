@@ -3,86 +3,49 @@
 #include "../model/gm_anim_sprite3d.h"
 #include "gm_scene_play.h"
 #include "gm_scene_result.h"
+#include "../object/gm_object_ground.h"
+#include "../object/gm_object_actor.h"
 
 tnl::Quaternion	fix_rot;
 
 ScenePlay::~ScenePlay() {
 	delete camera_;
-	delete sprite_;
+	for (auto object : objects_) delete object;
+	for (auto actor : actors_) delete actor;
 }
 
 
 void ScenePlay::initialzie() {
 	camera_ = new GmCamera();
-	camera_->pos_ = { 0, 150, -300 };
+	camera_->target_ = { 0,0,0 };
 
-	sprite_ = new AnimSprite3D(camera_);
-	sprite_->regist(32, 48, "walk_front", "graphics/c1_anim_up.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 48, 0);
-	sprite_->regist(32, 48, "walk_back", "graphics/c1_anim_down.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 48, 0);
-	sprite_->regist(32, 48, "walk_left", "graphics/c1_anim_left.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 48, 0);
-	sprite_->regist(32, 48, "walk_right", "graphics/c1_anim_right.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 4, 48, 0);
+	//マスの生成
+	frame_ = dxe::Mesh::CreatePlane({ FIELD_W_,FIELD_H_,0 });
+	frame_->setTexture(dxe::Texture::CreateFromFile("graphics/base/frame.png"));
+	frame_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(90));
+	frame_->pos_ = { 0, 0, FIELD_Z1_ };
 
-	sprite_->setCurrentAnim("walk_front");
+	//背景と床の生成
+	objects_.emplace_back(new Ground(this, BACK_W_, FIELD_H_, FIELD_Z1_, back_img));
+	objects_.emplace_back(new Ground(this, BACK_W_, FIELD_H_, FIELD_Z2_, back_img));
+	objects_.emplace_back(new Ground(this, FIELD_W_, FIELD_H_, FIELD_Z1_, road_img));
+	objects_.emplace_back(new Ground(this, FIELD_W_, FIELD_H_, FIELD_Z2_, road_img));
 
+	//プレイヤーの生成
+	actors_.emplace_back(new Player(this));
 }
 
 void ScenePlay::update(float delta_time)
 {
 	GameManager* mgr = GameManager::GetInstance();
 
-	//------------------------------------------------------------------
-	//
-	// 移動制御
-	//
-	int t = tnl::GetXzRegionPointAndOBB(
-		camera_->pos_
-		, sprite_->pos_
-		, {32, 48, 32}
-		, sprite_->rot_);
+	//オブジェクト制御
+	updateObject(delta_time);
 
-	std::string anim_names[4] = {
-		"walk_back", "walk_right", "walk_front", "walk_left"
-	};
-	sprite_->setCurrentAnim(anim_names[t]);
+	//アクター制御
+	updateActor(delta_time);
 
-	tnl::Vector3 move_v = { 0,0,0 };
-	tnl::Vector3 dir[4] = {
-		camera_->front().xz(), 
-		camera_->right().xz(), 
-		camera_->back().xz(),
-		camera_->left().xz(), 
-	};
-	tnl::Input::RunIndexKeyDown([&](uint32_t idx) {
-		move_v += dir[idx];
-	}, eKeys::KB_UP, eKeys::KB_RIGHT, eKeys::KB_DOWN, eKeys::KB_LEFT);
 
-	if (tnl::Input::IsKeyDown(eKeys::KB_UP, eKeys::KB_RIGHT, eKeys::KB_DOWN, eKeys::KB_LEFT)) {
-		move_v.normalize();
-		sprite_->rot_.slerp( tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + move_v), 0.3f);
-		sprite_->pos_ += move_v * 2.0f;
-	}
-
-	//------------------------------------------------------------------
-	//
-	// カメラ制御
-	//
-	tnl::Vector3 rot[4] = {
-		{ 0, tnl::ToRadian(1.0f), 0 },
-		{ 0, -tnl::ToRadian(1.0f), 0 },
-		{ tnl::ToRadian(1.0f), 0, 0 },
-		{ -tnl::ToRadian(1.0f), 0, 0 } };
-	tnl::Input::RunIndexKeyDown([&](uint32_t idx) {
-		camera_->free_look_angle_xy_ += rot[idx];
-	}, eKeys::KB_A, eKeys::KB_D, eKeys::KB_W, eKeys::KB_S);
-
-	if (tnl::Input::IsKeyDown(eKeys::KB_Z)) {
-		camera_->target_distance_ += 1.0f;
-	}
-	if (tnl::Input::IsKeyDown(eKeys::KB_X)) {
-		camera_->target_distance_ -= 1.0f;
-	}
-	camera_->target_ = sprite_->pos_;
-	sprite_->update(delta_time);
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		mgr->chengeScene(new SceneResult());
 	}
@@ -91,16 +54,57 @@ void ScenePlay::update(float delta_time)
 void ScenePlay::render()
 {
 	camera_->update();
-
 	DrawGridGround(camera_, 50, 20);
 
-	sprite_->render(camera_);
-	DrawOBB(camera_, sprite_->pos_, sprite_->rot_, { 32, 48, 32 });
+	//全オブジェクトの描画
+	for (auto object : objects_) {
+		if (object->mesh_ != nullptr) object->mesh_->render(camera_);
+	}
 
+	//マスの描画
+	frame_->render(camera_);
+
+	//全アクターの描画
+	for (auto actor : actors_) {
+		if (actor->mesh_ != nullptr) actor->mesh_->render(camera_);
+	}
 
 	DrawStringEx(50, 50, -1, "scene play");
-	DrawStringEx(50, 70, -1, "camera [ ← : A ] [ ↑ : W ] [ → : D ] [ ↓ : S ]");
-	DrawStringEx(50, 90, -1, "camera [ 遠 : Z ] [ 近 : X ] ");
-	DrawStringEx(50, 120, -1, "character [ 左 : ← ] [ 奥 : ↑ ] [ 右 : → ] [ 手前 : ↓ ] ");
 
+}
+
+void ScenePlay::updateObject(float delta_time) {
+	//全てのオブジェクトのアップデート
+	for (auto object : objects_) {
+		if (object->move_)	object->update(delta_time);
+	}
+
+	//オブジェクトの生存フラグがfalseになったらデリート
+	auto it_object = objects_.begin();
+	while (it_object != objects_.end()) {
+		if (!(*it_object)->alive_) {
+			delete (*it_object);
+			it_object = objects_.erase(it_object);
+			continue;
+		}
+		it_object++;
+	}
+}
+
+void ScenePlay::updateActor(float delta_time) {
+	//全てのアクターのアップデート
+	for (auto actor : actors_) {
+		if (actor->move_)	actor->update(delta_time);
+	}
+
+	//アクターの生存フラグがfalseになったらデリート
+	auto it_actor = actors_.begin();
+	while (it_actor != actors_.end()) {
+		if (!(*it_actor)->alive_) {
+			delete (*it_actor);
+			it_actor = actors_.erase(it_actor);
+			continue;
+		}
+		it_actor++;
+	}
 }

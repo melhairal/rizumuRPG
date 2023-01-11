@@ -29,6 +29,9 @@
     <Filter Include="program\game\scene">
       <UniqueIdentifier>{36a023e8-05af-4131-819f-285ef87e3f60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="program\game\object">
+      <UniqueIdentifier>{9653e660-5572-498b-abc7-63be5ab63396}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\system\sys_main.cpp">
@@ -163,6 +166,15 @@
     <ClCompile Include="program\game\gm_camera.cpp">
       <Filter>program\game</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\object\gm_object_base.cpp">
+      <Filter>program\game\object</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\object\gm_object_ground.cpp">
+      <Filter>program\game\object</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\object\gm_object_actor.cpp">
+      <Filter>program\game\object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\library\picojson.h">
@@ -275,6 +287,15 @@
     </ClInclude>
     <ClInclude Include="program\game\gm_camera.h">
       <Filter>program\game</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\object\gm_object_base.h">
+      <Filter>program\game\object</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\object\gm_object_ground.h">
+      <Filter>program\game\object</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\object\gm_object_actor.h">
+      <Filter>program\game\object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
