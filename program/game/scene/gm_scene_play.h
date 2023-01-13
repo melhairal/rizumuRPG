@@ -25,6 +25,7 @@ public :
 	dxe::Mesh* frame_ = nullptr;
 	std::list<ObjectBase*> objects_; //オブジェクトリスト
 	std::list<Actor*> actors_; //アクターリスト
+	Actor* player_ = nullptr; //プレイヤーポインタ
 
 	const float FIELD_H_ = 450.0f; //床の縦幅
 	const float FIELD_W_ = 300.0f; //床の横幅

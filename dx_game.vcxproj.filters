@@ -175,6 +175,12 @@
     <ClCompile Include="program\game\object\gm_object_actor.cpp">
       <Filter>program\game\object</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\object\gm_object_player.cpp">
+      <Filter>program\game\object</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\object\gm_object_enemy.cpp">
+      <Filter>program\game\object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\library\picojson.h">
@@ -295,6 +301,12 @@
       <Filter>program\game\object</Filter>
     </ClInclude>
     <ClInclude Include="program\game\object\gm_object_actor.h">
+      <Filter>program\game\object</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\object\gm_object_player.h">
+      <Filter>program\game\object</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\object\gm_object_enemy.h">
       <Filter>program\game\object</Filter>
     </ClInclude>
   </ItemGroup>

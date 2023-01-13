@@ -5,6 +5,8 @@
 #include "gm_scene_result.h"
 #include "../object/gm_object_ground.h"
 #include "../object/gm_object_actor.h"
+#include "../object/gm_object_player.h"
+#include "../object/gm_object_enemy.h"
 
 tnl::Quaternion	fix_rot;
 
@@ -32,7 +34,7 @@ void ScenePlay::initialzie() {
 	objects_.emplace_back(new Ground(this, FIELD_W_, FIELD_H_, FIELD_Z2_, road_img));
 
 	//プレイヤーの生成
-	actors_.emplace_back(new Player(this));
+	player_ = actors_.emplace_back(new Player(this));
 }
 
 void ScenePlay::update(float delta_time)
@@ -45,6 +47,21 @@ void ScenePlay::update(float delta_time)
 	//アクター制御
 	updateActor(delta_time);
 
+
+	// ==================== デバッグ等 ====================
+
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
+		actors_.emplace_back(new EnemyPig(this,EnemyBase::LL));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2)) {
+		actors_.emplace_back(new EnemyPig(this, EnemyBase::L));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_3)) {
+		actors_.emplace_back(new EnemyPig(this, EnemyBase::R));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_4)) {
+		actors_.emplace_back(new EnemyPig(this, EnemyBase::RR));
+	}
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		mgr->chengeScene(new SceneResult());
@@ -107,4 +124,13 @@ void ScenePlay::updateActor(float delta_time) {
 		}
 		it_actor++;
 	}
+
+	// カメラに近い順にソート(近いオブジェクトから描画するため)
+	actors_.sort([&](const Actor* l, const Actor* r) {
+		float ld = 0;
+		float rd = 0;
+		if (l->mesh_ != nullptr) ld = (camera_->pos_ - l->mesh_->pos_).length();
+		if (r->mesh_ != nullptr) rd = (camera_->pos_ - r->mesh_->pos_).length();
+		return ld > rd;
+		});
 }
