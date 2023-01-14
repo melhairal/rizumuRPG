@@ -21,6 +21,9 @@ public:
 		R, //右から2番目
 		RR //一番右
 	};
+
+	int lane_ = 0; //レーン
+
 	const float POS_X_[4] = { -110.0f,-35.0f,35.0f,110.0f }; //4つのレーンの座標
 	const float POS_Y_ = 20.0f; //Y座標
 

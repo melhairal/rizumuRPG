@@ -59,6 +59,10 @@ void ScenePlay::update(float delta_time)
 	ui_->update(delta_time);
 	updateSubUi(delta_time);
 
+	//値のクランプ
+	hp_ = std::clamp(hp_, 0, hp_max_);
+	mp_ = std::clamp(mp_, 0, mp_max_);
+	combo_ = std::clamp(combo_, 0, 999);
 
 	// ==================== デバッグ等 ====================
 
@@ -80,6 +84,8 @@ void ScenePlay::update(float delta_time)
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_W)) {
 		combo_ = 0;
 	}
+
+	progress_++;
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		mgr->chengeScene(new SceneResult());

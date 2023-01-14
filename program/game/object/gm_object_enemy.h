@@ -11,7 +11,7 @@ public:
 
 	// =========== 関数 ==========
 
-	void Initialize(ScenePlay* scene, int lane); //メッシュの初期化
+	void Initialize(ScenePlay* scene, int lane, int atk); //メッシュの初期化
 
 	void flow(float speed); //流れてくる
 	void shot(Actor* bullet); //弾を飛ばしてくる
@@ -39,7 +39,6 @@ public:
 	const float POS_Z_ = 300.0f; //初期Z座標
 	const float DEAD_Z_ = -160.0f; //消滅Z座標
 	const float SPEED_ = 5.0f; //流れるスピード(仮)
-	int lane_ = 0; //レーン
 
 	const float JUDGE_Z_ = -95.0f; //判定Z座標
 	const float RANGE_PERFECT_ = 10.0f; //パーフェクト判定の範囲
@@ -49,6 +48,8 @@ public:
 	const float MISS_Z_ = JUDGE_Z_ - RANGE_GOOD_; //失敗判定Z座標
 	const float RANGE_MISS_ = 20.0f;
 	bool miss_ = false; //失敗判定
+
+	int atk_ = 0; //攻撃力
 };
 
 class EnemyPig : public EnemyBase {
@@ -61,6 +62,7 @@ public:
 
 	// ========== 基本ステータス ==========
 
+	const int ATK_ = 10;
 
 	void getImage() override {
 		// ====================================
@@ -86,6 +88,7 @@ public:
 	const int TIME_SHOT_ = 40; //弾を飛ばすまでの時間
 	const int TIME_STOP_ = 80; //停止時間
 
+	const int ATK_ = 10;
 
 	void getImage() override {
 		// ====================================
@@ -106,6 +109,7 @@ public:
 
 	// ========== 基本ステータス ==========
 
+	const int ATK_ = 30;
 
 	void getImage() override {
 		// ====================================

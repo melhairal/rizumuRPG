@@ -17,8 +17,20 @@ void Player::update(float delta_time) {
 	animation(FRAME_);
 
 	//ƒL[‚Å‘¼‚Ìƒ‰ƒCƒ“‚ÉˆÚ“®
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_D)) mesh_->pos_.x = POS_X_[LL];
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_F)) mesh_->pos_.x = POS_X_[L];
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_J)) mesh_->pos_.x = POS_X_[R];
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_K)) mesh_->pos_.x = POS_X_[RR];
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_D)) {
+		mesh_->pos_.x = POS_X_[LL]; 
+		lane_ = LL;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_F)) {
+		mesh_->pos_.x = POS_X_[L];
+		lane_ = L;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_J)) {
+		mesh_->pos_.x = POS_X_[R];
+		lane_ = R;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_K)) {
+		mesh_->pos_.x = POS_X_[RR];
+		lane_ = RR;
+	}
 }

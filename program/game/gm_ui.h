@@ -13,6 +13,7 @@ public:
 
 	//可変ゲージを描画 x:x座標 y:y座標 width:画像サイズ(横幅) height:画像サイズ(縦幅) exrate:拡大率 num:ゲージの値 max:ゲージの最大値 color:色(enum)
 	void DrawGauge(int x, int y, int width, int height, double exrate, int num, int max, int color); 
+	void DrawGaugeProgress(int x, int y, int width, int height, double exrate, int num, int max, int color);
 
 	// ========== 基本ステータス ==========
 
@@ -51,6 +52,8 @@ public:
 	//進行度/ボスHP
 	const int HOME_HP_X_ = DXE_WINDOW_WIDTH / 2;
 	const int HOME_HP_Y_ = DXE_WINDOW_HEIGHT * 0.05f;
+	int run_ = 0; //走るアイコン
+	const int RUN_X_ = HOME_HP_X_;
 
 	//プレイヤーHP/MP
 	const int PLAYER_GAUGE_X_ = DXE_WINDOW_WIDTH / 2;

@@ -43,8 +43,16 @@ public :
 
 	// ========== ゲーム内ステータス ==========
 
+	const int COMBO_MAX_ = 999; //最大コンボ数
 	int combo_ = 0; //コンボ
-	const int hp_max_ = 200; //プレイヤー最大HP
+
+	int hp_max_ = 200; //プレイヤー最大HP
 	int hp_ = hp_max_; //プレイヤーHP
+
+	int mp_max_ = 200; //プレイヤー最大MP
+	int mp_ = 0; //プレイヤーMP
+
+	int progress_max_ = 3600; //進行度上限
+	int progress_ = 0; //進行度
 };
 
