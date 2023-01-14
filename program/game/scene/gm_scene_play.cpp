@@ -71,6 +71,7 @@ void ScenePlay::update(float delta_time)
 	hp_ = std::clamp(hp_, 0, hp_max_);
 	mp_ = std::clamp(mp_, 0, mp_max_);
 	combo_ = std::clamp(combo_, 0, 999);
+	score_ = std::clamp(score_, 0, 9999999);
 
 	// ==================== デバッグ等 ====================
 

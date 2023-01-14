@@ -5,10 +5,11 @@
 #include "../gm_ui.h"
 #include "../gm_bgm.h"
 
-void EnemyBase::Initialize(ScenePlay* scene, int lane, int atk) {
+void EnemyBase::Initialize(ScenePlay* scene, int lane, int atk, int exp) {
 	scene_ = scene;
 	lane_ = lane;
 	atk_ = atk;
+	exp_ = exp;
 	getImage();
 	mesh_ = dxe::Mesh::CreatePlane({ MESH_W_, MESH_H_, 0 });
 	mesh_->setTexture(dxe::Texture::CreateFromFile(*it));
@@ -65,6 +66,7 @@ void EnemyBase::notesEnemy() {
 			scene_->actors_.emplace_back(new EffectPerfect(scene_, lane_));
 			scene_->combo_++;
 			scene_->mp_ += (1 + (scene_->combo_ * 0.1f)) * 2;
+			scene_->score_ += exp_ * scene_->combo_ * 2;
 			scene_->bgm_->perfect_ = true;
 			alive_ = false;
 		}
@@ -76,6 +78,7 @@ void EnemyBase::notesEnemy() {
 			scene_->actors_.emplace_back(new EffectGood(scene_, lane_));
 			scene_->combo_++;
 			scene_->mp_ += 1 + (scene_->combo_ * 0.1f);
+			scene_->score_ += exp_ * scene_->combo_;
 			scene_->bgm_->perfect_ = true;
 			alive_ = false;
 		}
@@ -106,6 +109,7 @@ void EnemyBase::notesBullet() {
 			//パーフェクト判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, perfect, lane_));
 			scene_->mp_ += (1 + (scene_->combo_ * 0.1f)) * 2;
+			scene_->score_ += exp_ * scene_->combo_ * 2;
 			scene_->combo_++;
 			scene_->bgm_->perfect_ = true;
 		}
@@ -115,6 +119,7 @@ void EnemyBase::notesBullet() {
 			//グッド判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, good, lane_));
 			scene_->mp_ += 1 + (scene_->combo_ * 0.1f);
+			scene_->score_ += exp_ * scene_->combo_;
 			scene_->combo_++;
 			scene_->bgm_->perfect_ = true;
 		}
@@ -133,7 +138,7 @@ void EnemyBase::notesBullet() {
 
 EnemyPig::EnemyPig(ScenePlay* scene, int lane) {
 	//メッシュ初期化
-	Initialize(scene, lane, ATK_);
+	Initialize(scene, lane, ATK_, EXP_);
 }
 
 void EnemyPig::update(float delta_time) {
@@ -144,7 +149,7 @@ void EnemyPig::update(float delta_time) {
 
 EnemyRizard::EnemyRizard(ScenePlay* scene, int lane) {
 	//メッシュ初期化
-	Initialize(scene, lane, ATK_);
+	Initialize(scene, lane, ATK_, EXP_);
 }
 
 void EnemyRizard::update(float delta_time) {
@@ -163,7 +168,7 @@ void EnemyRizard::update(float delta_time) {
 
 EnemyRizardBullet::EnemyRizardBullet(ScenePlay* scene, int lane) {
 	//メッシュ初期化
-	Initialize(scene, lane, ATK_);
+	Initialize(scene, lane, ATK_, EXP_);
 	isBullet = true;
 }
 

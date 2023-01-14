@@ -11,7 +11,7 @@ public:
 
 	// =========== 関数 ==========
 
-	void Initialize(ScenePlay* scene, int lane, int atk); //メッシュの初期化
+	void Initialize(ScenePlay* scene, int lane, int atk, int exp); //メッシュの初期化
 
 	void flow(float speed); //流れてくる
 	void shot(Actor* bullet); //弾を飛ばしてくる
@@ -50,6 +50,7 @@ public:
 	bool miss_ = false; //失敗判定
 
 	int atk_ = 0; //攻撃力
+	int exp_ = 0; //スコア、経験値
 };
 
 class EnemyPig : public EnemyBase {
@@ -63,6 +64,7 @@ public:
 	// ========== 基本ステータス ==========
 
 	const int ATK_ = 10;
+	const int EXP_ = 100;
 
 	void getImage() override {
 		// ====================================
@@ -89,6 +91,7 @@ public:
 	const int TIME_STOP_ = 80; //停止時間
 
 	const int ATK_ = 10;
+	const int EXP_ = 200;
 
 	void getImage() override {
 		// ====================================
@@ -110,6 +113,7 @@ public:
 	// ========== 基本ステータス ==========
 
 	const int ATK_ = 30;
+	const int EXP_ = 10;
 
 	void getImage() override {
 		// ====================================

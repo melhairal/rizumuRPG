@@ -68,6 +68,12 @@ public:
 	const int COMBO_NUM_X_ = COMBO_X_ - 100;
 	const int COMBO_NUM_Y_ = COMBO_Y_ - 20;
 
+	//スコア
+	const int SCORE_X_ = DXE_WINDOW_WIDTH * 0.8f;
+	const int SCORE_Y_ = DXE_WINDOW_HEIGHT * 0.05f;
+	const int SCORE_NUM_X_ = SCORE_X_ + 80;
+	const int SCORE_NUM_Y_ = SCORE_Y_;
+
 	//判定
 	const float JUDGE_X_[4] = { DXE_WINDOW_WIDTH * 0.2f,DXE_WINDOW_WIDTH * 0.4f,DXE_WINDOW_WIDTH * 0.6f,DXE_WINDOW_WIDTH * 0.8f }; //4つのレーンの座標
 	const float JUDGE_Y_ = DXE_WINDOW_HEIGHT * 0.75f; 

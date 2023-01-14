@@ -47,6 +47,8 @@ public :
 	const int COMBO_MAX_ = 999; //最大コンボ数
 	int combo_ = 0; //コンボ
 
+	int score_ = 0; //スコア
+
 	int hp_max_ = 200; //プレイヤー最大HP
 	int hp_ = hp_max_; //プレイヤーHP
 
