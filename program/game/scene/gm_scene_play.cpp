@@ -4,6 +4,7 @@
 #include "gm_scene_play.h"
 #include "gm_scene_result.h"
 #include "../gm_ui.h"
+#include "../gm_bgm.h"
 #include "../object/gm_object_ground.h"
 #include "../object/gm_object_actor.h"
 #include "../object/gm_object_player.h"
@@ -14,6 +15,7 @@ tnl::Quaternion	fix_rot;
 ScenePlay::~ScenePlay() {
 	delete camera_;
 	delete ui_;
+	delete bgm_;
 	delete frame_;
 	for (auto object : objects_) delete object;
 	for (auto actor : actors_) delete actor;
@@ -28,6 +30,9 @@ void ScenePlay::initialzie() {
 
 	//uiの生成
 	ui_ = new Ui(this);
+
+	//bgmの生成
+	bgm_ = new Bgm(this);
 	
 	//マスの生成
 	frame_ = dxe::Mesh::CreatePlane({ FIELD_W_,FIELD_H_,0 });
@@ -58,6 +63,9 @@ void ScenePlay::update(float delta_time)
 	//UIアップデート
 	ui_->update(delta_time);
 	updateSubUi(delta_time);
+
+	//Bgmアップデート
+	bgm_->update(delta_time);
 
 	//値のクランプ
 	hp_ = std::clamp(hp_, 0, hp_max_);

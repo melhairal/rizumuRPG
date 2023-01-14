@@ -6,6 +6,7 @@ class ObjectBase;
 class Actor;
 class Ui;
 class SubUiJudge;
+class Bgm;
 
 class ScenePlay : public SceneBase {
 public :
@@ -21,12 +22,12 @@ public :
 	void updateObject(float delta_time); //オブジェクト制御
 	void updateActor(float delta_time); //アクター制御
 	void updateSubUi(float delta_time); //サブUi制御
-	void renderSubUi(); //サブUi描画
 
 	// ========== 基本ステータス ==========
 
 	GmCamera* camera_ = nullptr;
 	Ui* ui_ = nullptr; //メインUI
+	Bgm* bgm_ = nullptr; //BGM,SE
 	dxe::Mesh* frame_ = nullptr; //床の線
 	std::list<ObjectBase*> objects_; //オブジェクトリスト
 	std::list<Actor*> actors_; //アクターリスト

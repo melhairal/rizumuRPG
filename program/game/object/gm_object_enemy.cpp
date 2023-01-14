@@ -3,6 +3,7 @@
 #include "../scene/gm_scene_play.h"
 #include "../gm_camera.h"
 #include "../gm_ui.h"
+#include "../gm_bgm.h"
 
 void EnemyBase::Initialize(ScenePlay* scene, int lane, int atk) {
 	scene_ = scene;
@@ -64,6 +65,7 @@ void EnemyBase::notesEnemy() {
 			scene_->actors_.emplace_back(new EffectPerfect(scene_, lane_));
 			scene_->combo_++;
 			scene_->mp_ += (1 + (scene_->combo_ * 0.1f)) * 2;
+			scene_->bgm_->perfect_ = true;
 			alive_ = false;
 		}
 	}
@@ -74,12 +76,13 @@ void EnemyBase::notesEnemy() {
 			scene_->actors_.emplace_back(new EffectGood(scene_, lane_));
 			scene_->combo_++;
 			scene_->mp_ += 1 + (scene_->combo_ * 0.1f);
+			scene_->bgm_->perfect_ = true;
 			alive_ = false;
 		}
 	}
 	if (!miss_ && checkLane() &&
 		((mesh_->pos_.z < MISS_Z_ && mesh_->pos_.z >= MISS_Z_ - RANGE_MISS_) || 
-			(mesh_->pos_.z < JUDGE_Z_ + RANGE_GOOD_ + RANGE_MISS_ && mesh_->pos_.z >= JUDGE_Z_ + RANGE_GOOD_))) {
+			(mesh_->pos_.z < JUDGE_Z_ + RANGE_GOOD_ + RANGE_MISS_ && mesh_->pos_.z >= JUDGE_Z_ + RANGE_GOOD_ && notesEnemyKey()))) {
 		miss_ = true;
 		//Ž¸”s”»’èˆ—
 		scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
@@ -104,6 +107,7 @@ void EnemyBase::notesBullet() {
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, perfect, lane_));
 			scene_->mp_ += (1 + (scene_->combo_ * 0.1f)) * 2;
 			scene_->combo_++;
+			scene_->bgm_->perfect_ = true;
 		}
 	}
 	else if (good_ && !miss_) {
@@ -112,11 +116,11 @@ void EnemyBase::notesBullet() {
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, good, lane_));
 			scene_->mp_ += 1 + (scene_->combo_ * 0.1f);
 			scene_->combo_++;
+			scene_->bgm_->perfect_ = true;
 		}
 	}
 	if (!miss_ && checkLane() &&
-		((mesh_->pos_.z < MISS_Z_ && mesh_->pos_.z >= MISS_Z_ - RANGE_MISS_) ||
-			(mesh_->pos_.z < JUDGE_Z_ + RANGE_GOOD_ + RANGE_MISS_ && mesh_->pos_.z >= JUDGE_Z_ + RANGE_GOOD_))) {
+		mesh_->pos_.z < MISS_Z_ && mesh_->pos_.z >= MISS_Z_ - RANGE_MISS_) {
 		miss_ = true;
 		//Ž¸”s”»’èˆ—
 		scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
