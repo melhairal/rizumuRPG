@@ -3,6 +3,7 @@
 #include "../model/gm_anim_sprite3d.h"
 #include "gm_scene_play.h"
 #include "gm_scene_result.h"
+#include "../gm_ui.h"
 #include "../object/gm_object_ground.h"
 #include "../object/gm_object_actor.h"
 #include "../object/gm_object_player.h"
@@ -12,15 +13,22 @@ tnl::Quaternion	fix_rot;
 
 ScenePlay::~ScenePlay() {
 	delete camera_;
+	delete ui_;
+	delete frame_;
 	for (auto object : objects_) delete object;
 	for (auto actor : actors_) delete actor;
+	for (auto ui : subUis_) delete ui;
 }
 
 
 void ScenePlay::initialzie() {
+	//カメラの生成
 	camera_ = new GmCamera();
 	camera_->target_ = { 0,0,0 };
 
+	//uiの生成
+	ui_ = new Ui(this);
+	
 	//マスの生成
 	frame_ = dxe::Mesh::CreatePlane({ FIELD_W_,FIELD_H_,0 });
 	frame_->setTexture(dxe::Texture::CreateFromFile("graphics/base/frame.png"));
@@ -47,6 +55,10 @@ void ScenePlay::update(float delta_time)
 	//アクター制御
 	updateActor(delta_time);
 
+	//UIアップデート
+	ui_->update(delta_time);
+	updateSubUi(delta_time);
+
 
 	// ==================== デバッグ等 ====================
 
@@ -61,6 +73,12 @@ void ScenePlay::update(float delta_time)
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_4)) {
 		actors_.emplace_back(new EnemyRizard(this, EnemyBase::RR));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Q)) {
+		combo_++;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_W)) {
+		combo_ = 0;
 	}
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
@@ -85,6 +103,14 @@ void ScenePlay::render()
 	for (auto actor : actors_) {
 		if (actor->mesh_ != nullptr) actor->mesh_->render(camera_);
 	}
+
+	//UIの描画
+	ui_->render();
+	for (auto ui : subUis_) {
+		ui->render();
+	}
+
+	// ==================== デバッグ等 ====================
 
 	DrawStringEx(50, 50, -1, "scene play");
 
@@ -133,4 +159,22 @@ void ScenePlay::updateActor(float delta_time) {
 		if (r->mesh_ != nullptr) rd = (camera_->pos_ - r->mesh_->pos_).length();
 		return ld > rd;
 		});
+}
+
+void ScenePlay::updateSubUi(float delta_time) {
+	//全てのオブジェクトのアップデート
+	for (auto ui : subUis_) {
+		if (ui->move_)	ui->update(delta_time);
+	}
+
+	//オブジェクトの生存フラグがfalseになったらデリート
+	auto it_ui = subUis_.begin();
+	while (it_ui != subUis_.end()) {
+		if (!(*it_ui)->alive_) {
+			delete (*it_ui);
+			it_ui = subUis_.erase(it_ui);
+			continue;
+		}
+		it_ui++;
+	}
 }

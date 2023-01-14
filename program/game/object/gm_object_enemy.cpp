@@ -1,20 +1,28 @@
 #include "gm_object_enemy.h"
 #include "../scene/gm_scene_play.h"
 #include "../gm_camera.h"
+#include "../gm_ui.h"
 
 void EnemyBase::Initialize(ScenePlay* scene, int lane) {
 	scene_ = scene;
+	lane_ = lane;
 	getImage();
 	mesh_ = dxe::Mesh::CreatePlane({ MESH_W_, MESH_H_, 0 });
 	mesh_->setTexture(dxe::Texture::CreateFromFile(*it));
 	it++;
-	mesh_->pos_ = { POS_X_[lane],POS_Y_,POS_Z_ };
+	mesh_->pos_ = { POS_X_[lane_],POS_Y_,POS_Z_ };
 	mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(60));
 }
 
 void EnemyBase::flow(float speed) {
 	mesh_->pos_.z -= speed;
-	if (mesh_->pos_.z < DEAD_Z_) alive_ = false;
+	if (mesh_->pos_.z < DEAD_Z_) {
+		if (!isBullet && !miss_) {
+			scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
+			scene_->combo_ = 0;
+		}
+		alive_ = false;
+	}
 }
 
 void EnemyBase::shot(Actor* bullet) {
@@ -50,21 +58,24 @@ void EnemyBase::notesEnemy() {
 	if (perfect_) {
 		if (notesEnemyKey()) {
 			//パーフェクト判定処理
+			scene_->subUis_.emplace_back(new SubUiJudge(scene_, perfect, lane_));
+			scene_->combo_++;
 			alive_ = false;
 		}
 	}
 	else if(good_) {
 		if (notesEnemyKey()) {
 			//グッド判定処理
-			mesh_->pos_ = { 150.0f,20.0f,0 };
-			move_ = false;
+			scene_->subUis_.emplace_back(new SubUiJudge(scene_, good, lane_));
+			scene_->combo_++;
+			alive_ = false;
 		}
 	}
 	if (!miss_ && checkLane() && mesh_->pos_.z < MISS_Z_ && mesh_->pos_.z >= MISS_Z_ - RANGE_MISS_) {
 		miss_ = true;
 		//失敗判定処理
-		mesh_->pos_ = { -150.0f,20.0f,0 };
-		move_ = false;
+		scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
+		scene_->combo_ = 0;
 	}
 }
 
@@ -80,21 +91,23 @@ void EnemyBase::notesBullet() {
 	if (perfect_) {
 		if (notesBulletKey()) {
 			//パーフェクト判定処理
-			alive_ = false;
+			scene_->subUis_.emplace_back(new SubUiJudge(scene_, perfect, lane_));
+			scene_->combo_++;
 		}
 	}
 	else if (good_) {
 		if (notesBulletKey()) {
 			//グッド判定処理
-			mesh_->pos_ = { 150.0f,20.0f,0 };
-			move_ = false;
+			scene_->subUis_.emplace_back(new SubUiJudge(scene_, good, lane_));
+			scene_->combo_++;
 		}
 	}
 	if (!miss_ && checkLane() && mesh_->pos_.z < MISS_Z_ && mesh_->pos_.z >= MISS_Z_ - RANGE_MISS_) {
 		miss_ = true;
 		//失敗判定処理
-		mesh_->pos_ = { -150.0f,20.0f,0 };
-		move_ = false;
+		scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
+		scene_->combo_ = 0;
+		alive_ = false;
 	}
 }
 
@@ -120,7 +133,7 @@ void EnemyRizard::update(float delta_time) {
 
 	if (mesh_->pos_.z < SHOT_Z_) {
 		if (elapsed_ < TIME_STOP_) elapsed_++;
-		if (elapsed_ == TIME_SHOT_) shot(new EnemyRizardBullet(scene_));
+		if (elapsed_ == TIME_SHOT_) shot(new EnemyRizardBullet(scene_, lane_));
 		if (elapsed_ == TIME_STOP_) flow(SPEED_);
 	}
 	else {
@@ -128,9 +141,10 @@ void EnemyRizard::update(float delta_time) {
 	}
 }
 
-EnemyRizardBullet::EnemyRizardBullet(ScenePlay* scene) {
+EnemyRizardBullet::EnemyRizardBullet(ScenePlay* scene, int lane) {
 	//メッシュ初期化
-	Initialize(scene, 0);
+	Initialize(scene, lane);
+	isBullet = true;
 }
 
 void EnemyRizardBullet::update(float delta_time) {

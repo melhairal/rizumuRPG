@@ -17,7 +17,6 @@ public:
 	const float POS_Z_ = -100.0f; //Z座標
 	const int FRAME_ = 10; //アニメーション更新フレーム
 
-
 	void getImage() override {
 		// ====================================
 		//  ここにアニメーションの画像を並べる

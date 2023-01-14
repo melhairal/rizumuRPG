@@ -28,13 +28,22 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const float POS_Z_ = 300.0f; //初期Z座標
-	const float DEAD_Z_ = -200.0f; //消滅Z座標
-	const float SPEED_ = 5.0f; //流れるスピード(仮)
+	enum {
+		perfect,
+		good,
+		miss
+	};
 
-	const float JUDGE_Z_ = -90.0f; //判定Z座標
+	bool isBullet = false; //弾かどうか
+
+	const float POS_Z_ = 300.0f; //初期Z座標
+	const float DEAD_Z_ = -160.0f; //消滅Z座標
+	const float SPEED_ = 5.0f; //流れるスピード(仮)
+	int lane_ = 0; //レーン
+
+	const float JUDGE_Z_ = -95.0f; //判定Z座標
 	const float RANGE_PERFECT_ = 10.0f; //パーフェクト判定の範囲
-	const float RANGE_GOOD_ = 20.0f; //グッド判定の範囲
+	const float RANGE_GOOD_ = 30.0f; //グッド判定の範囲
 	bool perfect_ = false; //パーフェクト判定
 	bool good_ = false; //グッド判定
 	const float MISS_Z_ = JUDGE_Z_ - RANGE_GOOD_; //失敗判定Z座標
@@ -89,7 +98,7 @@ public:
 
 class EnemyRizardBullet : public EnemyBase {
 public:
-	EnemyRizardBullet(ScenePlay* scene);
+	EnemyRizardBullet(ScenePlay* scene, int lane);
 	~EnemyRizardBullet() {}
 	void update(float delta_time) override;
 
