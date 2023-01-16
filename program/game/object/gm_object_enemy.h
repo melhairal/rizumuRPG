@@ -35,10 +35,14 @@ public:
 	};
 
 	bool isBullet = false; //弾かどうか
+	bool isShift = false; //シフトしたかどうか
+	int shift_r_ = 0; //シフト用乱数
+	float shift_dis_ = 0; //シフト距離
+	const int SHIFT_SPEED_ = 30; //シフトにかかる時間
 
 	const float POS_Z_ = 300.0f; //初期Z座標
 	const float DEAD_Z_ = -160.0f; //消滅Z座標
-	const float SPEED_ = 5.0f; //流れるスピード(仮)
+	const float SPEED_ = 4.0f; //流れるスピード(仮)
 
 	const float JUDGE_Z_ = -95.0f; //判定Z座標
 	const float RANGE_PERFECT_ = 10.0f; //パーフェクト判定の範囲
@@ -48,6 +52,8 @@ public:
 	const float MISS_Z_ = JUDGE_Z_ - RANGE_GOOD_; //失敗判定Z座標
 	const float RANGE_MISS_ = 20.0f;
 	bool miss_ = false; //失敗判定
+
+	int elapsed_ = 0; //時間計測用
 
 	int atk_ = 0; //攻撃力
 	int exp_ = 0; //スコア、経験値
@@ -63,14 +69,14 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const int ATK_ = 10;
+	const int ATK_ = 20;
 	const int EXP_ = 100;
 
 	void getImage() override {
 		// ====================================
 		//  ここにアニメーションの画像を並べる
 		// ====================================
-		images_.emplace_back("graphics/chara/enemy/pig_a.png");
+		images_.emplace_back("graphics/chara/enemy/pig.png");
 		it = images_.begin();
 	}
 };
@@ -86,7 +92,6 @@ public:
 	// ========== 基本ステータス ==========
 	
 	const float SHOT_Z_ = 200.0f; //弾を発射するZ座標
-	int elapsed_ = 0; //時間計測用
 	const int TIME_SHOT_ = 40; //弾を飛ばすまでの時間
 	const int TIME_STOP_ = 80; //停止時間
 
@@ -97,7 +102,7 @@ public:
 		// ====================================
 		//  ここにアニメーションの画像を並べる
 		// ====================================
-		images_.emplace_back("graphics/chara/enemy/rizard_a.png");
+		images_.emplace_back("graphics/chara/enemy/rizard.png");
 		it = images_.begin();
 	}
 };
@@ -120,6 +125,30 @@ public:
 		//  ここにアニメーションの画像を並べる
 		// ====================================
 		images_.emplace_back("graphics/effect/fireball.png");
+		it = images_.begin();
+	}
+};
+
+class EnemyMash : public EnemyBase {
+public:
+	EnemyMash(ScenePlay* scene, int lane);
+	~EnemyMash() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const float SHIFT_Z_ = 150.0f; //レーンを移動するZ座標
+
+	const int ATK_ = 15;
+	const int EXP_ = 200;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/mash.png");
 		it = images_.begin();
 	}
 };

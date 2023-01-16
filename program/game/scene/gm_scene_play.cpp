@@ -82,7 +82,7 @@ void ScenePlay::update(float delta_time)
 		actors_.emplace_back(new EnemyPig(this, EnemyBase::L));
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_3)) {
-		actors_.emplace_back(new EnemyRizard(this, EnemyBase::R));
+		actors_.emplace_back(new EnemyMash(this, EnemyBase::R));
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_4)) {
 		actors_.emplace_back(new EnemyRizard(this, EnemyBase::RR));

@@ -34,6 +34,23 @@ void EnemyBase::shot(Actor* bullet) {
 	bullet->mesh_->pos_ = mesh_->pos_;
 }
 
+void EnemyBase::shift() {
+	if (elapsed_ == 0) {
+		shift_r_ = rand() % 4;
+		shift_dis_ = POS_X_[shift_r_] - POS_X_[lane_];
+		elapsed_++;
+	}
+	else if (elapsed_ <= SHIFT_SPEED_) {
+		mesh_->pos_.x += shift_dis_ / SHIFT_SPEED_;
+		elapsed_++;
+	}
+	else {
+		mesh_->pos_.x = POS_X_[shift_r_];
+		lane_ = shift_r_;
+		isShift = true;
+	}
+}
+
 bool EnemyBase::checkLane() {
 	if (scene_->player_->mesh_->pos_.x == mesh_->pos_.x) return true;
 	else return false;
@@ -176,4 +193,22 @@ void EnemyRizardBullet::update(float delta_time) {
 	checkJudge();
 	notesBullet();
 	flow(SPEED_);
+}
+
+EnemyMash::EnemyMash(ScenePlay* scene, int lane) {
+	//ƒƒbƒVƒ…‰Šú‰»
+	Initialize(scene, lane, ATK_, EXP_);
+}
+
+void EnemyMash::update(float delta_time) {
+	checkJudge();
+	notesEnemy();
+
+	if (mesh_->pos_.z < SHIFT_Z_) {
+		if (!isShift) shift();
+		else flow(SPEED_);
+	}
+	else {
+		flow(SPEED_);
+	}
 }
