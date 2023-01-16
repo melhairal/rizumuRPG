@@ -152,3 +152,69 @@ public:
 		it = images_.begin();
 	}
 };
+
+class EnemyGrifin : public EnemyBase {
+public:
+	EnemyGrifin(ScenePlay* scene, int lane);
+	~EnemyGrifin() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const float SHOT_Z_ = 120.0f; //弾を発射するZ座標
+	const int TIME_SHOT_ = 30; //弾を飛ばすまでの時間
+	const int TIME_STOP_ = 60; //停止時間
+
+	const float SHIFT_Z_ = 170.0f; //レーンを移動するZ座標
+
+	const int ATK_ = 30;
+	const int EXP_ = 300;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/grifin.png");
+		it = images_.begin();
+	}
+};
+
+class EnemyGrifinBullet : public EnemyBase {
+public:
+	EnemyGrifinBullet(ScenePlay* scene, int lane);
+	~EnemyGrifinBullet() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_ = 40;
+	const int EXP_ = 15;
+
+	const int FRAME_ = 3;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/wind/wind_001.png");
+		images_.emplace_back("graphics/effect/wind/wind_002.png");
+		images_.emplace_back("graphics/effect/wind/wind_003.png");
+		images_.emplace_back("graphics/effect/wind/wind_004.png");
+		images_.emplace_back("graphics/effect/wind/wind_005.png");
+		images_.emplace_back("graphics/effect/wind/wind_006.png");
+		images_.emplace_back("graphics/effect/wind/wind_007.png");
+		images_.emplace_back("graphics/effect/wind/wind_008.png");
+		images_.emplace_back("graphics/effect/wind/wind_009.png");
+		images_.emplace_back("graphics/effect/wind/wind_010.png");
+		images_.emplace_back("graphics/effect/wind/wind_011.png");
+		images_.emplace_back("graphics/effect/wind/wind_012.png");
+		images_.emplace_back("graphics/effect/wind/wind_013.png");
+		images_.emplace_back("graphics/effect/wind/wind_014.png");
+		images_.emplace_back("graphics/effect/wind/wind_015.png");
+		it = images_.begin();
+	}
+};

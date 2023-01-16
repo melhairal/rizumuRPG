@@ -47,6 +47,7 @@ void EnemyBase::shift() {
 	else {
 		mesh_->pos_.x = POS_X_[shift_r_];
 		lane_ = shift_r_;
+		elapsed_ = 0;
 		isShift = true;
 	}
 }
@@ -211,4 +212,40 @@ void EnemyMash::update(float delta_time) {
 	else {
 		flow(SPEED_);
 	}
+}
+
+EnemyGrifin::EnemyGrifin(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+}
+
+void EnemyGrifin::update(float delta_time) {
+	checkJudge();
+	notesEnemy();
+
+	if (mesh_->pos_.z < SHOT_Z_) {
+		if (elapsed_ < TIME_STOP_) elapsed_++;
+		if (elapsed_ == TIME_SHOT_) shot(new EnemyGrifinBullet(scene_, lane_));
+		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+	}
+	else if (mesh_->pos_.z < SHIFT_Z_) {
+		if (!isShift) shift();
+		else flow(SPEED_);
+	}
+	else {
+		flow(SPEED_);
+	}
+}
+
+EnemyGrifinBullet::EnemyGrifinBullet(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+	isBullet = true;
+}
+
+void EnemyGrifinBullet::update(float delta_time) {
+	animation(FRAME_);
+	checkJudge();
+	notesBullet();
+	flow(SPEED_);
 }
