@@ -40,7 +40,9 @@ void EnemyBase::shift() {
 		initElapsed_ = true;
 	}
 	if (elapsed_ == 0) {
-		shift_r_ = rand() % 4;
+		do {
+			shift_r_ = rand() % 4;
+		} while (shift_r_ == lane_);
 		shift_dis_ = POS_X_[shift_r_] - POS_X_[lane_];
 		elapsed_++;
 	}
@@ -414,4 +416,116 @@ void EnemyJellyC::update(float delta_time) {
 	else {
 		flow(SPEED_);
 	}
+}
+
+EnemyKingPig::EnemyKingPig(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+}
+
+void EnemyKingPig::update(float delta_time) {
+	checkJudge();
+	notesEnemy();
+	flow(SPEED_);
+}
+
+EnemyKingRizard::EnemyKingRizard(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+}
+
+void EnemyKingRizard::update(float delta_time) {
+	checkJudge();
+	notesEnemy();
+
+	if (mesh_->pos_.z < SHOT_Z_) {
+		if (elapsed_ < TIME_STOP_) elapsed_++;
+		if (elapsed_ == TIME_SHOT1_) shot(new EnemyKingRizardBullet(scene_, lane_));
+		if (elapsed_ == TIME_SHOT2_) shot(new EnemyKingRizardBullet(scene_, lane_));
+		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+	}
+	else {
+		flow(SPEED_);
+	}
+}
+
+EnemyKingRizardBullet::EnemyKingRizardBullet(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+	isBullet_ = true;
+}
+
+void EnemyKingRizardBullet::update(float delta_time) {
+	checkJudge();
+	notesBullet();
+	flow(SPEED_);
+}
+
+EnemyKingMash::EnemyKingMash(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+}
+
+void EnemyKingMash::update(float delta_time) {
+	checkJudge();
+	notesEnemy();
+
+	if (mesh_->pos_.z < SHIFT_Z2_) {
+		if (!isShift2_) {
+			isShift_ = false;
+			isShift2_ = true;
+		}
+		if (!isShift_) shift();
+		else flow(SPEED_);
+	}
+	else if (mesh_->pos_.z < SHIFT_Z1_) {
+		if (!isShift_) shift();
+		else flow(SPEED_);
+	}
+	else {
+		flow(SPEED_);
+	}
+}
+
+EnemyKingGrifin::EnemyKingGrifin(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+}
+
+void EnemyKingGrifin::update(float delta_time) {
+	checkJudge();
+	notesEnemy();
+
+	if (mesh_->pos_.z < SHOT_Z1_) {
+		if (elapsed_ < TIME_STOP_) elapsed_++;
+		if (elapsed_ == TIME_SHOT1_) shot(new EnemyKingGrifinBullet(scene_, lane_));
+		if (elapsed_ == TIME_SHOT2_) shot(new EnemyKingGrifinBullet(scene_, lane_));
+		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+	}
+	else if (mesh_->pos_.z < SHIFT_Z_) {
+		if (!isShift_) shift();
+		else flow(SPEED_);
+	}
+	else if (mesh_->pos_.z < SHOT_Z2_) {
+		if (elapsed_ < TIME_STOP_) elapsed_++;
+		if (elapsed_ == TIME_SHOT1_) shot(new EnemyKingGrifinBullet(scene_, lane_));
+		if (elapsed_ == TIME_SHOT2_) shot(new EnemyKingGrifinBullet(scene_, lane_));
+		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+	}
+	else {
+		flow(SPEED_);
+	}
+}
+
+EnemyKingGrifinBullet::EnemyKingGrifinBullet(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+	isBullet_ = true;
+}
+
+void EnemyKingGrifinBullet::update(float delta_time) {
+	animation(FRAME_);
+	checkJudge();
+	notesBullet();
+	flow(SPEED_);
 }

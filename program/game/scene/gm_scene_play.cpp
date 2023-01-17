@@ -108,6 +108,18 @@ void ScenePlay::update(float delta_time)
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_T)) {
 		actors_.emplace_back(new EnemyJellyB(this, EnemyBase::RR));
 	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Y)) {
+		actors_.emplace_back(new EnemyKingPig(this, EnemyBase::LL));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_U)) {
+		actors_.emplace_back(new EnemyKingGrifin(this, EnemyBase::L));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_I)) {
+		actors_.emplace_back(new EnemyKingMash(this, EnemyBase::R));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_O)) {
+		actors_.emplace_back(new EnemyKingRizard(this, EnemyBase::RR));
+	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Q)) {
 		combo_++;
 	}

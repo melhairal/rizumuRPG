@@ -478,3 +478,168 @@ public:
 		it = images_.begin();
 	}
 };
+
+class EnemyKingPig : public EnemyBase {
+public:
+	EnemyKingPig(ScenePlay* scene, int lane);
+	~EnemyKingPig() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_ = 60;
+	const int EXP_ = 600;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/pig_king.png");
+		it = images_.begin();
+	}
+};
+
+class EnemyKingRizard : public EnemyBase {
+public:
+	EnemyKingRizard(ScenePlay* scene, int lane);
+	~EnemyKingRizard() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const float SHOT_Z_ = 120.0f; //弾を発射するZ座標
+	const int TIME_SHOT1_ = 25; //弾を飛ばすまでの時間
+	const int TIME_SHOT2_ = 50; //弾を飛ばすまでの時間
+	const int TIME_STOP_ = 75; //停止時間
+
+	const int ATK_ = 40;
+	const int EXP_ = 600;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/rizard_king.png");
+		it = images_.begin();
+	}
+};
+
+class EnemyKingRizardBullet : public EnemyBase {
+public:
+	EnemyKingRizardBullet(ScenePlay* scene, int lane);
+	~EnemyKingRizardBullet() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_ = 70;
+	const int EXP_ = 30;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/fireball.png");
+		it = images_.begin();
+	}
+};
+
+class EnemyKingMash : public EnemyBase {
+public:
+	EnemyKingMash(ScenePlay* scene, int lane);
+	~EnemyKingMash() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const float SHIFT_Z1_ = 140.0f; //レーンを移動するZ座標
+	const float SHIFT_Z2_ = 100.0f; //レーンを移動するZ座標
+	bool isShift2_ = false; //2回目のシフトをするためのフラグ
+
+	const int ATK_ = 60;
+	const int EXP_ = 600;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/mash_king.png");
+		it = images_.begin();
+	}
+};
+
+class EnemyKingGrifin : public EnemyBase {
+public:
+	EnemyKingGrifin(ScenePlay* scene, int lane);
+	~EnemyKingGrifin() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const float SHOT_Z1_ = 70.0f; //弾を発射するZ座標1
+	const float SHOT_Z2_ = 170.0f; //弾を発射するZ座標2
+	const int TIME_SHOT1_ = 20; //弾を飛ばすまでの時間
+	const int TIME_SHOT2_ = 40; //弾を飛ばすまでの時間
+	const int TIME_STOP_ = 60; //停止時間
+
+	const float SHIFT_Z_ = 120.0f; //レーンを移動するZ座標
+
+	const int ATK_ = 80;
+	const int EXP_ = 1000;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/grifin_king.png");
+		it = images_.begin();
+	}
+};
+
+class EnemyKingGrifinBullet : public EnemyBase {
+public:
+	EnemyKingGrifinBullet(ScenePlay* scene, int lane);
+	~EnemyKingGrifinBullet() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_ = 70;
+	const int EXP_ = 50;
+
+	const int FRAME_ = 3;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/wind/wind_001.png");
+		images_.emplace_back("graphics/effect/wind/wind_002.png");
+		images_.emplace_back("graphics/effect/wind/wind_003.png");
+		images_.emplace_back("graphics/effect/wind/wind_004.png");
+		images_.emplace_back("graphics/effect/wind/wind_005.png");
+		images_.emplace_back("graphics/effect/wind/wind_006.png");
+		images_.emplace_back("graphics/effect/wind/wind_007.png");
+		images_.emplace_back("graphics/effect/wind/wind_008.png");
+		images_.emplace_back("graphics/effect/wind/wind_009.png");
+		images_.emplace_back("graphics/effect/wind/wind_010.png");
+		images_.emplace_back("graphics/effect/wind/wind_011.png");
+		images_.emplace_back("graphics/effect/wind/wind_012.png");
+		images_.emplace_back("graphics/effect/wind/wind_013.png");
+		images_.emplace_back("graphics/effect/wind/wind_014.png");
+		images_.emplace_back("graphics/effect/wind/wind_015.png");
+		it = images_.begin();
+	}
+};
