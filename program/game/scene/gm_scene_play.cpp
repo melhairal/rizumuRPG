@@ -87,12 +87,33 @@ void ScenePlay::update(float delta_time)
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_4)) {
 		actors_.emplace_back(new EnemyRizard(this, EnemyBase::RR));
 	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_5)) {
+		actors_.emplace_back(new EnemyBad(this, EnemyBase::LL));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_6)) {
+		actors_.emplace_back(new EnemySinigami(this, EnemyBase::L));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_7)) {
+		actors_.emplace_back(new EnemySnake(this, EnemyBase::R));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_8)) {
+		actors_.emplace_back(new EnemyMagician(this, EnemyBase::RR));
+	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Q)) {
 		combo_++;
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_W)) {
 		combo_ = 0;
 	}
+
+	//ƒJƒƒ‰‰ñ“]
+	tnl::Vector3 rot[2] = {
+		{tnl::ToRadian(-1.0f), 0, 0 },
+		{-tnl::ToRadian(-1.0f), 0, 0 }
+	};
+	tnl::Input::RunIndexKeyDown([&](uint32_t idx) {
+		camera_->free_look_angle_xy_ += rot[idx];
+		}, eKeys::KB_Z, eKeys::KB_X);
 
 	progress_++;
 

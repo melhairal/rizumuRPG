@@ -34,8 +34,9 @@ public:
 		miss
 	};
 
-	bool isBullet = false; //弾かどうか
-	bool isShift = false; //シフトしたかどうか
+	bool isBullet_ = false; //弾かどうか
+	bool isShift_ = false; //シフトしたかどうか
+	bool initElapsed_ = false; //シフト関数でelapsedを初期化するためのフラグ
 	int shift_r_ = 0; //シフト用乱数
 	float shift_dis_ = 0; //シフト距離
 	const int SHIFT_SPEED_ = 30; //シフトにかかる時間
@@ -50,7 +51,7 @@ public:
 	bool perfect_ = false; //パーフェクト判定
 	bool good_ = false; //グッド判定
 	const float MISS_Z_ = JUDGE_Z_ - RANGE_GOOD_; //失敗判定Z座標
-	const float RANGE_MISS_ = 20.0f;
+	const float RANGE_MISS_ = 30.0f;
 	bool miss_ = false; //失敗判定
 
 	int elapsed_ = 0; //時間計測用
@@ -215,6 +216,171 @@ public:
 		images_.emplace_back("graphics/effect/wind/wind_013.png");
 		images_.emplace_back("graphics/effect/wind/wind_014.png");
 		images_.emplace_back("graphics/effect/wind/wind_015.png");
+		it = images_.begin();
+	}
+};
+
+class EnemyBad : public EnemyBase {
+public:
+	EnemyBad(ScenePlay* scene, int lane);
+	~EnemyBad() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_ = 30;
+	const int EXP_ = 150;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/bad.png");
+		it = images_.begin();
+	}
+};
+
+class EnemyMagician : public EnemyBase {
+public:
+	EnemyMagician(ScenePlay* scene, int lane);
+	~EnemyMagician() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const float SHOT_Z_ = 170.0f; //弾を発射するZ座標
+	const int TIME_SHOT_ = 20; //弾を飛ばすまでの時間
+	const int TIME_STOP_ = 80; //停止時間
+
+	const int ATK_ = 20;
+	const int EXP_ = 250;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/magician.png");
+		it = images_.begin();
+	}
+};
+
+class EnemyMagicianBullet : public EnemyBase {
+public:
+	EnemyMagicianBullet(ScenePlay* scene, int lane);
+	~EnemyMagicianBullet() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_ = 40;
+	const int EXP_ = 20;
+
+	const int FRAME_ = 3;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/ice/ice_001.png");
+		images_.emplace_back("graphics/effect/ice/ice_002.png");
+		images_.emplace_back("graphics/effect/ice/ice_003.png");
+		images_.emplace_back("graphics/effect/ice/ice_004.png");
+		images_.emplace_back("graphics/effect/ice/ice_005.png");
+		images_.emplace_back("graphics/effect/ice/ice_006.png");
+		images_.emplace_back("graphics/effect/ice/ice_007.png");
+		images_.emplace_back("graphics/effect/ice/ice_008.png");
+		it = images_.begin();
+	}
+};
+
+class EnemySnake : public EnemyBase {
+public:
+	EnemySnake(ScenePlay* scene, int lane);
+	~EnemySnake() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const float SHIFT_Z_ = 60.0f; //レーンを移動するZ座標
+
+	const int ATK_ = 20;
+	const int EXP_ = 200;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/snake.png");
+		it = images_.begin();
+	}
+};
+
+class EnemySinigami : public EnemyBase {
+public:
+	EnemySinigami(ScenePlay* scene, int lane);
+	~EnemySinigami() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const float SHOT_Z1_ = 70.0f; //弾を発射するZ座標1
+	const float SHOT_Z2_ = 170.0f; //弾を発射するZ座標2
+	const int TIME_SHOT_ = 30; //弾を飛ばすまでの時間
+	const int TIME_STOP_ = 60; //停止時間
+
+	const float SHIFT_Z_ = 120.0f; //レーンを移動するZ座標
+
+	const int ATK_ = 50;
+	const int EXP_ = 500;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/sinigami.png");
+		it = images_.begin();
+	}
+};
+
+class EnemySinigamiBullet : public EnemyBase {
+public:
+	EnemySinigamiBullet(ScenePlay* scene, int lane);
+	~EnemySinigamiBullet() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_ = 20;
+	const int EXP_ = 10;
+
+	const int FRAME_ = 3;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/badball/badball_001.png");
+		images_.emplace_back("graphics/effect/badball/badball_002.png");
+		images_.emplace_back("graphics/effect/badball/badball_003.png");
+		images_.emplace_back("graphics/effect/badball/badball_004.png");
+		images_.emplace_back("graphics/effect/badball/badball_005.png");
+		images_.emplace_back("graphics/effect/badball/badball_006.png");
+		images_.emplace_back("graphics/effect/badball/badball_007.png");
+		images_.emplace_back("graphics/effect/badball/badball_008.png");
+		images_.emplace_back("graphics/effect/badball/badball_009.png");
+		images_.emplace_back("graphics/effect/badball/badball_010.png");
 		it = images_.begin();
 	}
 };

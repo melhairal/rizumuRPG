@@ -21,7 +21,7 @@ void EnemyBase::Initialize(ScenePlay* scene, int lane, int atk, int exp) {
 void EnemyBase::flow(float speed) {
 	mesh_->pos_.z -= speed;
 	if (mesh_->pos_.z < DEAD_Z_) {
-		if (!isBullet && !miss_) {
+		if (!isBullet_ && !miss_) {
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
 			scene_->combo_ = 0;
 		}
@@ -35,6 +35,10 @@ void EnemyBase::shot(Actor* bullet) {
 }
 
 void EnemyBase::shift() {
+	if (!initElapsed_) {
+		elapsed_ = 0;
+		initElapsed_ = true;
+	}
 	if (elapsed_ == 0) {
 		shift_r_ = rand() % 4;
 		shift_dis_ = POS_X_[shift_r_] - POS_X_[lane_];
@@ -48,7 +52,7 @@ void EnemyBase::shift() {
 		mesh_->pos_.x = POS_X_[shift_r_];
 		lane_ = shift_r_;
 		elapsed_ = 0;
-		isShift = true;
+		isShift_ = true;
 	}
 }
 
@@ -187,7 +191,7 @@ void EnemyRizard::update(float delta_time) {
 EnemyRizardBullet::EnemyRizardBullet(ScenePlay* scene, int lane) {
 	//メッシュ初期化
 	Initialize(scene, lane, ATK_, EXP_);
-	isBullet = true;
+	isBullet_ = true;
 }
 
 void EnemyRizardBullet::update(float delta_time) {
@@ -206,7 +210,7 @@ void EnemyMash::update(float delta_time) {
 	notesEnemy();
 
 	if (mesh_->pos_.z < SHIFT_Z_) {
-		if (!isShift) shift();
+		if (!isShift_) shift();
 		else flow(SPEED_);
 	}
 	else {
@@ -229,7 +233,7 @@ void EnemyGrifin::update(float delta_time) {
 		if (elapsed_ == TIME_STOP_) flow(SPEED_);
 	}
 	else if (mesh_->pos_.z < SHIFT_Z_) {
-		if (!isShift) shift();
+		if (!isShift_) shift();
 		else flow(SPEED_);
 	}
 	else {
@@ -240,10 +244,112 @@ void EnemyGrifin::update(float delta_time) {
 EnemyGrifinBullet::EnemyGrifinBullet(ScenePlay* scene, int lane) {
 	//メッシュ初期化
 	Initialize(scene, lane, ATK_, EXP_);
-	isBullet = true;
+	isBullet_ = true;
 }
 
 void EnemyGrifinBullet::update(float delta_time) {
+	animation(FRAME_);
+	checkJudge();
+	notesBullet();
+	flow(SPEED_);
+}
+
+EnemyBad::EnemyBad(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+}
+
+void EnemyBad::update(float delta_time) {
+	checkJudge();
+	notesEnemy();
+	flow(SPEED_);
+}
+
+EnemyMagician::EnemyMagician(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+}
+
+void EnemyMagician::update(float delta_time) {
+	checkJudge();
+	notesEnemy();
+
+	if (mesh_->pos_.z < SHOT_Z_) {
+		if (elapsed_ < TIME_STOP_) elapsed_++;
+		if (elapsed_ == TIME_SHOT_) shot(new EnemyMagicianBullet(scene_, lane_));
+		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+	}
+	else {
+		flow(SPEED_);
+	}
+}
+
+EnemyMagicianBullet::EnemyMagicianBullet(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+	isBullet_ = true;
+}
+
+void EnemyMagicianBullet::update(float delta_time) {
+	animation(FRAME_);
+	checkJudge();
+	notesBullet();
+	flow(SPEED_);
+}
+
+EnemySnake::EnemySnake(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+}
+
+void EnemySnake::update(float delta_time) {
+	checkJudge();
+	notesEnemy();
+
+	if (mesh_->pos_.z < SHIFT_Z_) {
+		if (!isShift_) shift();
+		else flow(SPEED_);
+	}
+	else {
+		flow(SPEED_);
+	}
+}
+
+EnemySinigami::EnemySinigami(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+}
+
+void EnemySinigami::update(float delta_time) {
+	checkJudge();
+	notesEnemy();
+
+	if (mesh_->pos_.z < SHOT_Z1_) {
+		if (elapsed_ < TIME_STOP_) elapsed_++;
+		if (elapsed_ == TIME_SHOT_) shot(new EnemySinigamiBullet(scene_, lane_));
+		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+	}
+	else if (mesh_->pos_.z < SHIFT_Z_) {
+		if (!isShift_) shift();
+		else flow(SPEED_);
+	}
+	else if (mesh_->pos_.z < SHOT_Z2_) {
+		if (elapsed_ < TIME_STOP_) elapsed_++;
+		if (elapsed_ == TIME_SHOT_) shot(new EnemySinigamiBullet(scene_, lane_));
+		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+	}
+	else {
+		flow(SPEED_);
+	}
+}
+
+EnemySinigamiBullet::EnemySinigamiBullet(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+	isBullet_ = true;
+}
+
+void EnemySinigamiBullet::update(float delta_time) {
 	animation(FRAME_);
 	checkJudge();
 	notesBullet();
