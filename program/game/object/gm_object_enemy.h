@@ -384,3 +384,97 @@ public:
 		it = images_.begin();
 	}
 };
+
+class EnemyJellyA : public EnemyBase {
+public:
+	EnemyJellyA(ScenePlay* scene, int lane);
+	~EnemyJellyA() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_ = 40;
+	const int EXP_ = 300;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/jelly_a.png");
+		it = images_.begin();
+	}
+};
+
+class EnemyJellyB : public EnemyBase {
+public:
+	EnemyJellyB(ScenePlay* scene, int lane);
+	~EnemyJellyB() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const float SHOT_Z_ = 120.0f; //弾を発射するZ座標
+	const int TIME_SHOT_ = 25; //弾を飛ばすまでの時間
+	const int TIME_STOP_ = 50; //停止時間
+
+	const int ATK_ = 10;
+	const int EXP_ = 400;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/jelly_b.png");
+		it = images_.begin();
+	}
+};
+
+class EnemyJellyBullet : public EnemyBase {
+public:
+	EnemyJellyBullet(ScenePlay* scene, int lane);
+	~EnemyJellyBullet() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_ = 60;
+	const int EXP_ = 25;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/thunder.png");
+		it = images_.begin();
+	}
+};
+
+class EnemyJellyC : public EnemyBase {
+public:
+	EnemyJellyC(ScenePlay* scene, int lane);
+	~EnemyJellyC() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	const float SHIFT_Z_ = 100.0f; //レーンを移動するZ座標
+
+	const int ATK_ = 40;
+	const int EXP_ = 400;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/jelly_c.png");
+		it = images_.begin();
+	}
+};

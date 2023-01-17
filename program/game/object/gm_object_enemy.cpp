@@ -355,3 +355,63 @@ void EnemySinigamiBullet::update(float delta_time) {
 	notesBullet();
 	flow(SPEED_);
 }
+
+EnemyJellyA::EnemyJellyA(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+}
+
+void EnemyJellyA::update(float delta_time) {
+	checkJudge();
+	notesEnemy();
+	flow(SPEED_);
+}
+
+EnemyJellyB::EnemyJellyB(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+}
+
+void EnemyJellyB::update(float delta_time) {
+	checkJudge();
+	notesEnemy();
+
+	if (mesh_->pos_.z < SHOT_Z_) {
+		if (elapsed_ < TIME_STOP_) elapsed_++;
+		if (elapsed_ == TIME_SHOT_) shot(new EnemyJellyBullet(scene_, lane_));
+		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+	}
+	else {
+		flow(SPEED_);
+	}
+}
+
+EnemyJellyBullet::EnemyJellyBullet(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+	isBullet_ = true;
+}
+
+void EnemyJellyBullet::update(float delta_time) {
+	checkJudge();
+	notesBullet();
+	flow(SPEED_);
+}
+
+EnemyJellyC::EnemyJellyC(ScenePlay* scene, int lane) {
+	//メッシュ初期化
+	Initialize(scene, lane, ATK_, EXP_);
+}
+
+void EnemyJellyC::update(float delta_time) {
+	checkJudge();
+	notesEnemy();
+
+	if (mesh_->pos_.z < SHIFT_Z_) {
+		if (!isShift_) shift();
+		else flow(SPEED_);
+	}
+	else {
+		flow(SPEED_);
+	}
+}
