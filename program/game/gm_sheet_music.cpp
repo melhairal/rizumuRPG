@@ -2,19 +2,13 @@
 #include "scene/gm_scene_play.h"
 #include "object/gm_object_enemy.h"
 #include "object/gm_object_ground.h"
+#include "gm_camera.h"
 
-#include <iostream>
-#include <fstream>
-
-using std::endl;
-using std::ofstream;
-
-ofstream ofs("csv/test.csv");  // ファイルパスを指定する
-
-Sheet::Sheet(ScenePlay* scene) {
+Sheet::Sheet(ScenePlay* scene, std::string csv) {
 	scene_ = scene;
-	csv_ = tnl::LoadCsv("csv/stage_2.csv");
+	csv_ = tnl::LoadCsv(csv);
 	bgm_ = LoadSoundMem(csv_[0][0].c_str());
+	type_ = std::atoi(csv_[1][0].c_str());
 }
 
 void Sheet::update(float delta_time) {
@@ -29,77 +23,111 @@ void Sheet::update(float delta_time) {
 	//ノーツ情報取得
 	if (csv_y_ < csv_.size()) {
 		elapsed_++;
-		if (elapsed_ >= INTERVAL_LINE_ / bpm_) {
+		if (elapsed_ >= NODE_INTERVAL_) {
 			elapsed_ = 0;
 			if (csv_y_ == 2) {
-				scene_->objects_.emplace_back(new Line(scene_));
+				line_ = scene_->objects_.emplace_back(new Line(scene_));
 			}
 			for (int i = 0; i < 4; i++) {
 				int n = std::atoi(csv_[csv_y_][i].c_str());
-				switch (n) {
-				case 0:
-					break;
-				case 1:
-					scene_->actors_.emplace_back(new EnemyPig(scene_, i));
-					break;
-				case 2:
-					scene_->actors_.emplace_back(new EnemyRizard(scene_, i));
-					break;
-				case 3:
-					scene_->actors_.emplace_back(new EnemyMash(scene_, i));
-					break;
-				case 4:
-					scene_->actors_.emplace_back(new EnemyGrifin(scene_, i));
-					break;
-				}
+				createNotes(n, i);
 			}
 			csv_y_++;
 		}
 	}
+	else {
+		elapsed_++;
+		if (elapsed_ < 120) {
+			tnl::Vector3 rot = { tnl::ToRadian(-0.35f), 0, 0 };
+			scene_->camera_->free_look_angle_xy_ += rot;
+			scene_->player_->mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(-0.35f));
+			scene_->player_->mesh_->pos_.y += 0.05f;
+			line_->alive_ = false;
 
-	/*
-	//ノーツ作成	//BGM
-	if (bgm_timer_ == 0) {
-		PlaySoundMem(bgm_, DX_PLAYTYPE_BACK);
+			for (auto object : scene_->objects_) {
+				object->move_ = false;
+			}
+		}
+		else {
+
+		}
 	}
-	if (bgm_timer_ <= 0) {
-		bgm_timer_++;
-	}
-	elapsed_++;
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_D)) {
-		save_ = 1;
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_F)) {
-		save_ = 2;
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_J)) {
-		save_ = 3;
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_K)) {
-		save_ = 4;
-	}
-	if (elapsed_ >= INTERVAL_LINE_ / 10) {
-		elapsed_ = 0;
-		switch (save_) {
+
+}
+
+void Sheet::createNotes(int id, int lane) {
+	switch (type_) {
+	case plains:
+		switch (id) {
 		case 0:
-			ofs << 0 << ", " << 0 << ", " << 0 << ", " << 0 << ", " << endl;
 			break;
 		case 1:
-			ofs << 1 << ", " << 0 << ", " << 0 << ", " << 0 << ", " << endl;
+			scene_->actors_.emplace_back(new EnemyPig(scene_, lane));
 			break;
 		case 2:
-			ofs << 0 << ", " << 1 << ", " << 0 << ", " << 0 << ", " << endl;
+			scene_->actors_.emplace_back(new EnemyRizard(scene_, lane));
 			break;
 		case 3:
-			ofs << 0 << ", " << 0 << ", " << 1 << ", " << 0 << ", " << endl;
+			scene_->actors_.emplace_back(new EnemyMash(scene_, lane));
 			break;
 		case 4:
-			ofs << 0 << ", " << 0 << ", " << 0 << ", " << 1 << ", " << endl;
+			scene_->actors_.emplace_back(new EnemyGrifin(scene_, lane));
 			break;
 		}
-		save_ = 0;
+		break;
+
+	case cave:
+		switch (id) {
+		case 0:
+			break;
+		case 1:
+			scene_->actors_.emplace_back(new EnemyBad(scene_, lane));
+			break;
+		case 2:
+			scene_->actors_.emplace_back(new EnemyMagician(scene_, lane));
+			break;
+		case 3:
+			scene_->actors_.emplace_back(new EnemySnake(scene_, lane));
+			break;
+		case 4:
+			scene_->actors_.emplace_back(new EnemySinigami(scene_, lane));
+			break;
+		}
+		break;
+
+	case sea:
+		switch (id) {
+		case 0:
+			break;
+		case 1:
+			scene_->actors_.emplace_back(new EnemyJellyA(scene_, lane));
+			break;
+		case 2:
+			scene_->actors_.emplace_back(new EnemyJellyB(scene_, lane));
+			break;
+		case 3:
+			scene_->actors_.emplace_back(new EnemyJellyC(scene_, lane));
+			break;
+		}
+		break;
+
+	case forest:
+		switch (id) {
+		case 0:
+			break;
+		case 1:
+			scene_->actors_.emplace_back(new EnemyKingPig(scene_, lane));
+			break;
+		case 2:
+			scene_->actors_.emplace_back(new EnemyKingRizard(scene_, lane));
+			break;
+		case 3:
+			scene_->actors_.emplace_back(new EnemyKingMash(scene_, lane));
+			break;
+		case 4:
+			scene_->actors_.emplace_back(new EnemyKingGrifin(scene_, lane));
+			break;
+		}
+		break;
 	}
-
-	*/
-
 }

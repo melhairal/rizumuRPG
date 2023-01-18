@@ -6,6 +6,7 @@
 #include "../gm_ui.h"
 #include "../gm_bgm.h"
 #include "../gm_sheet_music.h"
+#include "../gm_make_sheet.h"
 #include "../object/gm_object_ground.h"
 #include "../object/gm_object_actor.h"
 #include "../object/gm_object_player.h"
@@ -18,6 +19,8 @@ ScenePlay::~ScenePlay() {
 	delete ui_;
 	delete bgm_;
 	delete frame_;
+	if (sheet_ != nullptr) delete sheet_;
+	if (make_ != nullptr) delete make_;
 	for (auto object : objects_) delete object;
 	for (auto actor : actors_) delete actor;
 	for (auto ui : subUis_) delete ui;
@@ -71,6 +74,9 @@ void ScenePlay::update(float delta_time)
 	//譜面アップテート
 	if(sheet_ != nullptr) sheet_->update(delta_time);
 
+	//譜面作成アップデート
+	if (make_ != nullptr) make_->update(delta_time);
+
 	//値のクランプ
 	hp_ = std::clamp(hp_, 0, hp_max_);
 	mp_ = std::clamp(mp_, 0, mp_max_);
@@ -78,76 +84,13 @@ void ScenePlay::update(float delta_time)
 	score_ = std::clamp(score_, 0, 9999999);
 
 	// ==================== デバッグ等 ====================
-
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
-		actors_.emplace_back(new EnemyPig(this,EnemyBase::LL));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2)) {
-		actors_.emplace_back(new EnemyGrifin(this, EnemyBase::L));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_3)) {
-		actors_.emplace_back(new EnemyMash(this, EnemyBase::R));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_4)) {
-		actors_.emplace_back(new EnemyRizard(this, EnemyBase::RR));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_5)) {
-		actors_.emplace_back(new EnemyBad(this, EnemyBase::LL));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_6)) {
-		actors_.emplace_back(new EnemySinigami(this, EnemyBase::L));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_7)) {
-		actors_.emplace_back(new EnemySnake(this, EnemyBase::R));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_8)) {
-		actors_.emplace_back(new EnemyMagician(this, EnemyBase::RR));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_E)) {
-		actors_.emplace_back(new EnemyJellyA(this, EnemyBase::L));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_R)) {
-		actors_.emplace_back(new EnemyJellyC(this, EnemyBase::R));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_T)) {
-		actors_.emplace_back(new EnemyJellyB(this, EnemyBase::RR));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Y)) {
-		actors_.emplace_back(new EnemyKingPig(this, EnemyBase::LL));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_U)) {
-		actors_.emplace_back(new EnemyKingGrifin(this, EnemyBase::L));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_I)) {
-		actors_.emplace_back(new EnemyKingMash(this, EnemyBase::R));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_O)) {
-		actors_.emplace_back(new EnemyKingRizard(this, EnemyBase::RR));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_P)) {
-		sheet_ = new Sheet(this);
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Q)) {
-		combo_++;
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_W)) {
-		combo_ = 0;
-	}
-
-	//カメラ回転
-	tnl::Vector3 rot[2] = {
-		{tnl::ToRadian(-1.0f), 0, 0 },
-		{-tnl::ToRadian(-1.0f), 0, 0 }
-	};
-	tnl::Input::RunIndexKeyDown([&](uint32_t idx) {
-		camera_->free_look_angle_xy_ += rot[idx];
-		}, eKeys::KB_Z, eKeys::KB_X);
-
-	progress_++;
+	
+	Debug();
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		mgr->chengeScene(new SceneResult());
 	}
+	
 }
 
 void ScenePlay::render()
@@ -173,6 +116,9 @@ void ScenePlay::render()
 	for (auto ui : subUis_) {
 		ui->render();
 	}
+
+	//譜面作成用描画
+	if (make_ != nullptr) make_->render();
 
 	// ==================== デバッグ等 ====================
 
@@ -241,4 +187,74 @@ void ScenePlay::updateSubUi(float delta_time) {
 		}
 		it_ui++;
 	}
+}
+
+void ScenePlay::Debug() {
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
+		actors_.emplace_back(new EnemyPig(this, EnemyBase::LL));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2)) {
+		actors_.emplace_back(new EnemyGrifin(this, EnemyBase::L));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_3)) {
+		actors_.emplace_back(new EnemyMash(this, EnemyBase::R));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_4)) {
+		actors_.emplace_back(new EnemyRizard(this, EnemyBase::RR));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_5)) {
+		actors_.emplace_back(new EnemyBad(this, EnemyBase::LL));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_6)) {
+		actors_.emplace_back(new EnemySinigami(this, EnemyBase::L));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_7)) {
+		actors_.emplace_back(new EnemySnake(this, EnemyBase::R));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_8)) {
+		actors_.emplace_back(new EnemyMagician(this, EnemyBase::RR));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_E)) {
+		actors_.emplace_back(new EnemyJellyA(this, EnemyBase::L));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_R)) {
+		actors_.emplace_back(new EnemyJellyC(this, EnemyBase::R));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_T)) {
+		actors_.emplace_back(new EnemyJellyB(this, EnemyBase::RR));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Y)) {
+		actors_.emplace_back(new EnemyKingPig(this, EnemyBase::LL));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_U)) {
+		actors_.emplace_back(new EnemyKingGrifin(this, EnemyBase::L));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_I)) {
+		actors_.emplace_back(new EnemyKingMash(this, EnemyBase::R));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_O)) {
+		actors_.emplace_back(new EnemyKingRizard(this, EnemyBase::RR));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_P)) {
+		sheet_ = new Sheet(this, stage_2_csv_);
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_A)) {
+		make_ = new MakeSheet(this);
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Q)) {
+		combo_++;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_W)) {
+		combo_ = 0;
+	}
+
+	//カメラ回転
+	tnl::Vector3 rot[2] = {
+		{tnl::ToRadian(-1.0f), 0, 0 },
+		{-tnl::ToRadian(-1.0f), 0, 0 }
+	};
+	tnl::Input::RunIndexKeyDown([&](uint32_t idx) {
+		camera_->free_look_angle_xy_ += rot[idx];
+		}, eKeys::KB_Z, eKeys::KB_X);
+
 }

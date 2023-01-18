@@ -8,6 +8,7 @@ class Ui;
 class SubUiJudge;
 class Bgm;
 class Sheet;
+class MakeSheet;
 
 class ScenePlay : public SceneBase {
 public :
@@ -24,6 +25,8 @@ public :
 	void updateActor(float delta_time); //アクター制御
 	void updateSubUi(float delta_time); //サブUi制御
 
+	void Debug(); //デバッグ
+
 	// ========== 基本ステータス ==========
 
 	GmCamera* camera_ = nullptr;
@@ -35,6 +38,7 @@ public :
 	std::list<SubUiJudge*> subUis_; //サブUIリスト
 	Actor* player_ = nullptr; //プレイヤーポインタ
 	Sheet* sheet_ = nullptr; //譜面ポインタ
+	MakeSheet* make_ = nullptr; //譜面作成用クラスポインタ
 
 	const float FIELD_H_ = 450.0f; //床の縦幅
 	const float FIELD_W_ = 300.0f; //床の横幅
@@ -43,6 +47,8 @@ public :
 	const float FIELD_Z2_ = 525.0f; //床画像2枚目の初期Z座標
 	std::string road_img = "graphics/base/road.png"; //道画像パス
 	std::string back_img = "graphics/base/ground.png"; //背景画像パス
+
+	std::string stage_2_csv_ = "csv/stage_2.csv"; //csvパス
 
 	const int NOTES_SPEED_ = 4; //ノーツの流れる速度
 
@@ -53,13 +59,10 @@ public :
 
 	int score_ = 0; //スコア
 
-	int hp_max_ = 200; //プレイヤー最大HP
+	int hp_max_ = 1000; //プレイヤー最大HP
 	int hp_ = hp_max_; //プレイヤーHP
 
-	int mp_max_ = 200; //プレイヤー最大MP
+	int mp_max_ = 1000; //プレイヤー最大MP
 	int mp_ = 0; //プレイヤーMP
-
-	int progress_max_ = 3600; //進行度上限
-	int progress_ = 0; //進行度
 };
 

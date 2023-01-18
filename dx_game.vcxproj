@@ -37,6 +37,7 @@
     <ClCompile Include="program\game\gm_bgm.cpp" />
     <ClCompile Include="program\game\gm_camera.cpp" />
     <ClCompile Include="program\game\gm_main.cpp" />
+    <ClCompile Include="program\game\gm_make_sheet.cpp" />
     <ClCompile Include="program\game\gm_manager.cpp" />
     <ClCompile Include="program\game\gm_sheet_music.cpp" />
     <ClCompile Include="program\game\gm_ui.cpp" />
@@ -75,6 +76,7 @@
     <ClInclude Include="program\game\gm_bgm.h" />
     <ClInclude Include="program\game\gm_camera.h" />
     <ClInclude Include="program\game\gm_main.h" />
+    <ClInclude Include="program\game\gm_make_sheet.h" />
     <ClInclude Include="program\game\gm_manager.h" />
     <ClInclude Include="program\game\gm_sheet_music.h" />
     <ClInclude Include="program\game\gm_ui.h" />
