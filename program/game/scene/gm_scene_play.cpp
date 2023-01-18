@@ -11,6 +11,7 @@
 #include "../object/gm_object_actor.h"
 #include "../object/gm_object_player.h"
 #include "../object/gm_object_enemy.h"
+#include "../gm_boss.h"
 
 tnl::Quaternion	fix_rot;
 
@@ -21,6 +22,7 @@ ScenePlay::~ScenePlay() {
 	delete frame_;
 	if (sheet_ != nullptr) delete sheet_;
 	if (make_ != nullptr) delete make_;
+	if (boss_ != nullptr) delete boss_;
 	for (auto object : objects_) delete object;
 	for (auto actor : actors_) delete actor;
 	for (auto ui : subUis_) delete ui;
@@ -72,10 +74,19 @@ void ScenePlay::update(float delta_time)
 	bgm_->update(delta_time);
 
 	//譜面アップテート
-	if(sheet_ != nullptr) sheet_->update(delta_time);
+	if (sheet_ != nullptr) {
+		sheet_->update(delta_time);
+		if (!sheet_->alive_) {
+			delete sheet_;
+			sheet_ = nullptr;
+		}
+	}
 
 	//譜面作成アップデート
 	if (make_ != nullptr) make_->update(delta_time);
+
+	//ボス戦アップデート
+	if (boss_ != nullptr) boss_->update(delta_time);
 
 	//値のクランプ
 	hp_ = std::clamp(hp_, 0, hp_max_);

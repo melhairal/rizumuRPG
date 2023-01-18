@@ -196,6 +196,9 @@
     <ClCompile Include="program\game\gm_make_sheet.cpp">
       <Filter>program\game</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\gm_boss.cpp">
+      <Filter>program\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\library\picojson.h">
@@ -337,6 +340,9 @@
       <Filter>program\game</Filter>
     </ClInclude>
     <ClInclude Include="program\game\gm_make_sheet.h">
+      <Filter>program\game</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\gm_boss.h">
       <Filter>program\game</Filter>
     </ClInclude>
   </ItemGroup>

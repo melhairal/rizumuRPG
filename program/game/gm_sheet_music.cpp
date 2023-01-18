@@ -2,7 +2,7 @@
 #include "scene/gm_scene_play.h"
 #include "object/gm_object_enemy.h"
 #include "object/gm_object_ground.h"
-#include "gm_camera.h"
+#include "gm_boss.h"
 
 Sheet::Sheet(ScenePlay* scene, std::string csv) {
 	scene_ = scene;
@@ -21,7 +21,7 @@ void Sheet::update(float delta_time) {
 	}
 
 	//ノーツ情報取得
-	if (csv_y_ < csv_.size()) {
+	if (csv_y_ < csv_.size()) { //再生中
 		elapsed_++;
 		if (elapsed_ >= NODE_INTERVAL_) {
 			elapsed_ = 0;
@@ -35,22 +35,18 @@ void Sheet::update(float delta_time) {
 			csv_y_++;
 		}
 	}
-	else {
-		elapsed_++;
-		if (elapsed_ < 120) {
-			tnl::Vector3 rot = { tnl::ToRadian(-0.35f), 0, 0 };
-			scene_->camera_->free_look_angle_xy_ += rot;
-			scene_->player_->mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(-0.35f));
-			scene_->player_->mesh_->pos_.y += 0.05f;
-			line_->alive_ = false;
-
-			for (auto object : scene_->objects_) {
-				object->move_ = false;
-			}
+	else { //再生終了
+		line_->alive_ = false;
+		for (auto object : scene_->objects_) {
+			object->move_ = false;
 		}
-		else {
+		scene_->boss_ = new Boss(scene_);
+		alive_ = false;
+	}
 
-		}
+	// ========== デバッグ用 ==========
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_C)) {
+		csv_y_ = csv_.size();
 	}
 
 }

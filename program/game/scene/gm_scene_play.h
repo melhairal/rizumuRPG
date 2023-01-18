@@ -9,6 +9,7 @@ class SubUiJudge;
 class Bgm;
 class Sheet;
 class MakeSheet;
+class Boss;
 
 class ScenePlay : public SceneBase {
 public :
@@ -39,6 +40,7 @@ public :
 	Actor* player_ = nullptr; //プレイヤーポインタ
 	Sheet* sheet_ = nullptr; //譜面ポインタ
 	MakeSheet* make_ = nullptr; //譜面作成用クラスポインタ
+	Boss* boss_ = nullptr; //ボス戦クラス用ポインタ
 
 	const float FIELD_H_ = 450.0f; //床の縦幅
 	const float FIELD_W_ = 300.0f; //床の横幅

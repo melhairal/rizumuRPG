@@ -35,4 +35,6 @@ public:
 	const int START_INTERVAL_ = 99; //最初のラインが判定ラインに到達するまでのラグ
 
 	int csv_y_ = 2; //csvの何行目か
+
+	bool alive_ = true; //生存フラグ
 };
