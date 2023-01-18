@@ -49,20 +49,20 @@ Boss::Boss(ScenePlay* scene) {
 }
 
 void Boss::update(float delta_time) {
-
-	elapsed_++;
-	if (elapsed_ < 120) {
-		tnl::Vector3 rot = { tnl::ToRadian(-0.35f), 0, 0 };
-		scene_->camera_->free_look_angle_xy_ += rot;
-		scene_->player_->mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(-0.35f));
-		scene_->player_->mesh_->pos_.y += 0.05f;
-		enemy_->mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(-0.35f));
-		enemy_->mesh_->pos_.y += 0.05f;
-	}
-	else {
-
+	//初期演出
+	if (!init_) {
+		initialize();
 	}
 
+	//カメラアングル処理
+	if (is_changing_angle_ && is_battle_angle_) changeAngleCommand();
+	if (is_changing_angle_ && is_command_angle_) changeAngleBattle();
+
+
+	// ========== デバッグ等 ==========
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_V)) {
+		is_changing_angle_ = true;
+	}
 
 }
 
@@ -73,4 +73,58 @@ void Boss::render() {
 	field_l2_->render(scene_->camera_);
 	field_r2_->render(scene_->camera_);
 	road_->render(scene_->camera_);
+}
+
+void Boss::initialize() {
+	//アングルの変更が終わったら
+	if (!is_changing_angle_) {
+		//ボスを前進させる
+		if (elapsed_ < INIT_TIMER_) {
+			elapsed_++;
+			enemy_->mesh_->pos_.z -= 2;
+		}
+		else if(elapsed_ == INIT_TIMER_) {
+			//初期化終了
+			elapsed_ = 0;
+			init_ = true;
+		}
+	}
+}
+
+void Boss::changeAngleCommand() {
+	if (elapsed_ < ANGLE_TIMER_) {
+		is_changing_angle_ = true; //変更中フラグ
+		elapsed_++;
+		tnl::Vector3 rot = { tnl::ToRadian(-0.35f), 0, 0 };
+		scene_->camera_->free_look_angle_xy_ += rot;
+		scene_->player_->mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(-0.35f));
+		scene_->player_->mesh_->pos_.y += 0.05f;
+		enemy_->mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(-0.35f));
+		enemy_->mesh_->pos_.y += 0.05f;
+	}
+	else if (elapsed_ == ANGLE_TIMER_) {
+		is_changing_angle_ = false;
+		is_battle_angle_ = false;
+		is_command_angle_ = true;
+		elapsed_ = 0;
+	}
+}
+
+void Boss::changeAngleBattle() {
+	if (elapsed_ < ANGLE_TIMER_) {
+		is_changing_angle_ = true; //変更中フラグ
+		elapsed_++;
+		tnl::Vector3 rot = { tnl::ToRadian(0.35f), 0, 0 };
+		scene_->camera_->free_look_angle_xy_ += rot;
+		scene_->player_->mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(0.35f));
+		scene_->player_->mesh_->pos_.y -= 0.05f;
+		enemy_->mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(0.35f));
+		enemy_->mesh_->pos_.y -= 0.05f;
+	}
+	else if (elapsed_ == ANGLE_TIMER_) {
+		is_changing_angle_ = false;
+		is_command_angle_ = false;
+		is_battle_angle_ = true;
+		elapsed_ = 0;
+	}
 }

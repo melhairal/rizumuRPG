@@ -12,6 +12,9 @@ public:
 
 	// =========== 関数 ==========
 
+	void initialize(); //初期遷移
+	void changeAngleCommand(); //コマンド選択のカメラアングルに遷移
+	void changeAngleBattle(); //バトルのカメラアングルに遷移
 
 	// ========== 基本ステータス ==========
 
@@ -29,6 +32,15 @@ public:
 
 	int back_ = 0; //背景
 
+	bool init_ = false; //初期化フラグ
 	int elapsed_ = 0; //時間計測用
 
+	const int ANGLE_TIMER_ = 120; //カメラアングルが変わるのにかかる時間
+	const int INIT_TIMER_ = 75; //初期化にかかる時間
+	bool is_changing_angle_ = true; //カメラアングル変更フラグ
+	bool is_command_angle_ = false; //コマンド画面アングル
+	bool is_battle_angle_ = true; //バトル画面アングル
+
+	int hp_max_ = 1000; //ボスHP
+	int hp_ = hp_max_;
 };

@@ -1,6 +1,7 @@
 #include "gm_ui.h"
 #include "scene/gm_scene_play.h"
 #include "gm_sheet_music.h"
+#include "gm_boss.h"
 
 Ui::Ui(ScenePlay* scene) {
 	scene_ = scene;
@@ -27,6 +28,9 @@ void Ui::render() {
 	//進行メーター表示
 	if (scene_->sheet_ != nullptr) {
 		DrawGaugeProgress(HOME_HP_X_, HOME_HP_Y_, GAUGE_IMG_W_, GAUGE_IMG_H_, 2.0f, scene_->sheet_->csv_y_, scene_->sheet_->csv_.size(), eYellow);
+	}
+	if (scene_->boss_ != nullptr) {
+		DrawGauge(HOME_HP_X_, HOME_HP_Y_, GAUGE_IMG_W_, GAUGE_IMG_H_, 2.0f, scene_->boss_->hp_, scene_->boss_->hp_max_, eYellow);
 	}
 
 	//プレイヤーゲージ表示

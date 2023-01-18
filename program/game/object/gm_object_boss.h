@@ -14,8 +14,7 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const float POS_Z_ = 250.0f; //Z座標
-	const int FRAME_ = 10; //アニメーション更新フレーム
+	const float POS_Z_ = 300.0f; //Z座標
 
 	void getImage() override {
 		// ====================================
