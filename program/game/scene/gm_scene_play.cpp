@@ -109,10 +109,16 @@ void ScenePlay::render()
 	camera_->update();
 	DrawGridGround(camera_, 50, 20);
 
+	//ボス戦描画
+	if (boss_ != nullptr) boss_->render();
+
 	//全オブジェクトの描画
 	for (auto object : objects_) {
 		if (object->mesh_ != nullptr) object->mesh_->render(camera_);
 	}
+
+	//譜面作成用描画
+	if (make_ != nullptr) make_->render();
 
 	//マスの描画
 	frame_->render(camera_);
@@ -128,8 +134,6 @@ void ScenePlay::render()
 		ui->render();
 	}
 
-	//譜面作成用描画
-	if (make_ != nullptr) make_->render();
 
 	// ==================== デバッグ等 ====================
 

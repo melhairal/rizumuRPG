@@ -38,7 +38,7 @@ void Sheet::update(float delta_time) {
 	else { //Ä¶I—¹
 		line_->alive_ = false;
 		for (auto object : scene_->objects_) {
-			object->move_ = false;
+			object->alive_ = false;
 		}
 		scene_->boss_ = new Boss(scene_);
 		alive_ = false;
