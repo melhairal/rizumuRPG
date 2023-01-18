@@ -7,6 +7,7 @@ class Actor;
 class Ui;
 class SubUiJudge;
 class Bgm;
+class Sheet;
 
 class ScenePlay : public SceneBase {
 public :
@@ -33,6 +34,7 @@ public :
 	std::list<Actor*> actors_; //アクターリスト
 	std::list<SubUiJudge*> subUis_; //サブUIリスト
 	Actor* player_ = nullptr; //プレイヤーポインタ
+	Sheet* sheet_ = nullptr; //譜面ポインタ
 
 	const float FIELD_H_ = 450.0f; //床の縦幅
 	const float FIELD_W_ = 300.0f; //床の横幅
@@ -41,6 +43,8 @@ public :
 	const float FIELD_Z2_ = 525.0f; //床画像2枚目の初期Z座標
 	std::string road_img = "graphics/base/road.png"; //道画像パス
 	std::string back_img = "graphics/base/ground.png"; //背景画像パス
+
+	const int NOTES_SPEED_ = 4; //ノーツの流れる速度
 
 	// ========== ゲーム内ステータス ==========
 

@@ -39,19 +39,18 @@ public:
 	bool initElapsed_ = false; //シフト関数でelapsedを初期化するためのフラグ
 	int shift_r_ = 0; //シフト用乱数
 	float shift_dis_ = 0; //シフト距離
-	const int SHIFT_SPEED_ = 30; //シフトにかかる時間
+	const int SHIFT_SPEED_ = 36; //シフトにかかる時間
 
 	const float POS_Z_ = 300.0f; //初期Z座標
 	const float DEAD_Z_ = -160.0f; //消滅Z座標
-	const float SPEED_ = 4.0f; //流れるスピード(仮)
 
-	const float JUDGE_Z_ = -95.0f; //判定Z座標
+	const float JUDGE_Z_ = -96.0f; //判定Z座標
 	const float RANGE_PERFECT_ = 10.0f; //パーフェクト判定の範囲
 	const float RANGE_GOOD_ = 30.0f; //グッド判定の範囲
 	bool perfect_ = false; //パーフェクト判定
 	bool good_ = false; //グッド判定
 	const float MISS_Z_ = JUDGE_Z_ - RANGE_GOOD_; //失敗判定Z座標
-	const float RANGE_MISS_ = 30.0f;
+	const float RANGE_MISS_ = 15.0f;
 	bool miss_ = false; //失敗判定
 
 	int elapsed_ = 0; //時間計測用
@@ -93,8 +92,8 @@ public:
 	// ========== 基本ステータス ==========
 	
 	const float SHOT_Z_ = 200.0f; //弾を発射するZ座標
-	const int TIME_SHOT_ = 40; //弾を飛ばすまでの時間
-	const int TIME_STOP_ = 80; //停止時間
+	const int TIME_SHOT_ = 36; //弾を飛ばすまでの時間
+	const int TIME_STOP_ = 72; //停止時間
 
 	const int ATK_ = 10;
 	const int EXP_ = 200;
@@ -164,11 +163,11 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const float SHOT_Z_ = 120.0f; //弾を発射するZ座標
-	const int TIME_SHOT_ = 30; //弾を飛ばすまでの時間
-	const int TIME_STOP_ = 60; //停止時間
+	const float SHOT_Z_ = 170.0f; //弾を発射するZ座標
+	const int TIME_SHOT_ = 24; //弾を飛ばすまでの時間
+	const int TIME_STOP_ = 48; //停止時間
 
-	const float SHIFT_Z_ = 170.0f; //レーンを移動するZ座標
+	const float SHIFT_Z_ = 120.0f; //レーンを移動するZ座標
 
 	const int ATK_ = 30;
 	const int EXP_ = 300;
@@ -253,8 +252,8 @@ public:
 	// ========== 基本ステータス ==========
 
 	const float SHOT_Z_ = 170.0f; //弾を発射するZ座標
-	const int TIME_SHOT_ = 20; //弾を飛ばすまでの時間
-	const int TIME_STOP_ = 80; //停止時間
+	const int TIME_SHOT_ = 24; //弾を飛ばすまでの時間
+	const int TIME_STOP_ = 60; //停止時間
 
 	const int ATK_ = 20;
 	const int EXP_ = 250;
@@ -309,7 +308,7 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const float SHIFT_Z_ = 60.0f; //レーンを移動するZ座標
+	const float SHIFT_Z_ = 100.0f; //レーンを移動するZ座標
 
 	const int ATK_ = 20;
 	const int EXP_ = 200;
@@ -333,10 +332,9 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const float SHOT_Z1_ = 70.0f; //弾を発射するZ座標1
-	const float SHOT_Z2_ = 170.0f; //弾を発射するZ座標2
-	const int TIME_SHOT_ = 30; //弾を飛ばすまでの時間
-	const int TIME_STOP_ = 60; //停止時間
+	const float SHOT_Z_ = 160.0f; //弾を発射するZ座標
+	const int TIME_SHOT_ = 12; //弾を飛ばすまでの時間
+	const int TIME_STOP_ = 24; //停止時間
 
 	const float SHIFT_Z_ = 120.0f; //レーンを移動するZ座標
 
@@ -418,8 +416,8 @@ public:
 	// ========== 基本ステータス ==========
 
 	const float SHOT_Z_ = 120.0f; //弾を発射するZ座標
-	const int TIME_SHOT_ = 25; //弾を飛ばすまでの時間
-	const int TIME_STOP_ = 50; //停止時間
+	const int TIME_SHOT_ = 24; //弾を飛ばすまでの時間
+	const int TIME_STOP_ = 48; //停止時間
 
 	const int ATK_ = 10;
 	const int EXP_ = 400;
@@ -465,7 +463,7 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const float SHIFT_Z_ = 100.0f; //レーンを移動するZ座標
+	const float SHIFT_Z_ = 120.0f; //レーンを移動するZ座標
 
 	const int ATK_ = 40;
 	const int EXP_ = 400;
@@ -512,9 +510,9 @@ public:
 	// ========== 基本ステータス ==========
 
 	const float SHOT_Z_ = 120.0f; //弾を発射するZ座標
-	const int TIME_SHOT1_ = 25; //弾を飛ばすまでの時間
-	const int TIME_SHOT2_ = 50; //弾を飛ばすまでの時間
-	const int TIME_STOP_ = 75; //停止時間
+	const int TIME_SHOT1_ = 24; //弾を飛ばすまでの時間
+	const int TIME_SHOT2_ = 48; //弾を飛ばすまでの時間
+	const int TIME_STOP_ = 72; //停止時間
 
 	const int ATK_ = 40;
 	const int EXP_ = 600;
@@ -560,7 +558,7 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const float SHIFT_Z1_ = 140.0f; //レーンを移動するZ座標
+	const float SHIFT_Z1_ = 260.0f; //レーンを移動するZ座標
 	const float SHIFT_Z2_ = 100.0f; //レーンを移動するZ座標
 	bool isShift2_ = false; //2回目のシフトをするためのフラグ
 
@@ -586,13 +584,13 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const float SHOT_Z1_ = 70.0f; //弾を発射するZ座標1
-	const float SHOT_Z2_ = 170.0f; //弾を発射するZ座標2
-	const int TIME_SHOT1_ = 20; //弾を飛ばすまでの時間
-	const int TIME_SHOT2_ = 40; //弾を飛ばすまでの時間
+	const float SHOT_Z1_ = 0.0f; //弾を発射するZ座標1
+	const float SHOT_Z2_ = 200.0f; //弾を発射するZ座標2
+	const int TIME_SHOT1_ = 12; //弾を飛ばすまでの時間
+	const int TIME_SHOT2_ = 36; //弾を飛ばすまでの時間
 	const int TIME_STOP_ = 60; //停止時間
 
-	const float SHIFT_Z_ = 120.0f; //レーンを移動するZ座標
+	const float SHIFT_Z_ = 160.0f; //レーンを移動するZ座標
 
 	const int ATK_ = 80;
 	const int EXP_ = 1000;

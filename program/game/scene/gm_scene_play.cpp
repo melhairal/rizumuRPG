@@ -5,6 +5,7 @@
 #include "gm_scene_result.h"
 #include "../gm_ui.h"
 #include "../gm_bgm.h"
+#include "../gm_sheet_music.h"
 #include "../object/gm_object_ground.h"
 #include "../object/gm_object_actor.h"
 #include "../object/gm_object_player.h"
@@ -67,6 +68,9 @@ void ScenePlay::update(float delta_time)
 	//Bgmアップデート
 	bgm_->update(delta_time);
 
+	//譜面アップテート
+	if(sheet_ != nullptr) sheet_->update(delta_time);
+
 	//値のクランプ
 	hp_ = std::clamp(hp_, 0, hp_max_);
 	mp_ = std::clamp(mp_, 0, mp_max_);
@@ -119,6 +123,9 @@ void ScenePlay::update(float delta_time)
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_O)) {
 		actors_.emplace_back(new EnemyKingRizard(this, EnemyBase::RR));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_P)) {
+		sheet_ = new Sheet(this);
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Q)) {
 		combo_++;

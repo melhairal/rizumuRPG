@@ -35,15 +35,17 @@ void EnemyBase::shot(Actor* bullet) {
 }
 
 void EnemyBase::shift() {
+	flow(scene_->NOTES_SPEED_);
 	if (!initElapsed_) {
 		elapsed_ = 0;
 		initElapsed_ = true;
 	}
 	if (elapsed_ == 0) {
 		do {
+
 			shift_r_ = rand() % 4;
+			shift_dis_ = POS_X_[shift_r_] - POS_X_[lane_];
 		} while (shift_r_ == lane_);
-		shift_dis_ = POS_X_[shift_r_] - POS_X_[lane_];
 		elapsed_++;
 	}
 	else if (elapsed_ <= SHIFT_SPEED_) {
@@ -168,7 +170,7 @@ EnemyPig::EnemyPig(ScenePlay* scene, int lane) {
 void EnemyPig::update(float delta_time) {
 	checkJudge();
 	notesEnemy();
-	flow(SPEED_);
+	flow(scene_->NOTES_SPEED_);
 }
 
 EnemyRizard::EnemyRizard(ScenePlay* scene, int lane) {
@@ -183,10 +185,10 @@ void EnemyRizard::update(float delta_time) {
 	if (mesh_->pos_.z < SHOT_Z_) {
 		if (elapsed_ < TIME_STOP_) elapsed_++;
 		if (elapsed_ == TIME_SHOT_) shot(new EnemyRizardBullet(scene_, lane_));
-		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+		if (elapsed_ == TIME_STOP_) flow(scene_->NOTES_SPEED_);
 	}
 	else {
-		flow(SPEED_);
+		flow(scene_->NOTES_SPEED_);
 	}
 }
 
@@ -199,7 +201,7 @@ EnemyRizardBullet::EnemyRizardBullet(ScenePlay* scene, int lane) {
 void EnemyRizardBullet::update(float delta_time) {
 	checkJudge();
 	notesBullet();
-	flow(SPEED_);
+	flow(scene_->NOTES_SPEED_);
 }
 
 EnemyMash::EnemyMash(ScenePlay* scene, int lane) {
@@ -213,10 +215,10 @@ void EnemyMash::update(float delta_time) {
 
 	if (mesh_->pos_.z < SHIFT_Z_) {
 		if (!isShift_) shift();
-		else flow(SPEED_);
+		else flow(scene_->NOTES_SPEED_);
 	}
 	else {
-		flow(SPEED_);
+		flow(scene_->NOTES_SPEED_);
 	}
 }
 
@@ -229,17 +231,17 @@ void EnemyGrifin::update(float delta_time) {
 	checkJudge();
 	notesEnemy();
 
-	if (mesh_->pos_.z < SHOT_Z_) {
+	if (mesh_->pos_.z < SHIFT_Z_) {
+		if (!isShift_) shift();
+		else flow(scene_->NOTES_SPEED_);
+	}
+	else if (mesh_->pos_.z < SHOT_Z_) {
 		if (elapsed_ < TIME_STOP_) elapsed_++;
 		if (elapsed_ == TIME_SHOT_) shot(new EnemyGrifinBullet(scene_, lane_));
-		if (elapsed_ == TIME_STOP_) flow(SPEED_);
-	}
-	else if (mesh_->pos_.z < SHIFT_Z_) {
-		if (!isShift_) shift();
-		else flow(SPEED_);
+		if (elapsed_ == TIME_STOP_) flow(scene_->NOTES_SPEED_);
 	}
 	else {
-		flow(SPEED_);
+		flow(scene_->NOTES_SPEED_);
 	}
 }
 
@@ -253,7 +255,7 @@ void EnemyGrifinBullet::update(float delta_time) {
 	animation(FRAME_);
 	checkJudge();
 	notesBullet();
-	flow(SPEED_);
+	flow(scene_->NOTES_SPEED_);
 }
 
 EnemyBad::EnemyBad(ScenePlay* scene, int lane) {
@@ -264,7 +266,7 @@ EnemyBad::EnemyBad(ScenePlay* scene, int lane) {
 void EnemyBad::update(float delta_time) {
 	checkJudge();
 	notesEnemy();
-	flow(SPEED_);
+	flow(scene_->NOTES_SPEED_);
 }
 
 EnemyMagician::EnemyMagician(ScenePlay* scene, int lane) {
@@ -279,10 +281,10 @@ void EnemyMagician::update(float delta_time) {
 	if (mesh_->pos_.z < SHOT_Z_) {
 		if (elapsed_ < TIME_STOP_) elapsed_++;
 		if (elapsed_ == TIME_SHOT_) shot(new EnemyMagicianBullet(scene_, lane_));
-		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+		if (elapsed_ == TIME_STOP_) flow(scene_->NOTES_SPEED_);
 	}
 	else {
-		flow(SPEED_);
+		flow(scene_->NOTES_SPEED_);
 	}
 }
 
@@ -296,7 +298,7 @@ void EnemyMagicianBullet::update(float delta_time) {
 	animation(FRAME_);
 	checkJudge();
 	notesBullet();
-	flow(SPEED_);
+	flow(scene_->NOTES_SPEED_);
 }
 
 EnemySnake::EnemySnake(ScenePlay* scene, int lane) {
@@ -310,10 +312,10 @@ void EnemySnake::update(float delta_time) {
 
 	if (mesh_->pos_.z < SHIFT_Z_) {
 		if (!isShift_) shift();
-		else flow(SPEED_);
+		else flow(scene_->NOTES_SPEED_);
 	}
 	else {
-		flow(SPEED_);
+		flow(scene_->NOTES_SPEED_);
 	}
 }
 
@@ -326,22 +328,17 @@ void EnemySinigami::update(float delta_time) {
 	checkJudge();
 	notesEnemy();
 
-	if (mesh_->pos_.z < SHOT_Z1_) {
-		if (elapsed_ < TIME_STOP_) elapsed_++;
-		if (elapsed_ == TIME_SHOT_) shot(new EnemySinigamiBullet(scene_, lane_));
-		if (elapsed_ == TIME_STOP_) flow(SPEED_);
-	}
-	else if (mesh_->pos_.z < SHIFT_Z_) {
+	if (mesh_->pos_.z < SHIFT_Z_) {
 		if (!isShift_) shift();
-		else flow(SPEED_);
+		else flow(scene_->NOTES_SPEED_);
 	}
-	else if (mesh_->pos_.z < SHOT_Z2_) {
+	else if (mesh_->pos_.z < SHOT_Z_) {
 		if (elapsed_ < TIME_STOP_) elapsed_++;
 		if (elapsed_ == TIME_SHOT_) shot(new EnemySinigamiBullet(scene_, lane_));
-		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+		if (elapsed_ == TIME_STOP_) flow(scene_->NOTES_SPEED_);
 	}
 	else {
-		flow(SPEED_);
+		flow(scene_->NOTES_SPEED_);
 	}
 }
 
@@ -355,7 +352,7 @@ void EnemySinigamiBullet::update(float delta_time) {
 	animation(FRAME_);
 	checkJudge();
 	notesBullet();
-	flow(SPEED_);
+	flow(scene_->NOTES_SPEED_);
 }
 
 EnemyJellyA::EnemyJellyA(ScenePlay* scene, int lane) {
@@ -366,7 +363,7 @@ EnemyJellyA::EnemyJellyA(ScenePlay* scene, int lane) {
 void EnemyJellyA::update(float delta_time) {
 	checkJudge();
 	notesEnemy();
-	flow(SPEED_);
+	flow(scene_->NOTES_SPEED_);
 }
 
 EnemyJellyB::EnemyJellyB(ScenePlay* scene, int lane) {
@@ -381,10 +378,10 @@ void EnemyJellyB::update(float delta_time) {
 	if (mesh_->pos_.z < SHOT_Z_) {
 		if (elapsed_ < TIME_STOP_) elapsed_++;
 		if (elapsed_ == TIME_SHOT_) shot(new EnemyJellyBullet(scene_, lane_));
-		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+		if (elapsed_ == TIME_STOP_) flow(scene_->NOTES_SPEED_);
 	}
 	else {
-		flow(SPEED_);
+		flow(scene_->NOTES_SPEED_);
 	}
 }
 
@@ -397,7 +394,7 @@ EnemyJellyBullet::EnemyJellyBullet(ScenePlay* scene, int lane) {
 void EnemyJellyBullet::update(float delta_time) {
 	checkJudge();
 	notesBullet();
-	flow(SPEED_);
+	flow(scene_->NOTES_SPEED_);
 }
 
 EnemyJellyC::EnemyJellyC(ScenePlay* scene, int lane) {
@@ -411,10 +408,10 @@ void EnemyJellyC::update(float delta_time) {
 
 	if (mesh_->pos_.z < SHIFT_Z_) {
 		if (!isShift_) shift();
-		else flow(SPEED_);
+		else flow(scene_->NOTES_SPEED_);
 	}
 	else {
-		flow(SPEED_);
+		flow(scene_->NOTES_SPEED_);
 	}
 }
 
@@ -426,7 +423,7 @@ EnemyKingPig::EnemyKingPig(ScenePlay* scene, int lane) {
 void EnemyKingPig::update(float delta_time) {
 	checkJudge();
 	notesEnemy();
-	flow(SPEED_);
+	flow(scene_->NOTES_SPEED_);
 }
 
 EnemyKingRizard::EnemyKingRizard(ScenePlay* scene, int lane) {
@@ -442,10 +439,10 @@ void EnemyKingRizard::update(float delta_time) {
 		if (elapsed_ < TIME_STOP_) elapsed_++;
 		if (elapsed_ == TIME_SHOT1_) shot(new EnemyKingRizardBullet(scene_, lane_));
 		if (elapsed_ == TIME_SHOT2_) shot(new EnemyKingRizardBullet(scene_, lane_));
-		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+		if (elapsed_ == TIME_STOP_) flow(scene_->NOTES_SPEED_);
 	}
 	else {
-		flow(SPEED_);
+		flow(scene_->NOTES_SPEED_);
 	}
 }
 
@@ -458,7 +455,7 @@ EnemyKingRizardBullet::EnemyKingRizardBullet(ScenePlay* scene, int lane) {
 void EnemyKingRizardBullet::update(float delta_time) {
 	checkJudge();
 	notesBullet();
-	flow(SPEED_);
+	flow(scene_->NOTES_SPEED_);
 }
 
 EnemyKingMash::EnemyKingMash(ScenePlay* scene, int lane) {
@@ -476,14 +473,14 @@ void EnemyKingMash::update(float delta_time) {
 			isShift2_ = true;
 		}
 		if (!isShift_) shift();
-		else flow(SPEED_);
+		else flow(scene_->NOTES_SPEED_);
 	}
 	else if (mesh_->pos_.z < SHIFT_Z1_) {
 		if (!isShift_) shift();
-		else flow(SPEED_);
+		else flow(scene_->NOTES_SPEED_);
 	}
 	else {
-		flow(SPEED_);
+		flow(scene_->NOTES_SPEED_);
 	}
 }
 
@@ -500,20 +497,20 @@ void EnemyKingGrifin::update(float delta_time) {
 		if (elapsed_ < TIME_STOP_) elapsed_++;
 		if (elapsed_ == TIME_SHOT1_) shot(new EnemyKingGrifinBullet(scene_, lane_));
 		if (elapsed_ == TIME_SHOT2_) shot(new EnemyKingGrifinBullet(scene_, lane_));
-		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+		if (elapsed_ == TIME_STOP_) flow(scene_->NOTES_SPEED_);
 	}
 	else if (mesh_->pos_.z < SHIFT_Z_) {
 		if (!isShift_) shift();
-		else flow(SPEED_);
+		else flow(scene_->NOTES_SPEED_);
 	}
 	else if (mesh_->pos_.z < SHOT_Z2_) {
 		if (elapsed_ < TIME_STOP_) elapsed_++;
 		if (elapsed_ == TIME_SHOT1_) shot(new EnemyKingGrifinBullet(scene_, lane_));
 		if (elapsed_ == TIME_SHOT2_) shot(new EnemyKingGrifinBullet(scene_, lane_));
-		if (elapsed_ == TIME_STOP_) flow(SPEED_);
+		if (elapsed_ == TIME_STOP_) flow(scene_->NOTES_SPEED_);
 	}
 	else {
-		flow(SPEED_);
+		flow(scene_->NOTES_SPEED_);
 	}
 }
 
@@ -527,5 +524,5 @@ void EnemyKingGrifinBullet::update(float delta_time) {
 	animation(FRAME_);
 	checkJudge();
 	notesBullet();
-	flow(SPEED_);
+	flow(scene_->NOTES_SPEED_);
 }
