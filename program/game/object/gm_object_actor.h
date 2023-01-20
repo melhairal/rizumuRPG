@@ -34,4 +34,6 @@ public:
 	int frame_ = 0; //アニメーションの現在のフレーム
 	std::list<std::string> images_; //アニメーションリスト
 	std::list<std::string>::iterator it; //アニメーションリスト用イテレータ
+
+	int judge_ = -1; //アタックノーツ用判定
 };

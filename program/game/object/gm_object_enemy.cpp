@@ -42,7 +42,6 @@ void EnemyBase::shift() {
 	}
 	if (elapsed_ == 0) {
 		do {
-
 			shift_r_ = rand() % 4;
 			shift_dis_ = POS_X_[shift_r_] - POS_X_[lane_];
 		} while (shift_r_ == lane_);

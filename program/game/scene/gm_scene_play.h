@@ -10,6 +10,7 @@ class Bgm;
 class Sheet;
 class MakeSheet;
 class Boss;
+class SkillBase;
 
 class ScenePlay : public SceneBase {
 public :
@@ -25,8 +26,9 @@ public :
 	void updateObject(float delta_time); //オブジェクト制御
 	void updateActor(float delta_time); //アクター制御
 	void updateSubUi(float delta_time); //サブUi制御
+	void deleteList(); //デリート処理
 
-	void Debug(); //デバッグ
+	void Debug(float delta_time); //デバッグ
 
 	// ========== 基本ステータス ==========
 
@@ -41,6 +43,7 @@ public :
 	Sheet* sheet_ = nullptr; //譜面ポインタ
 	MakeSheet* make_ = nullptr; //譜面作成用クラスポインタ
 	Boss* boss_ = nullptr; //ボス戦クラス用ポインタ
+	std::list<SkillBase*> skills_; //スキルリスト
 
 	const float FIELD_H_ = 450.0f; //床の縦幅
 	const float FIELD_W_ = 300.0f; //床の横幅

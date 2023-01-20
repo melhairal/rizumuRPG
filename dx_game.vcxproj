@@ -46,6 +46,7 @@
     <ClCompile Include="program\game\model\gm_anim_sprite3d.cpp" />
     <ClCompile Include="program\game\model\gm_model.cpp" />
     <ClCompile Include="program\game\model\gm_parts.cpp" />
+    <ClCompile Include="program\game\object\gm_object_attack.cpp" />
     <ClCompile Include="program\game\object\gm_object_base.cpp" />
     <ClCompile Include="program\game\object\gm_object_boss.cpp" />
     <ClCompile Include="program\game\object\gm_object_effect.cpp" />
@@ -87,6 +88,7 @@
     <ClInclude Include="program\game\model\gm_anim_sprite3d.h" />
     <ClInclude Include="program\game\model\gm_model.h" />
     <ClInclude Include="program\game\model\gm_parts.h" />
+    <ClInclude Include="program\game\object\gm_object_attack.h" />
     <ClInclude Include="program\game\object\gm_object_base.h" />
     <ClInclude Include="program\game\object\gm_object_boss.h" />
     <ClInclude Include="program\game\object\gm_object_effect.h" />

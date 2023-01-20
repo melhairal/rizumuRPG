@@ -12,6 +12,8 @@
 #include "../object/gm_object_player.h"
 #include "../object/gm_object_enemy.h"
 #include "../gm_boss.h"
+#include "../object/gm_object_attack.h"
+
 
 tnl::Quaternion	fix_rot;
 
@@ -60,6 +62,9 @@ void ScenePlay::update(float delta_time)
 {
 	GameManager* mgr = GameManager::GetInstance();
 
+	//aliveがfalseになったオブジェクトを消す
+	deleteList();
+
 	//オブジェクト制御
 	updateObject(delta_time);
 
@@ -96,12 +101,11 @@ void ScenePlay::update(float delta_time)
 
 	// ==================== デバッグ等 ====================
 	
-	Debug();
+	Debug(delta_time);
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		mgr->chengeScene(new SceneResult());
 	}
-	
 }
 
 void ScenePlay::render()
@@ -146,34 +150,12 @@ void ScenePlay::updateObject(float delta_time) {
 	for (auto object : objects_) {
 		if (object->move_)	object->update(delta_time);
 	}
-
-	//オブジェクトの生存フラグがfalseになったらデリート
-	auto it_object = objects_.begin();
-	while (it_object != objects_.end()) {
-		if (!(*it_object)->alive_) {
-			delete (*it_object);
-			it_object = objects_.erase(it_object);
-			continue;
-		}
-		it_object++;
-	}
 }
 
 void ScenePlay::updateActor(float delta_time) {
 	//全てのアクターのアップデート
 	for (auto actor : actors_) {
 		if (actor->move_)	actor->update(delta_time);
-	}
-
-	//アクターの生存フラグがfalseになったらデリート
-	auto it_actor = actors_.begin();
-	while (it_actor != actors_.end()) {
-		if (!(*it_actor)->alive_) {
-			delete (*it_actor);
-			it_actor = actors_.erase(it_actor);
-			continue;
-		}
-		it_actor++;
 	}
 
 	// カメラに近い順にソート(近いオブジェクトから描画するため)
@@ -191,8 +173,32 @@ void ScenePlay::updateSubUi(float delta_time) {
 	for (auto ui : subUis_) {
 		if (ui->move_)	ui->update(delta_time);
 	}
+}
 
+void ScenePlay::deleteList() {
 	//オブジェクトの生存フラグがfalseになったらデリート
+	auto it_object = objects_.begin();
+	while (it_object != objects_.end()) {
+		if (!(*it_object)->alive_) {
+			delete (*it_object);
+			it_object = objects_.erase(it_object);
+			continue;
+		}
+		it_object++;
+	}
+
+	//アクターの生存フラグがfalseになったらデリート
+	auto it_actor = actors_.begin();
+	while (it_actor != actors_.end()) {
+		if (!(*it_actor)->alive_) {
+			delete (*it_actor);
+			it_actor = actors_.erase(it_actor);
+			continue;
+		}
+		it_actor++;
+	}
+
+	//サブUIの生存フラグがfalseになったらデリート
 	auto it_ui = subUis_.begin();
 	while (it_ui != subUis_.end()) {
 		if (!(*it_ui)->alive_) {
@@ -204,7 +210,7 @@ void ScenePlay::updateSubUi(float delta_time) {
 	}
 }
 
-void ScenePlay::Debug() {
+void ScenePlay::Debug(float delta_time) {
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
 		actors_.emplace_back(new EnemyPig(this, EnemyBase::LL));
 	}
@@ -261,6 +267,17 @@ void ScenePlay::Debug() {
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_W)) {
 		combo_ = 0;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_N)) {
+		skills_.emplace_back(new SkillNormalA(this));
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_M)) {
+		skills_.emplace_back(new SkillComboA(this));
+	}
+
+	//デバッグ用（スキルアップデート）
+	for (auto skill : skills_) {
+		skill->update(delta_time);
 	}
 
 	//カメラ回転
