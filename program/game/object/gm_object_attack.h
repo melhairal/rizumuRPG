@@ -54,7 +54,7 @@ public:
 	void randomPop(); //ランダムなレーンに生成
 	void checkJudge(); //判定を確認
 
-	void notesPerfect(){} //パーフェクト判定
+	virtual void notesPerfect(){} //パーフェクト判定
 	virtual void notesGood(){} //グッド判定
 
 	// ========== 基本ステータス ==========

@@ -142,7 +142,6 @@ void ScenePlay::render()
 	// ==================== デバッグ等 ====================
 
 	DrawStringEx(50, 50, -1, "scene play");
-
 }
 
 void ScenePlay::updateObject(float delta_time) {

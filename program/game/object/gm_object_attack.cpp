@@ -78,19 +78,22 @@ void SkillBase::randomPop() {
 
 void SkillBase::checkJudge() {
 	for (int i = 0; i < num_; ++i) {
-		if (attacks_[num_] == nullptr) return;
-		switch (attacks_[num_]->judge_) {
+		if (attacks_[i] == nullptr) continue;
+		switch (attacks_[i]->judge_) {
 		case AttackNotes::perfect:
-			judges_[num_] = AttackNotes::perfect;
+			judges_[i] = AttackNotes::perfect;
 			notesPerfect();
+			attacks_[i] = nullptr;
 			break;
 		case AttackNotes::good:
-			judges_[num_] = AttackNotes::good;
+			judges_[i] = AttackNotes::good;
 			notesGood();
+			attacks_[i] = nullptr;
 			break;
 		case AttackNotes::miss:
-			judges_[num_] = AttackNotes::miss;
+			judges_[i] = AttackNotes::miss;
 			scene_->combo_ = 0;
+			attacks_[i] = nullptr;
 			break;
 		}
 	}
