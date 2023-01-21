@@ -69,5 +69,7 @@ public :
 
 	int mp_max_ = 1000; //プレイヤー最大MP
 	int mp_ = 0; //プレイヤーMP
+
+	int atk_ = 10; //プレイヤー攻撃力
 };
 

@@ -93,6 +93,27 @@ public:
 
 };
 
+class SkillNormalB : public SkillBase {
+public:
+public:
+	SkillNormalB(ScenePlay* scene);
+	~SkillNormalB() {}
+	void update(float delta_time);
+
+	// =========== 関数 ==========
+
+	void notesPerfect(); //パーフェクト判定
+	void notesGood(); //グッド判定
+
+	// ========== 基本ステータス ==========
+
+	const std::string NAME_ = "三連斬り"; //技の名前
+	const int MP_ = 10; //消費MP
+	const int MAX_NUM_ = 3; //ノード数
+	const int INTERVAL_ = 24; //ノード生成間隔
+
+};
+
 class SkillComboA : public SkillBase {
 public:
 public:
@@ -111,5 +132,47 @@ public:
 	const int MP_ = 20; //消費MP
 	const int MAX_NUM_ = 3; //ノード数
 	const int INTERVAL_ = 12; //ノード生成間隔
+
+};
+
+class SkillComboB : public SkillBase {
+public:
+public:
+	SkillComboB(ScenePlay* scene);
+	~SkillComboB() {}
+	void update(float delta_time);
+
+	// =========== 関数 ==========
+
+	void notesPerfect(); //パーフェクト判定
+	void notesGood(); //グッド判定
+
+	// ========== 基本ステータス ==========
+
+	const std::string NAME_ = "神速斬り"; //技の名前
+	const int MP_ = 30; //消費MP
+	const int MAX_NUM_ = 5; //ノード数
+	const int INTERVAL_ = 12; //ノード生成間隔
+
+};
+
+class SkillComboC : public SkillBase {
+public:
+public:
+	SkillComboC(ScenePlay* scene);
+	~SkillComboC() {}
+	void update(float delta_time);
+
+	// =========== 関数 ==========
+
+	void notesPerfect(); //パーフェクト判定
+	void notesGood(); //グッド判定
+
+	// ========== 基本ステータス ==========
+
+	const std::string NAME_ = "神速斬り"; //技の名前
+	const int MP_ = 50; //消費MP
+	const int MAX_NUM_ = 4; //ノード数
+	const int INTERVAL_ = 24; //ノード生成間隔
 
 };

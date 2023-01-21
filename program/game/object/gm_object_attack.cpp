@@ -119,12 +119,40 @@ void SkillNormalA::update(float delta_time) {
 
 void SkillNormalA::notesPerfect() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= 30;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f);
 }
 
 void SkillNormalA::notesGood() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= 10;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);
+}
+
+SkillNormalB::SkillNormalB(ScenePlay* scene) {
+	scene_ = scene;
+	name_ = NAME_;
+	mp_ = MP_;
+}
+
+void SkillNormalB::update(float delta_time) {
+	checkJudge();
+	elapsed_++;
+	if (elapsed_ >= INTERVAL_ && num_ < MAX_NUM_) {
+		elapsed_ = 0;
+		randomPop();
+	}
+	if (elapsed_ >= SKILL_INTERVAL_ && num_ == MAX_NUM_) {
+		finish_ = true;
+	}
+}
+
+void SkillNormalB::notesPerfect() {
+	scene_->combo_++;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f);
+}
+
+void SkillNormalB::notesGood() {
+	scene_->combo_++;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);
 }
 
 SkillComboA::SkillComboA(ScenePlay* scene) {
@@ -147,10 +175,70 @@ void SkillComboA::update(float delta_time) {
 
 void SkillComboA::notesPerfect() {
 	scene_->combo_+= 3;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= 30;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f);;
 }
 
 void SkillComboA::notesGood() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= 10;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);;
+}
+
+SkillComboB::SkillComboB(ScenePlay* scene) {
+	scene_ = scene;
+	name_ = NAME_;
+	mp_ = MP_;
+}
+
+void SkillComboB::update(float delta_time) {
+	checkJudge();
+	elapsed_++;
+	if (elapsed_ >= INTERVAL_ && num_ < MAX_NUM_) {
+		elapsed_ = 0;
+		randomPop();
+	}
+	if (elapsed_ >= SKILL_INTERVAL_ && num_ == MAX_NUM_) {
+		finish_ = true;
+	}
+}
+
+void SkillComboB::notesPerfect() {
+	scene_->combo_ += 2;
+	if (judges_[0] == AttackNotes::perfect && judges_[1] == AttackNotes::perfect && judges_[2] == AttackNotes::perfect
+		&& judges_[3] == AttackNotes::perfect && judges_[4] == AttackNotes::perfect) scene_->combo_ += 10;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f);;
+}
+
+void SkillComboB::notesGood() {
+	scene_->combo_++;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);;
+}
+
+SkillComboC::SkillComboC(ScenePlay* scene) {
+	scene_ = scene;
+	name_ = NAME_;
+	mp_ = MP_;
+}
+
+void SkillComboC::update(float delta_time) {
+	checkJudge();
+	elapsed_++;
+	if (elapsed_ >= INTERVAL_ && num_ < MAX_NUM_) {
+		elapsed_ = 0;
+		randomPop();
+	}
+	if (elapsed_ >= SKILL_INTERVAL_ && num_ == MAX_NUM_) {
+		finish_ = true;
+	}
+}
+
+void SkillComboC::notesPerfect() {
+	scene_->combo_ += 2;
+	if (judges_[0] == AttackNotes::perfect && judges_[1] == AttackNotes::perfect && judges_[2] == AttackNotes::perfect
+		&& judges_[3] == AttackNotes::perfect) scene_->combo_ *= 2;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f);;
+}
+
+void SkillComboC::notesGood() {
+	scene_->combo_ /= 2;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);;
 }
