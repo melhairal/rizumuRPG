@@ -268,7 +268,7 @@ void ScenePlay::Debug(float delta_time) {
 		combo_ = 0;
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_N)) {
-		skills_.emplace_back(new SkillNormalB(this));
+		skills_.emplace_back(new SkillComboD(this));
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_M)) {
 		skills_.emplace_back(new SkillComboC(this));

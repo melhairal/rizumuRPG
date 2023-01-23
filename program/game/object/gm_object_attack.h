@@ -131,7 +131,7 @@ public:
 	const std::string NAME_ = "隼斬り"; //技の名前
 	const int MP_ = 20; //消費MP
 	const int MAX_NUM_ = 3; //ノード数
-	const int INTERVAL_ = 12; //ノード生成間隔
+	const int INTERVAL_ = 18; //ノード生成間隔
 
 };
 
@@ -152,7 +152,7 @@ public:
 	const std::string NAME_ = "神速斬り"; //技の名前
 	const int MP_ = 30; //消費MP
 	const int MAX_NUM_ = 5; //ノード数
-	const int INTERVAL_ = 12; //ノード生成間隔
+	const int INTERVAL_ = 18; //ノード生成間隔
 
 };
 
@@ -170,9 +170,30 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const std::string NAME_ = "神速斬り"; //技の名前
+	const std::string NAME_ = "ダブルアップ"; //技の名前
 	const int MP_ = 50; //消費MP
 	const int MAX_NUM_ = 4; //ノード数
 	const int INTERVAL_ = 24; //ノード生成間隔
+
+};
+
+class SkillComboD : public SkillBase {
+public:
+public:
+	SkillComboD(ScenePlay* scene);
+	~SkillComboD() {}
+	void update(float delta_time);
+
+	// =========== 関数 ==========
+
+	void notesPerfect(); //パーフェクト判定
+	void notesGood(); //グッド判定
+
+	// ========== 基本ステータス ==========
+
+	const std::string NAME_ = "トリプルアップ"; //技の名前
+	const int MP_ = 60; //消費MP
+	const int MAX_NUM_ = 6; //ノード数
+	const int INTERVAL_ = 18; //ノード生成間隔
 
 };
