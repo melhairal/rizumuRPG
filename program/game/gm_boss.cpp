@@ -45,7 +45,7 @@ Boss::Boss(ScenePlay* scene) {
 	back_ = LoadGraph("graphics/base/sky.jpg");
 
 	//ƒ{ƒX
-	enemy_ = scene_->actors_.emplace_back(new BossEnemy(scene_));
+	enemy_ = scene_->actors_.emplace_back(new BossDragon(scene_));
 }
 
 void Boss::update(float delta_time) {
