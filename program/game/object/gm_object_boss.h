@@ -59,10 +59,13 @@ public:
 
 	// =========== 関数 ==========
 
+	void initialize(ScenePlay* scene, int damage, int lane);
 	void flow(float speed); //流れてくる
 
 	void judge(); //判定
 	bool judgeKey(); //キー判定
+
+	void judgeAll(); //全体攻撃の判定
 
 	// ========== 基本ステータス ==========
 
@@ -80,12 +83,14 @@ public:
 	const float RANGE_PERFECT_ = 10.0f; //パーフェクト判定の範囲
 	const float RANGE_GOOD_ = 30.0f; //グッド判定の範囲
 	const float MISS_Z_ = JUDGE_Z_ - RANGE_GOOD_; //失敗判定Z座標
-	const float RANGE_MISS_ = 15.0f;
+	const float RANGE_MISS_ = 15.0f; //失敗判定の範囲
+
+	int damage_ = 0;
 };
 
 class NotesWarning : public BossNotes {
 public:
-	NotesWarning(ScenePlay* scene, int lane);
+	NotesWarning(ScenePlay* scene, int damage, int lane);
 	~NotesWarning() {}
 	void update(float delta_time) override;
 
@@ -98,6 +103,44 @@ public:
 		//  ここにアニメーションの画像を並べる
 		// ====================================
 		images_.emplace_back("graphics/effect/warning.png");
+		it = images_.begin();
+	}
+};
+
+class NotesWarningAll : public BossNotes {
+public:
+	NotesWarningAll(ScenePlay* scene, int damage, int lane);
+	~NotesWarningAll() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/warning.png");
+		it = images_.begin();
+	}
+};
+
+class NotesDragonBless : public BossNotes {
+public:
+	NotesDragonBless(ScenePlay* scene, int damage, int lane);
+	~NotesDragonBless() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/fireball.png");
 		it = images_.begin();
 	}
 };

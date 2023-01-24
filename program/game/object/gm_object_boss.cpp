@@ -47,7 +47,7 @@ bool BossNotes::judgeKey() {
 }
 
 void BossNotes::judge() {
-	if (mesh_->pos_.z < JUDGE_Z_ + RANGE_PERFECT_ && mesh_->pos_.z >= JUDGE_Z_ - RANGE_PERFECT_) {
+	if (mesh_->pos_.z < JUDGE_Z_ + RANGE_PERFECT_ && mesh_->pos_.z >= JUDGE_Z_ - RANGE_PERFECT_ && judge_ != good && judge_ != perfect) {
 		if (judgeKey()) {
 			//パーフェクト判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, perfect, lane_));
@@ -57,7 +57,7 @@ void BossNotes::judge() {
 			scene_->combo_++;
 		}
 	}
-	else if (mesh_->pos_.z < JUDGE_Z_ + RANGE_GOOD_ && mesh_->pos_.z >= JUDGE_Z_ - RANGE_GOOD_) {
+	else if (mesh_->pos_.z < JUDGE_Z_ + RANGE_GOOD_ && mesh_->pos_.z >= JUDGE_Z_ - RANGE_GOOD_ && judge_ != good && judge_ != perfect) {
 		if (judgeKey()) {
 			//グッド判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, good, lane_));
@@ -68,7 +68,7 @@ void BossNotes::judge() {
 		}
 	}
 	else if (mesh_->pos_.z >= MISS_Z_ - RANGE_MISS_ && mesh_->pos_.z < JUDGE_Z_ + RANGE_GOOD_ + RANGE_MISS_
-		&& mesh_->pos_.x == scene_->player_->mesh_->pos_.z && judge_ != miss) {
+		&& mesh_->pos_.x == scene_->player_->mesh_->pos_.x && judge_ != miss) {
 		//失敗判定処理
 		scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
 		judge_ = miss;
@@ -76,4 +76,65 @@ void BossNotes::judge() {
 		scene_->combo_ = 0;
 		alive_ = false;
 	}
+}
+
+void BossNotes::judgeAll() {
+	if (mesh_->pos_.z < JUDGE_Z_ + RANGE_PERFECT_ && mesh_->pos_.z >= JUDGE_Z_ - RANGE_PERFECT_ && judge_ != good && judge_ != perfect) {
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE) && mesh_->pos_.x == scene_->player_->mesh_->pos_.x) {
+			//パーフェクト判定処理
+			scene_->subUis_.emplace_back(new SubUiJudge(scene_, perfect, lane_));
+			scene_->actors_.emplace_back(new EffectPerfect(scene_, lane_));
+			scene_->bgm_->perfect_ = true;
+			judge_ = perfect;
+			scene_->combo_++;
+			alive_ = false;
+		}
+	}
+	else if (mesh_->pos_.z < JUDGE_Z_ + RANGE_GOOD_ && mesh_->pos_.z >= JUDGE_Z_ - RANGE_GOOD_ && judge_ != good && judge_ != perfect) {
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE) && mesh_->pos_.x == scene_->player_->mesh_->pos_.x) {
+			//グッド判定処理
+			scene_->subUis_.emplace_back(new SubUiJudge(scene_, good, lane_));
+			scene_->actors_.emplace_back(new EffectGood(scene_, lane_));
+			scene_->bgm_->perfect_ = true;
+			judge_ = good;
+			scene_->combo_++;
+			alive_ = false;
+		}
+	}
+	else if (mesh_->pos_.z >= MISS_Z_ - RANGE_MISS_ && mesh_->pos_.z < JUDGE_Z_ + RANGE_GOOD_ + RANGE_MISS_
+		&& mesh_->pos_.x == scene_->player_->mesh_->pos_.x && judge_ != miss) {
+		//失敗判定処理
+		scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
+		judge_ = miss;
+		scene_->hp_ -= damage_;
+		scene_->combo_ = 0;
+		alive_ = false;
+	}
+}
+
+NotesWarning::NotesWarning(ScenePlay* scene, int damage, int lane) {
+	initialize(scene, damage, lane);
+}
+
+void NotesWarning::update(float delta_time) {
+	flow(scene_->NOTES_SPEED_);
+	judge();
+}
+
+NotesWarningAll::NotesWarningAll(ScenePlay* scene, int damage, int lane) {
+	initialize(scene, damage, lane);
+}
+
+void NotesWarningAll::update(float delta_time) {
+	flow(scene_->NOTES_SPEED_);
+	judgeAll();
+}
+
+NotesDragonBless::NotesDragonBless(ScenePlay* scene, int damage, int lane) {
+	initialize(scene, damage, lane);
+}
+
+void NotesDragonBless::update(float delta_time) {
+	flow(scene_->NOTES_SPEED_);
+	judge();
 }
