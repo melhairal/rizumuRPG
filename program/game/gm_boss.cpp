@@ -60,7 +60,7 @@ void Boss::update(float delta_time) {
 
 
 	// ========== デバッグ等 ==========
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_V)) {
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_C)) {
 		is_changing_angle_ = true;
 	}
 

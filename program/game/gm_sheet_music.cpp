@@ -45,7 +45,7 @@ void Sheet::update(float delta_time) {
 	}
 
 	// ========== デバッグ用 ==========
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_C)) {
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_X)) {
 		csv_y_ = csv_.size();
 	}
 

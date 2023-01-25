@@ -213,66 +213,29 @@ void ScenePlay::Debug(float delta_time) {
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
 		actors_.emplace_back(new EnemyPig(this, EnemyBase::LL));
 	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2)) {
-		actors_.emplace_back(new EnemyGrifin(this, EnemyBase::L));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_3)) {
-		actors_.emplace_back(new EnemyMash(this, EnemyBase::R));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_4)) {
-		actors_.emplace_back(new EnemyRizard(this, EnemyBase::RR));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_5)) {
-		actors_.emplace_back(new EnemyBad(this, EnemyBase::LL));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_6)) {
-		actors_.emplace_back(new EnemySinigami(this, EnemyBase::L));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_7)) {
-		actors_.emplace_back(new EnemySnake(this, EnemyBase::R));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_8)) {
-		actors_.emplace_back(new EnemyMagician(this, EnemyBase::RR));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_E)) {
-		actors_.emplace_back(new EnemyJellyA(this, EnemyBase::L));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_R)) {
-		actors_.emplace_back(new EnemyJellyC(this, EnemyBase::R));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_T)) {
-		actors_.emplace_back(new EnemyJellyB(this, EnemyBase::RR));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Y)) {
-		actors_.emplace_back(new EnemyKingPig(this, EnemyBase::LL));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_U)) {
-		actors_.emplace_back(new EnemyKingGrifin(this, EnemyBase::L));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_I)) {
-		actors_.emplace_back(new EnemyKingMash(this, EnemyBase::R));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_O)) {
-		actors_.emplace_back(new EnemyKingRizard(this, EnemyBase::RR));
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_P)) {
-		sheet_ = new Sheet(this, stage_2_csv_);
-	}
+
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_A)) {
 		make_ = new MakeSheet(this);
 	}
+
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Q)) {
 		combo_++;
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_W)) {
 		combo_ = 0;
 	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_N)) {
+
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Z)) {
+		sheet_ = new Sheet(this, stage_2_csv_);
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_V)) {
 		skills_.emplace_back(new SkillComboD(this));
 	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_M)) {
-		skills_.emplace_back(new SkillComboC(this));
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_B)) {
+		boss_->enemy_->action_ = 0;
 	}
+
+
 
 	//デバッグ用（スキルアップデート）
 	for (auto skill : skills_) {

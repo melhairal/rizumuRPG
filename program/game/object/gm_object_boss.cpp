@@ -15,9 +15,92 @@ void BossEnemy::initialize(ScenePlay* scene) {
 	mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(60));
 }
 
+void BossEnemy::switchAction() {
+	switch (action_) {
+	case 0:
+		attackMeleeA();
+		break;
+	case 1:
+		attackRangeA();
+		break;
+	case 2:
+		attackBulletA();
+		break;
+	case 3:
+		attackMeleeB();
+		break;
+	case 4:
+		attackRangeB();
+		break;
+	case 5:
+		attackBulletB();
+		break;
+	}
+}
+
+void BossEnemy::setMove(float x, float z) {
+	move_flame_ = MOVE_SPEED_;
+	dir_x_ = (x - mesh_->pos_.x) / MOVE_SPEED_;
+	dir_z_ = (z - mesh_->pos_.z) / MOVE_SPEED_;
+}
+
+void BossEnemy::move(float x, float z) {
+	mesh_->pos_.x += x;
+	mesh_->pos_.z += z;
+	move_flame_--;
+}
+
 BossDragon::BossDragon(ScenePlay* scene) {
 	initialize(scene);
 }
+
+void BossDragon::attackMeleeA() {
+	if (elapsed_ == 0) { //1つ目のノーツ生成
+		r_[0] = rand() % 4;
+		scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[0]));
+	}
+	if (elapsed_ == ATTACK_INTERVAL_FASE_) { //2つ目のノーツ生成
+		r_[1] = rand() % 4;
+		scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[1]));
+	}
+	if (elapsed_ == ATTACK_INTERVAL_FASE_ * 2) { //3つ目のノーツ生成
+		r_[2] = rand() % 4;
+		scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[2]));
+	}
+	if (elapsed_ == FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+		setMove(POS_X_[r_[0]], MELEE_POS_Z_);
+	}
+	if (elapsed_ == ATTACK_INTERVAL_FASE_ + FLOW_INTERVAL_ - MOVE_SPEED_) { //2つ目のノーツに向かって移動
+		setMove(POS_X_[r_[1]], MELEE_POS_Z_);
+	}
+	if (elapsed_ == ATTACK_INTERVAL_FASE_ * 2 + FLOW_INTERVAL_ - MOVE_SPEED_) { //3つ目のノーツに向かって移動
+		setMove(POS_X_[r_[2]], MELEE_POS_Z_);
+	}
+	if (elapsed_ == FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+		scene_->actors_.emplace_back(new EffectCrow(scene_, r_[0]));
+	}
+	if (elapsed_ == ATTACK_INTERVAL_FASE_ + FLOW_INTERVAL_) { //2つ目のノーツのエフェクトを生成
+		scene_->actors_.emplace_back(new EffectCrow(scene_, r_[1]));
+	}
+	if (elapsed_ == ATTACK_INTERVAL_FASE_ * 2 + FLOW_INTERVAL_) { //3つ目のノーツのエフェクトを生成
+		scene_->actors_.emplace_back(new EffectCrow(scene_, r_[2]));
+	}
+	elapsed_++;
+
+	if (elapsed_ == ATTACK_INTERVAL_FASE_ * 2 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossDragon::update(float delta_time) {
+	if (move_flame_ != 0) move(dir_x_, dir_z_);
+	if (action_ != -1)switchAction();
+}
+
+
+
+
 
 void BossNotes::initialize(ScenePlay* scene, int damage, int lane) {
 	scene_ = scene;
@@ -67,10 +150,11 @@ void BossNotes::judge() {
 			scene_->combo_++;
 		}
 	}
-	else if (mesh_->pos_.z >= MISS_Z_ - RANGE_MISS_ && mesh_->pos_.z < JUDGE_Z_ + RANGE_GOOD_ + RANGE_MISS_
+	else if (mesh_->pos_.z >= MISS_Z_ - RANGE_MISS_ && mesh_->pos_.z < MISS_Z_
 		&& mesh_->pos_.x == scene_->player_->mesh_->pos_.x && judge_ != miss) {
 		//失敗判定処理
 		scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
+		scene_->actors_.emplace_back(new EffectHit(scene_, lane_));
 		judge_ = miss;
 		scene_->hp_ -= damage_;
 		scene_->combo_ = 0;
@@ -101,10 +185,13 @@ void BossNotes::judgeAll() {
 			alive_ = false;
 		}
 	}
-	else if (mesh_->pos_.z >= MISS_Z_ - RANGE_MISS_ && mesh_->pos_.z < JUDGE_Z_ + RANGE_GOOD_ + RANGE_MISS_
-		&& mesh_->pos_.x == scene_->player_->mesh_->pos_.x && judge_ != miss) {
+	else if ((mesh_->pos_.z >= MISS_Z_ - RANGE_MISS_ && mesh_->pos_.z < MISS_Z_
+		&& mesh_->pos_.x == scene_->player_->mesh_->pos_.x && judge_ != miss) || 
+		(mesh_->pos_.z >= JUDGE_Z_ + RANGE_GOOD_ && mesh_->pos_.z < JUDGE_Z_ + RANGE_GOOD_ + RANGE_MISS_
+			&& mesh_->pos_.x == scene_->player_->mesh_->pos_.x && judge_ != miss && tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE))) {
 		//失敗判定処理
 		scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
+		scene_->actors_.emplace_back(new EffectHit(scene_, lane_));
 		judge_ = miss;
 		scene_->hp_ -= damage_;
 		scene_->combo_ = 0;

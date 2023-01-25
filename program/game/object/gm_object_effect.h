@@ -94,3 +94,34 @@ public:
 		it = images_.begin();
 	}
 };
+
+class EffectCrow : public Actor {
+public:
+	EffectCrow(ScenePlay* scene, int lane);
+	~EffectCrow() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+
+	// ========== 基本ステータス ==========
+
+	const float POS_Z_ = -90.0f; //Z座標
+	const int FRAME_ = 3
+		; //アニメーション更新フレーム
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/crow/crow_001.png");
+		images_.emplace_back("graphics/effect/crow/crow_002.png");
+		images_.emplace_back("graphics/effect/crow/crow_003.png");
+		images_.emplace_back("graphics/effect/crow/crow_004.png");
+		images_.emplace_back("graphics/effect/crow/crow_005.png");
+		images_.emplace_back("graphics/effect/crow/crow_006.png");
+		images_.emplace_back("graphics/effect/crow/crow_007.png");
+		images_.emplace_back("graphics/effect/crow/crow_008.png");
+		it = images_.begin();
+	}
+};

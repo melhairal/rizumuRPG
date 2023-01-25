@@ -129,7 +129,7 @@ bool EnemyBase::notesBulletKey() {
 }
 
 void EnemyBase::notesBullet() {
-	if (perfect_ && !miss_) {
+	if (perfect_ && !miss_ && judge_ != good && judge_ != perfect) {
 		if (notesBulletKey()) {
 			//パーフェクト判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, perfect, lane_));
@@ -137,9 +137,10 @@ void EnemyBase::notesBullet() {
 			scene_->score_ += exp_ * scene_->combo_ * 2;
 			scene_->combo_++;
 			scene_->bgm_->perfect_ = true;
+			judge_ = perfect;
 		}
 	}
-	else if (good_ && !miss_) {
+	else if (good_ && !miss_ && judge_ != good && judge_ != perfect) {
 		if (notesBulletKey()) {
 			//グッド判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, good, lane_));
@@ -147,6 +148,7 @@ void EnemyBase::notesBullet() {
 			scene_->score_ += exp_ * scene_->combo_;
 			scene_->combo_++;
 			scene_->bgm_->perfect_ = true;
+			judge_ = good;
 		}
 	}
 	if (!miss_ && checkLane() &&

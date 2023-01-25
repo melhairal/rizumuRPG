@@ -197,3 +197,87 @@ public:
 	const int INTERVAL_ = 18; //ノード生成間隔
 
 };
+
+class SkillPowerA : public SkillBase {
+public:
+public:
+	SkillPowerA(ScenePlay* scene);
+	~SkillPowerA() {}
+	void update(float delta_time);
+
+	// =========== 関数 ==========
+
+	void notesPerfect(); //パーフェクト判定
+	void notesGood(); //グッド判定
+
+	// ========== 基本ステータス ==========
+
+	const std::string NAME_ = "溜め斬り"; //技の名前
+	const int MP_ = 20; //消費MP
+	const int MAX_NUM_ = 1; //ノード数
+	const int INTERVAL_ = 24; //ノード生成間隔
+
+};
+
+class SkillPowerB : public SkillBase {
+public:
+public:
+	SkillPowerB(ScenePlay* scene);
+	~SkillPowerB() {}
+	void update(float delta_time);
+
+	// =========== 関数 ==========
+
+	void notesPerfect(); //パーフェクト判定
+	void notesGood(); //グッド判定
+
+	// ========== 基本ステータス ==========
+
+	const std::string NAME_ = "燕返し"; //技の名前
+	const int MP_ = 30; //消費MP
+	const int MAX_NUM_ = 2; //ノード数
+	const int INTERVAL_ = 18; //ノード生成間隔
+
+};
+
+class SkillPowerC : public SkillBase {
+public:
+public:
+	SkillPowerC(ScenePlay* scene);
+	~SkillPowerC() {}
+	void update(float delta_time);
+
+	// =========== 関数 ==========
+
+	void notesPerfect(); //パーフェクト判定
+	void notesGood(); //グッド判定
+
+	// ========== 基本ステータス ==========
+
+	const std::string NAME_ = "百の剣"; //技の名前
+	const int MP_ = 100; //消費MP
+	const int MAX_NUM_ = 1; //ノード数
+	const int INTERVAL_ = 24; //ノード生成間隔
+
+};
+
+class SkillOtherA : public SkillBase {
+public:
+public:
+	SkillOtherA(ScenePlay* scene);
+	~SkillOtherA() {}
+	void update(float delta_time);
+
+	// =========== 関数 ==========
+
+	void notesPerfect(); //パーフェクト判定
+	void notesGood(); //グッド判定
+
+	// ========== 基本ステータス ==========
+
+	const std::string NAME_ = "吸血斬り"; //技の名前
+	const int MP_ = 50; //消費MP
+	const int MAX_NUM_ = 3; //ノード数
+	const int INTERVAL_ = 24; //ノード生成間隔
+
+};

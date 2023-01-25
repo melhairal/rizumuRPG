@@ -12,6 +12,9 @@ public:
 	// =========== 関数 ==========
 
 	void initialize(ScenePlay* scene); //初期化
+	void switchAction(); //アクションの切り替え
+	void setMove(float x, float z); //移動用数値セットアップ
+	void move(float x, float z); //メッシュの移動
 	virtual void attackMeleeA(){} //近接攻撃1
 	virtual void attackMeleeB(){} //近接攻撃2
 	virtual void attackRangeA(){} //全体攻撃1
@@ -22,9 +25,21 @@ public:
 	// ========== 基本ステータス ==========
 
 	const float POS_Z_ = 300.0f; //Z座標
-	const float MELEE_POS_Z_ = 50.0f; //接近Z座標
-	const float BULLET_POS_Z_ = 150.0f; //遠隔Z座標
+	const float MELEE_POS_Z_ = 0.0f; //接近Z座標
+	const float BULLET_POS_Z_ = 160.0f; //遠隔Z座標
 
+	const int FLOW_INTERVAL_ = 99; //ノーツが流れてきてから判定ラインに到達するまでのラグ
+	const int BULLET_INTERVAL_ = 64; //遠距離攻撃が流れてきてから判定ラインに到達するまでのラグ
+	const int MOVE_SPEED_ = 18; //移動にかかる時間
+	const int ATTACK_INTERVAL_FASE_ = 18; //攻撃間隔(短)
+	const int ATTACK_INTERVAL_SLOW_ = 36; //攻撃間隔(遅)
+
+	int r_[6] = { 0,0,0,0,0,0 }; //攻撃レーン乱数保存用
+	float dir_x_ = 0; //移動量を保存
+	float dir_z_ = 0; //移動量を保存
+
+	int move_flame_ = 0; //移動量計測用
+	int elapsed_ = 0; //時間計測
 };
 
 class BossDragon : public BossEnemy {
@@ -35,12 +50,20 @@ public:
 
 	// =========== 関数 ==========
 
+	void attackMeleeA(); //近接攻撃1
+	/*
+	void attackMeleeB(); //近接攻撃2
+	void attackRangeA(); //全体攻撃1
+	void attackRangeB(); //全体攻撃2
+	void attackBulletA(); //遠隔攻撃1
+	void attackBulletB(); //遠隔攻撃2
+	*/
 
 	// ========== 基本ステータス ==========
 
-
-
-
+	const int ATK_MELEE_ = 50;
+	const int ATK_RANGE_ = 40;
+	const int ATK_BULLET_ = 70;
 
 	void getImage() override {
 		// ====================================
