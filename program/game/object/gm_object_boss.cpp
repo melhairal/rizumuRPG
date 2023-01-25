@@ -55,39 +55,132 @@ BossDragon::BossDragon(ScenePlay* scene) {
 }
 
 void BossDragon::attackMeleeA() {
-	if (elapsed_ == 0) { //1つ目のノーツ生成
-		r_[0] = rand() % 4;
-		scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[0]));
-	}
-	if (elapsed_ == ATTACK_INTERVAL_FASE_) { //2つ目のノーツ生成
-		r_[1] = rand() % 4;
-		scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[1]));
-	}
-	if (elapsed_ == ATTACK_INTERVAL_FASE_ * 2) { //3つ目のノーツ生成
-		r_[2] = rand() % 4;
-		scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[2]));
-	}
-	if (elapsed_ == FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
-		setMove(POS_X_[r_[0]], MELEE_POS_Z_);
-	}
-	if (elapsed_ == ATTACK_INTERVAL_FASE_ + FLOW_INTERVAL_ - MOVE_SPEED_) { //2つ目のノーツに向かって移動
-		setMove(POS_X_[r_[1]], MELEE_POS_Z_);
-	}
-	if (elapsed_ == ATTACK_INTERVAL_FASE_ * 2 + FLOW_INTERVAL_ - MOVE_SPEED_) { //3つ目のノーツに向かって移動
-		setMove(POS_X_[r_[2]], MELEE_POS_Z_);
-	}
-	if (elapsed_ == FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
-		scene_->actors_.emplace_back(new EffectCrow(scene_, r_[0]));
-	}
-	if (elapsed_ == ATTACK_INTERVAL_FASE_ + FLOW_INTERVAL_) { //2つ目のノーツのエフェクトを生成
-		scene_->actors_.emplace_back(new EffectCrow(scene_, r_[1]));
-	}
-	if (elapsed_ == ATTACK_INTERVAL_FASE_ * 2 + FLOW_INTERVAL_) { //3つ目のノーツのエフェクトを生成
-		scene_->actors_.emplace_back(new EffectCrow(scene_, r_[2]));
+	for (int i = 0; i < 3; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i) { //1つ目のノーツ生成
+			r_[i] = rand() % 4;
+			scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i]));
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+			setMove(POS_X_[r_[i]], MELEE_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			scene_->actors_.emplace_back(new EffectCrow(scene_, r_[i]));
+		}
 	}
 	elapsed_++;
 
-	if (elapsed_ == ATTACK_INTERVAL_FASE_ * 2 + FLOW_INTERVAL_ + 1) { //終了
+	if (elapsed_ >= ATTACK_INTERVAL_FAST_ * 2 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossDragon::attackMeleeB() {
+	for (int i = 0; i < 6; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i) { //1つ目のノーツ生成
+			r_[i] = rand() % 4;
+			scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i]));
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+			setMove(POS_X_[r_[i]], MELEE_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			scene_->actors_.emplace_back(new EffectCrow(scene_, r_[i]));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_FAST_ * 6 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossDragon::attackRangeA() {
+	for (int i = 0; i < 2; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i) { //1つ目のノーツ生成
+			scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 0));
+			scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 1));
+			scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 2));
+			scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 3));
+		}
+		if (elapsed_ == FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+			setMove(0, MELEE_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			scene_->actors_.emplace_back(new EffectTail(scene_));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_SLOW_ * 2 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossDragon::attackRangeB() {
+	for (int i = 0; i < 3; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i) { //1つ目のノーツ生成
+			scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 0));
+			scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 1));
+			scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 2));
+			scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 3));
+		}
+		if (elapsed_ == FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+			setMove(0, MELEE_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			scene_->actors_.emplace_back(new EffectTail(scene_));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_FAST_ * 3 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossDragon::attackBulletA() {
+	for (int i = 0; i < 5; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i) { //1つ目のノーツ生成位置に移動
+			r_[i] = rand() % 4;
+			setMove(POS_X_[r_[i]], BULLET_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + MOVE_SPEED_) { //1つ目のノーツ生成
+			scene_->actors_.emplace_back(new NotesDragonBless(scene_, ATK_BULLET_, r_[i]));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_SLOW_ * 5 + BULLET_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossDragon::attackBulletB() {
+	for (int i = 0; i < 8; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i) { //1つ目のノーツ生成位置に移動
+			setMove(POS_X_[i % 4], BULLET_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + MOVE_SPEED_) { //1つ目のノーツ生成
+			scene_->actors_.emplace_back(new NotesDragonBless(scene_, ATK_BULLET_, i % 4));
+		}
+	}
+	for (int i = 8; i < 13; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i) { //1つ目のノーツ生成位置に移動
+			r_[i - 8] = rand() % 4;
+			setMove(POS_X_[r_[i - 8]], BULLET_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + MOVE_SPEED_) { //1つ目のノーツ生成
+			scene_->actors_.emplace_back(new NotesDragonBless(scene_, ATK_BULLET_, r_[i - 8]));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_FAST_ * 13 + BULLET_INTERVAL_ + 1) { //終了
 		elapsed_ = 0;
 		action_ = -1;
 	}
@@ -97,9 +190,6 @@ void BossDragon::update(float delta_time) {
 	if (move_flame_ != 0) move(dir_x_, dir_z_);
 	if (action_ != -1)switchAction();
 }
-
-
-
 
 
 void BossNotes::initialize(ScenePlay* scene, int damage, int lane) {
@@ -219,6 +309,7 @@ void NotesWarningAll::update(float delta_time) {
 
 NotesDragonBless::NotesDragonBless(ScenePlay* scene, int damage, int lane) {
 	initialize(scene, damage, lane);
+	mesh_->pos_.z = BULLET_POS_Z_;
 }
 
 void NotesDragonBless::update(float delta_time) {

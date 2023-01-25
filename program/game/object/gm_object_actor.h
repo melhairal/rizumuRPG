@@ -13,6 +13,8 @@ public:
 	virtual void getImage() {} //アニメーション画像セット
 	void animation(int frame); //アニメーションの更新
 
+	virtual void setMove (float x, float z) {}
+
 	// ========== 基本ステータス ==========
 
 	enum {

@@ -72,3 +72,21 @@ void EffectCrow::update(float delta_time) {
 		alive_ = false;
 	}
 }
+
+EffectTail::EffectTail(ScenePlay* scene) {
+	scene_ = scene;
+	getImage();
+	mesh_ = dxe::Mesh::CreatePlane({ MESH_W_ * 4, MESH_H_ * 3, 0 });
+	mesh_->setTexture(dxe::Texture::CreateFromFile(*it));
+	it++;
+	mesh_->pos_ = { 0,POS_Y_,POS_Z_ };
+	mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(60));
+}
+
+void EffectTail::update(float delta_time) {
+	//アニメーション更新
+	animation(FRAME_);
+	if (it == images_.begin()) {
+		alive_ = false;
+	}
+}

@@ -26,12 +26,12 @@ public:
 
 	const float POS_Z_ = 300.0f; //Z座標
 	const float MELEE_POS_Z_ = 0.0f; //接近Z座標
-	const float BULLET_POS_Z_ = 160.0f; //遠隔Z座標
+	const float BULLET_POS_Z_ = 100.0f; //遠隔Z座標
 
 	const int FLOW_INTERVAL_ = 99; //ノーツが流れてきてから判定ラインに到達するまでのラグ
-	const int BULLET_INTERVAL_ = 64; //遠距離攻撃が流れてきてから判定ラインに到達するまでのラグ
+	const int BULLET_INTERVAL_ = 49; //遠距離攻撃が流れてきてから判定ラインに到達するまでのラグ
 	const int MOVE_SPEED_ = 18; //移動にかかる時間
-	const int ATTACK_INTERVAL_FASE_ = 18; //攻撃間隔(短)
+	const int ATTACK_INTERVAL_FAST_ = 18; //攻撃間隔(短)
 	const int ATTACK_INTERVAL_SLOW_ = 36; //攻撃間隔(遅)
 
 	int r_[6] = { 0,0,0,0,0,0 }; //攻撃レーン乱数保存用
@@ -51,13 +51,12 @@ public:
 	// =========== 関数 ==========
 
 	void attackMeleeA(); //近接攻撃1
-	/*
 	void attackMeleeB(); //近接攻撃2
 	void attackRangeA(); //全体攻撃1
 	void attackRangeB(); //全体攻撃2
 	void attackBulletA(); //遠隔攻撃1
 	void attackBulletB(); //遠隔攻撃2
-	*/
+	
 
 	// ========== 基本ステータス ==========
 
@@ -100,6 +99,7 @@ public:
 	};
 
 	const float POS_Z_ = 300.0f; //初期Z座標
+	const float BULLET_POS_Z_ = 100.0f; //遠隔Z座標
 	const float DEAD_Z_ = -160.0f; //消滅Z座標
 
 	const float JUDGE_Z_ = -96.0f; //判定Z座標

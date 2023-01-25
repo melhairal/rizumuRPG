@@ -210,10 +210,6 @@ void ScenePlay::deleteList() {
 }
 
 void ScenePlay::Debug(float delta_time) {
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
-		actors_.emplace_back(new EnemyPig(this, EnemyBase::LL));
-	}
-
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_A)) {
 		make_ = new MakeSheet(this);
 	}
@@ -231,24 +227,29 @@ void ScenePlay::Debug(float delta_time) {
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_V)) {
 		skills_.emplace_back(new SkillComboD(this));
 	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_B)) {
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
 		boss_->enemy_->action_ = 0;
 	}
-
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2)) {
+		boss_->enemy_->action_ = 1;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_3)) {
+		boss_->enemy_->action_ = 2;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_4)) {
+		boss_->enemy_->action_ = 3;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_5)) {
+		boss_->enemy_->action_ = 4;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_6)) {
+		boss_->enemy_->action_ = 5;
+	}
 
 
 	//デバッグ用（スキルアップデート）
 	for (auto skill : skills_) {
 		skill->update(delta_time);
 	}
-
-	//カメラ回転
-	tnl::Vector3 rot[2] = {
-		{tnl::ToRadian(-1.0f), 0, 0 },
-		{-tnl::ToRadian(-1.0f), 0, 0 }
-	};
-	tnl::Input::RunIndexKeyDown([&](uint32_t idx) {
-		camera_->free_look_angle_xy_ += rot[idx];
-		}, eKeys::KB_Z, eKeys::KB_X);
 
 }

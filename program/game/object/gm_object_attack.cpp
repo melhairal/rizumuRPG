@@ -5,6 +5,7 @@
 #include "../gm_ui.h"
 #include "../gm_bgm.h"
 #include "../gm_boss.h"
+#include "gm_object_boss.h"
 
 AttackNotes::AttackNotes(ScenePlay* scene, int lane) {
 	scene_ = scene;
@@ -19,6 +20,10 @@ AttackNotes::AttackNotes(ScenePlay* scene, int lane) {
 
 void AttackNotes::flow(float speed) {
 	mesh_->pos_.z -= speed;
+	if (mesh_->pos_.z < JUDGE_Z_ + RANGE_GOOD_ && scene_->boss_->enemy_ != nullptr && !set_enemy_pos_) {
+		scene_->boss_->enemy_->setMove(mesh_->pos_.x, 0);
+		set_enemy_pos_ = true;
+	}
 	if (mesh_->pos_.z < DEAD_Z_) {
 		scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
 		judge_ = miss;

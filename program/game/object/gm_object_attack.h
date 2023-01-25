@@ -34,6 +34,8 @@ public:
 	const float MISS_Z_ = JUDGE_Z_ - RANGE_GOOD_; //失敗判定Z座標
 	const float RANGE_MISS_ = 15.0f;
 
+	bool set_enemy_pos_ = false;
+
 	void getImage() override {
 		// ====================================
 		//  ここにアニメーションの画像を並べる

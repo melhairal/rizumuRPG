@@ -125,3 +125,36 @@ public:
 		it = images_.begin();
 	}
 };
+
+class EffectTail : public Actor {
+public:
+	EffectTail(ScenePlay* scene);
+	~EffectTail() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+
+	// ========== 基本ステータス ==========
+
+	const float POS_Z_ = -90.0f; //Z座標
+	const int FRAME_ = 3
+		; //アニメーション更新フレーム
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/tail/tail_001.png");
+		images_.emplace_back("graphics/effect/tail/tail_002.png");
+		images_.emplace_back("graphics/effect/tail/tail_003.png");
+		images_.emplace_back("graphics/effect/tail/tail_004.png");
+		images_.emplace_back("graphics/effect/tail/tail_005.png");
+		images_.emplace_back("graphics/effect/tail/tail_006.png");
+		images_.emplace_back("graphics/effect/tail/tail_007.png");
+		images_.emplace_back("graphics/effect/tail/tail_008.png");
+		images_.emplace_back("graphics/effect/tail/tail_009.png");
+		images_.emplace_back("graphics/effect/tail/tail_010.png");
+		it = images_.begin();
+	}
+};
