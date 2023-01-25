@@ -12,7 +12,6 @@
 #include "../object/gm_object_player.h"
 #include "../object/gm_object_enemy.h"
 #include "../gm_boss.h"
-#include "../object/gm_object_attack.h"
 
 
 tnl::Quaternion	fix_rot;
@@ -224,9 +223,6 @@ void ScenePlay::Debug(float delta_time) {
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Z)) {
 		sheet_ = new Sheet(this, stage_2_csv_);
 	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_V)) {
-		skills_.emplace_back(new SkillComboD(this));
-	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
 		boss_->enemy_->action_ = 0;
 	}
@@ -248,8 +244,5 @@ void ScenePlay::Debug(float delta_time) {
 
 
 	//デバッグ用（スキルアップデート）
-	for (auto skill : skills_) {
-		skill->update(delta_time);
-	}
 
 }

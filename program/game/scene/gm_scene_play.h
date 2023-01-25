@@ -10,7 +10,6 @@ class Bgm;
 class Sheet;
 class MakeSheet;
 class Boss;
-class SkillBase;
 
 class ScenePlay : public SceneBase {
 public :
@@ -43,7 +42,6 @@ public :
 	Sheet* sheet_ = nullptr; //譜面ポインタ
 	MakeSheet* make_ = nullptr; //譜面作成用クラスポインタ
 	Boss* boss_ = nullptr; //ボス戦クラス用ポインタ
-	std::list<SkillBase*> skills_; //スキルリスト
 
 	const float FIELD_H_ = 450.0f; //床の縦幅
 	const float FIELD_W_ = 300.0f; //床の横幅

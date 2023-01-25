@@ -71,7 +71,7 @@ public:
 	int judges_[6] = { -1,-1,-1,-1,-1,-1 }; //判定リスト
 
 	int elapsed_ = 0; //時間計測用
-	const int SKILL_INTERVAL_ = 36; //スキルとスキルの間隔
+	const int SKILL_INTERVAL_ = 100; //スキルとスキルの間隔
 };
 
 class SkillNormalA : public SkillBase {

@@ -4,6 +4,16 @@
 #include "object/gm_object_boss.h"
 #include "object/gm_object_ground.h"
 #include "gm_camera.h"
+#include "object/gm_object_attack.h"
+
+Boss::~Boss() {
+	delete field_l1_;
+	delete field_r1_;
+	delete field_l2_;
+	delete field_r2_;
+	delete road_;
+	delete skills_;
+}
 
 Boss::Boss(ScenePlay* scene) {
 	//シーンポインタ取得
@@ -58,10 +68,20 @@ void Boss::update(float delta_time) {
 	if (is_changing_angle_ && is_battle_angle_) changeAngleCommand();
 	if (is_changing_angle_ && is_command_angle_) changeAngleBattle();
 
+	//バトル処理
+	if (battle_) battle();
+	
+	//スキル処理
+	if (skills_ != nullptr) {
+		skills_->update(delta_time);
+	}
 
 	// ========== デバッグ等 ==========
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_C)) {
 		is_changing_angle_ = true;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_V)) {
+		battle_ = true;
 	}
 
 }
@@ -126,5 +146,66 @@ void Boss::changeAngleBattle() {
 		is_command_angle_ = false;
 		is_battle_angle_ = true;
 		elapsed_ = 0;
+	}
+}
+
+void Boss::switchSkill() {
+	switch (player_action_[action_num_]) {
+	case 0:
+		skills_ = new SkillNormalA(scene_);
+		break;
+	case 1:
+		skills_ = new SkillNormalB(scene_);
+		break;
+	case 2:
+		skills_ = new SkillComboA(scene_);
+		break;
+	case 3:
+		skills_ = new SkillComboB(scene_);
+		break;
+	case 4:
+		skills_ = new SkillComboC(scene_);
+		break;
+	case 5:
+		skills_ = new SkillComboD(scene_);
+		break;
+	case 6:
+		skills_ = new SkillPowerA(scene_);
+		break;
+	case 7:
+		skills_ = new SkillPowerB(scene_);
+		break;
+	case 8:
+		skills_ = new SkillPowerC(scene_);
+		break;
+	case 9:
+		skills_ = new SkillOtherA(scene_);
+		break;
+	}
+}
+
+void Boss::battle() {
+	if (skills_ != nullptr) {
+		if (skills_->finish_) {
+			delete skills_;
+			skills_ = nullptr;
+			enemy_->action_ = enemy_action_[action_num_];
+		}
+	}
+	if (skills_ == nullptr && enemy_->action_ == -1) {
+		action_num_++;
+		if (action_num_ != 5) {
+			switchSkill();
+		}
+		else {
+			/*
+			for (int i = 0; i < 5; i++) {
+				player_action_[i] = -1;
+				enemy_action_[i] = -1;
+			}
+			*/
+			action_num_ = -1;
+			battle_ = false;
+		}
 	}
 }
