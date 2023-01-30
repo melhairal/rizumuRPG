@@ -191,7 +191,6 @@ void BossDragon::update(float delta_time) {
 	if (action_ != -1)switchAction();
 }
 
-
 void BossNotes::initialize(ScenePlay* scene, int damage, int lane) {
 	scene_ = scene;
 	lane_ = lane;
@@ -224,7 +223,6 @@ void BossNotes::judge() {
 		if (judgeKey()) {
 			//パーフェクト判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, perfect, lane_));
-			scene_->actors_.emplace_back(new EffectPerfect(scene_, lane_));
 			scene_->bgm_->perfect_ = true;
 			judge_ = perfect;
 			scene_->combo_++;
@@ -234,7 +232,6 @@ void BossNotes::judge() {
 		if (judgeKey()) {
 			//グッド判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, good, lane_));
-			scene_->actors_.emplace_back(new EffectGood(scene_, lane_));
 			scene_->bgm_->perfect_ = true;
 			judge_ = good;
 			scene_->combo_++;
@@ -257,7 +254,7 @@ void BossNotes::judgeAll() {
 		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE) && mesh_->pos_.x == scene_->player_->mesh_->pos_.x) {
 			//パーフェクト判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, perfect, lane_));
-			scene_->actors_.emplace_back(new EffectPerfect(scene_, lane_));
+			scene_->actors_.emplace_back(new EffectGard(scene_, lane_));
 			scene_->bgm_->perfect_ = true;
 			judge_ = perfect;
 			scene_->combo_++;
@@ -268,7 +265,7 @@ void BossNotes::judgeAll() {
 		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_SPACE) && mesh_->pos_.x == scene_->player_->mesh_->pos_.x) {
 			//グッド判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, good, lane_));
-			scene_->actors_.emplace_back(new EffectGood(scene_, lane_));
+			scene_->actors_.emplace_back(new EffectGard(scene_, lane_));
 			scene_->bgm_->perfect_ = true;
 			judge_ = good;
 			scene_->combo_++;

@@ -11,9 +11,15 @@ public:
 
 	// =========== 関数 ==========
 
+	//ウィンドウ画像読み込み
+	void getWindow();
+
 	//可変ゲージを描画 x:x座標 y:y座標 width:画像サイズ(横幅) height:画像サイズ(縦幅) exrate:拡大率 num:ゲージの値 max:ゲージの最大値 color:色(enum)
 	void DrawGauge(int x, int y, int width, int height, double exrate, int num, int max, int color); 
 	void DrawGaugeProgress(int x, int y, int width, int height, double exrate, int num, int max, int color);
+
+	//可変ウィンドウ描画
+	void DrawWindow(int x, int y, int width, int height, int color);
 
 	// ========== 基本ステータス ==========
 
@@ -21,6 +27,13 @@ public:
 		eBlue,
 		eYellow,
 		eRed
+	};
+
+	enum {
+		eWhite,
+		eBrown,
+		eGlay,
+		eBlack
 	};
 
 	ScenePlay* scene_ = nullptr; //シーンの変数を取得するためのポインタ
@@ -42,6 +55,17 @@ public:
 	int hp_bar_[3] = { 0,0,0 };
 	int hp_back_ = 0;
 	int hp_frame_ = 0;
+
+	//ウィンドウ
+	int window_top_left_[4] = { 0,0,0,0 };
+	int window_top_center_[4] = { 0,0,0,0 };
+	int window_top_right_[4] = { 0,0,0,0 };
+	int window_left_[4] = { 0,0,0,0 };
+	int window_center_[4] = { 0,0,0,0 };
+	int window_right_[4] = { 0,0,0,0 };
+	int window_bot_left_[4] = { 0,0,0,0 };
+	int window_bot_center_[4] = { 0,0,0,0 };
+	int window_bot_right_[4] = { 0,0,0,0 };
 
 	// ========== 座標 ==========
 

@@ -18,6 +18,9 @@ Ui::Ui(ScenePlay* scene) {
 	hp_back_ = LoadGraph("graphics/ui/gauge_background.png");
 	hp_frame_ = LoadGraph("graphics/ui/gauge_frame.png");
 	run_ = LoadGraph("graphics/ui/run.png");
+
+	//ウィンドウ読み込み
+	getWindow();
 }
 
 void Ui::update(float delta_time) {
@@ -49,6 +52,50 @@ void Ui::render() {
 
 }
 
+void Ui::getWindow() {
+	//白
+	window_top_left_[eWhite] = LoadGraph("graphics/ui/window_a/window_a_001.png");
+	window_top_center_[eWhite] = LoadGraph("graphics/ui/window_a/window_a_002.png");
+	window_top_right_[eWhite] = LoadGraph("graphics/ui/window_a/window_a_003.png");
+	window_left_[eWhite] = LoadGraph("graphics/ui/window_a/window_a_004.png");
+	window_center_[eWhite] = LoadGraph("graphics/ui/window_a/window_a_005.png");
+	window_right_[eWhite] = LoadGraph("graphics/ui/window_a/window_a_006.png");
+	window_bot_left_[eWhite] = LoadGraph("graphics/ui/window_a/window_a_007.png");
+	window_bot_center_[eWhite] = LoadGraph("graphics/ui/window_a/window_a_008.png");
+	window_bot_right_[eWhite] = LoadGraph("graphics/ui/window_a/window_a_009.png");
+	//茶色
+	window_top_left_[eBrown] = LoadGraph("graphics/ui/window_b/window_b_001.png");
+	window_top_center_[eBrown] = LoadGraph("graphics/ui/window_b/window_b_002.png");
+	window_top_right_[eBrown] = LoadGraph("graphics/ui/window_b/window_b_003.png");
+	window_left_[eBrown] = LoadGraph("graphics/ui/window_b/window_b_004.png");
+	window_center_[eBrown] = LoadGraph("graphics/ui/window_b/window_b_005.png");
+	window_right_[eBrown] = LoadGraph("graphics/ui/window_b/window_b_006.png");
+	window_bot_left_[eBrown] = LoadGraph("graphics/ui/window_b/window_b_007.png");
+	window_bot_center_[eBrown] = LoadGraph("graphics/ui/window_b/window_b_008.png");
+	window_bot_right_[eBrown] = LoadGraph("graphics/ui/window_b/window_b_009.png");
+	//灰色
+	window_top_left_[eGlay] = LoadGraph("graphics/ui/window_c/window_c_001.png");
+	window_top_center_[eGlay] = LoadGraph("graphics/ui/window_c/window_c_002.png");
+	window_top_right_[eGlay] = LoadGraph("graphics/ui/window_c/window_c_003.png");
+	window_left_[eGlay] = LoadGraph("graphics/ui/window_c/window_c_004.png");
+	window_center_[eGlay] = LoadGraph("graphics/ui/window_c/window_c_005.png");
+	window_right_[eGlay] = LoadGraph("graphics/ui/window_c/window_c_006.png");
+	window_bot_left_[eGlay] = LoadGraph("graphics/ui/window_c/window_c_007.png");
+	window_bot_center_[eGlay] = LoadGraph("graphics/ui/window_c/window_c_008.png");
+	window_bot_right_[eGlay] = LoadGraph("graphics/ui/window_c/window_c_009.png");
+	//黒
+	window_top_left_[eBlack] = LoadGraph("graphics/ui/window_d/window_d_001.png");
+	window_top_center_[eBlack] = LoadGraph("graphics/ui/window_d/window_d_002.png");
+	window_top_right_[eBlack] = LoadGraph("graphics/ui/window_d/window_d_003.png");
+	window_left_[eBlack] = LoadGraph("graphics/ui/window_d/window_d_004.png");
+	window_center_[eBlack] = LoadGraph("graphics/ui/window_d/window_d_005.png");
+	window_right_[eBlack] = LoadGraph("graphics/ui/window_d/window_d_006.png");
+	window_bot_left_[eBlack] = LoadGraph("graphics/ui/window_d/window_d_007.png");
+	window_bot_center_[eBlack] = LoadGraph("graphics/ui/window_d/window_d_008.png");
+	window_bot_right_[eBlack] = LoadGraph("graphics/ui/window_d/window_d_009.png");
+}
+
+
 void Ui::DrawGauge(int x, int y, int width, int height, double exrate, int num, int max, int color) {
 	int gauge_x1 = x - width * exrate / 2;
 	int gauge_y1 = y - height * exrate / 2;
@@ -68,6 +115,22 @@ void Ui::DrawGaugeProgress(int x, int y, int width, int height, double exrate, i
 	DrawExtendGraph(gauge_x1, gauge_y1, gauge_x2, gauge_y2, hp_bar_[color], true);
 	DrawRotaGraph(x, y, exrate, 0, hp_frame_, true);
 	DrawRotaGraph(gauge_x2, y, exrate * 0.1f, 0, run_, true);
+}
+
+void Ui::DrawWindow(int x, int y, int width, int height, int color) {
+	int center_x1 = x - width / 2 + 20;
+	int center_x2 = x + width / 2 - 20;
+	int center_y1 = y - height / 2 + 20;
+	int center_y2 = y + height / 2 - 20;
+	DrawExtendGraph(center_x1, center_y1, center_x2, center_y2, window_center_[color], true); //中心
+	DrawExtendGraph(center_x1 - 20, center_y1, center_x1, center_y2, window_left_[color], true); //左
+	DrawExtendGraph(center_x2, center_y1, center_x2 + 20, center_y2, window_right_[color], true); //右
+	DrawExtendGraph(center_x1, center_y1 - 20, center_x2, center_y1, window_top_center_[color], true); //上
+	DrawExtendGraph(center_x1, center_y2, center_x2, center_y2 + 20, window_bot_center_[color], true); //下
+	DrawExtendGraph(center_x1 - 20, center_y1 - 20, center_x1, center_y1, window_top_left_[color], true); //左上
+	DrawExtendGraph(center_x2, center_y1 - 20, center_x2 + 20, center_y1, window_top_right_[color], true); //右上
+	DrawExtendGraph(center_x1 - 20, center_y2, center_x1, center_y2 + 20, window_bot_left_[color], true); //左下
+	DrawExtendGraph(center_x2, center_y2, center_x2 + 20, center_y2 + 20, window_bot_right_[color], true); //右下
 }
 
 SubUiJudge::SubUiJudge(ScenePlay* scene, int judge, int lane) {

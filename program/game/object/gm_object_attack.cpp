@@ -44,7 +44,7 @@ void AttackNotes::judge() {
 		if (judgeKey()) {
 			//パーフェクト判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, perfect, lane_));
-			scene_->actors_.emplace_back(new EffectPerfect(scene_, lane_));
+			scene_->actors_.emplace_back(new EffectSkillPerfect(scene_, lane_));
 			scene_->bgm_->perfect_ = true;
 			judge_ = perfect;
 			alive_ = false;
@@ -54,7 +54,7 @@ void AttackNotes::judge() {
 		if (judgeKey()) {
 			//グッド判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, good, lane_));
-			scene_->actors_.emplace_back(new EffectGood(scene_, lane_));
+			scene_->actors_.emplace_back(new EffectSkillGood(scene_, lane_));
 			scene_->bgm_->perfect_ = true;
 			judge_ = good;
 			alive_ = false;
