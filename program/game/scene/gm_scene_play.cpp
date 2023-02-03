@@ -102,9 +102,11 @@ void ScenePlay::update(float delta_time)
 	
 	Debug(delta_time);
 
+	/*
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		mgr->chengeScene(new SceneResult());
 	}
+	*/
 }
 
 void ScenePlay::render()

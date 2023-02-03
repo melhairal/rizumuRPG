@@ -43,6 +43,7 @@ public :
 	MakeSheet* make_ = nullptr; //譜面作成用クラスポインタ
 	Boss* boss_ = nullptr; //ボス戦クラス用ポインタ
 
+
 	const float FIELD_H_ = 450.0f; //床の縦幅
 	const float FIELD_W_ = 300.0f; //床の横幅
 	const float BACK_W_ = 700.0f; //背景の横幅

@@ -32,13 +32,28 @@ void Ui::render() {
 	if (scene_->sheet_ != nullptr) {
 		DrawGaugeProgress(HOME_HP_X_, HOME_HP_Y_, GAUGE_IMG_W_, GAUGE_IMG_H_, 2.0f, scene_->sheet_->csv_y_, scene_->sheet_->csv_.size(), eYellow);
 	}
+
 	if (scene_->boss_ != nullptr) {
 		DrawGauge(HOME_HP_X_, HOME_HP_Y_, GAUGE_IMG_W_, GAUGE_IMG_H_, 2.0f, scene_->boss_->hp_, scene_->boss_->hp_max_, eYellow);
+		//コマンド表示
+		if (scene_->boss_->command_) {
+			DrawWindow(COMMAND_X1_, COMMAND_Y_, COMMAND_W1_, COMMAND_H_, eBrown);
+			DrawWindow(COMMAND_X2_, COMMAND_Y_, COMMAND_W2_, COMMAND_H_, eBrown);
+			DrawWindow(COMMAND_X3_, COMMAND_Y_, COMMAND_W3_, COMMAND_H_, eBrown);
+			DrawWindow(STATUS_X_, STATUS_Y_, STATUS_W_, STATUS_H_, eBrown);
+			DrawStringToHandle(COMMAND_MAIN_X_, COMMAND_LIST_Y_[0], "こうげき", BROWN, font_rondo_32_);
+			DrawStringToHandle(COMMAND_MAIN_X_, COMMAND_LIST_Y_[1], "スキル", BROWN, font_rondo_32_);
+			DrawStringToHandle(COMMAND_MAIN_X_, COMMAND_LIST_Y_[2], "どうぐ", BROWN, font_rondo_32_);
+			DrawStringToHandle(COMMAND_MAIN_X_, COMMAND_LIST_Y_[3], "にげる", BROWN, font_rondo_32_);
+		}
 	}
 
 	//プレイヤーゲージ表示
-	DrawGauge(PLAYER_GAUGE_X_, PLAYER_GAUGE_Y1_, GAUGE_IMG_W_, GAUGE_IMG_H_, 1.5f, scene_->hp_, scene_->hp_max_, eRed);
-	DrawGauge(PLAYER_GAUGE_X_, PLAYER_GAUGE_Y2_, GAUGE_IMG_W_, GAUGE_IMG_H_, 1.5f, scene_->mp_, scene_->mp_max_, eBlue);
+	DrawWindow(STATUS_X_, STATUS_Y_, STATUS_W_, STATUS_H_, eBrown);
+	DrawGauge(STATUS_GAUGE_X1_, STATUS_Y_, GAUGE_IMG_W_, GAUGE_IMG_H_, 1.5f, scene_->hp_, scene_->hp_max_, eRed);
+	DrawGauge(STATUS_GAUGE_X2_, STATUS_Y_, GAUGE_IMG_W_, GAUGE_IMG_H_, 1.5f, scene_->mp_, scene_->mp_max_, eBlue);
+	DrawFormatStringToHandle(STATUS_NUM_X1_, STATUS_NUM_Y_, BROWN, font_rondo_32_, "HP %d / %d", scene_->hp_, scene_->hp_max_);
+	DrawFormatStringToHandle(STATUS_NUM_X2_, STATUS_NUM_Y_, BROWN, font_rondo_32_, "MP %d / %d", scene_->mp_, scene_->mp_max_);
 
 	//コンボ数表示
 	if (scene_->combo_ != 0) {
@@ -47,6 +62,7 @@ void Ui::render() {
 	}
 
 	//スコア表示
+	DrawWindow(SCORE_WINDOW_X_, SCORE_WINDOW_Y_, SCORE_WINDOW_W_, SCORE_WINDOW_H_, eGlay);
 	DrawStringToHandle(SCORE_X_, SCORE_Y_, "Score", -1, font_rondo_32_);
 	DrawFormatStringToHandle(SCORE_NUM_X_, SCORE_NUM_Y_, -1, font_rondo_32_, "%7.0d", scene_->score_);
 

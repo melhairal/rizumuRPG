@@ -14,9 +14,11 @@ public:
 	// =========== 関数 ==========
 
 	void initialize(); //初期遷移
+	void getSkillList(); //スキルリストを取得
 	void changeAngleCommand(); //コマンド選択のカメラアングルに遷移
 	void changeAngleBattle(); //バトルのカメラアングルに遷移
 	void switchSkill(); //数値と発動させるスキルを対応させる
+	void command(); //コマンド選択処理
 	void battle(); //戦闘開始(ノーツが流れ始める)
 
 	// ========== 基本ステータス ==========
@@ -48,9 +50,13 @@ public:
 	int hp_max_ = 1000; //ボスHP
 	int hp_ = hp_max_;
 
-
+	bool command_ = false; //コマンドフラグ
 	bool battle_ = false; //バトル開始フラグ
 	int action_num_ = -1; //アクション回数
 	int player_action_[5] = { 1,2,3,4,5 }; //プレイヤーの行動を予約
 	int enemy_action_[5] = { 0,1,2,3,5 }; //エネミーの行動を予約
+
+	int index_main_ = 0; //メインコマンド選択用インデックス
+	int index_sub_ = 0; //サブコマンド選択用インデックス
+	bool main_command_ = true; //メインコマンドかどうか
 };

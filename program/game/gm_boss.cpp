@@ -105,11 +105,13 @@ void Boss::initialize() {
 		}
 		else if(elapsed_ == INIT_TIMER_) {
 			//初期化終了
+			command_ = true;
 			elapsed_ = 0;
 			init_ = true;
 		}
 	}
 }
+
 
 void Boss::changeAngleCommand() {
 	if (elapsed_ < ANGLE_TIMER_) {
@@ -198,14 +200,32 @@ void Boss::battle() {
 			switchSkill();
 		}
 		else {
-			/*
 			for (int i = 0; i < 5; i++) {
 				player_action_[i] = -1;
 				enemy_action_[i] = -1;
 			}
-			*/
 			action_num_ = -1;
 			battle_ = false;
 		}
 	}
+}
+
+void Boss::command() {
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
+		if (main_command_) index_main_ -= 1;
+		else index_sub_ -= 1;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
+		if (main_command_) index_main_ += 1;
+		else index_sub_ += 1;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		if (main_command_) main_command_ = false; //メインコマンドならサブコマンドに移る
+		else {
+
+		}
+	}
+	index_main_ = std::clamp(index_main_, 0, 3);
+	index_sub_ = std::clamp(index_sub_, 0, 5);
+
 }

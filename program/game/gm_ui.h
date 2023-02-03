@@ -15,7 +15,7 @@ public:
 	void getWindow();
 
 	//可変ゲージを描画 x:x座標 y:y座標 width:画像サイズ(横幅) height:画像サイズ(縦幅) exrate:拡大率 num:ゲージの値 max:ゲージの最大値 color:色(enum)
-	void DrawGauge(int x, int y, int width, int height, double exrate, int num, int max, int color); 
+	void DrawGauge(int x, int y, int width, int height, double exrate, int num, int max, int color);
 	void DrawGaugeProgress(int x, int y, int width, int height, double exrate, int num, int max, int color);
 
 	//可変ウィンドウ描画
@@ -79,13 +79,6 @@ public:
 	int run_ = 0; //走るアイコン
 	const int RUN_X_ = HOME_HP_X_;
 
-	//プレイヤーHP/MP
-	const int PLAYER_GAUGE_X_ = DXE_WINDOW_WIDTH / 2;
-	const int PLAYER_GAUGE_Y1_ = DXE_WINDOW_HEIGHT * 0.95f;
-	const int PLAYER_GAUGE_Y2_ = PLAYER_GAUGE_Y1_ + 20;
-
-	const int PLAYER_ICON_X_ = PLAYER_GAUGE_X_ - 140;
-
 	//コンボ
 	const int COMBO_X_ = DXE_WINDOW_WIDTH * 0.9f;
 	const int COMBO_Y_ = DXE_WINDOW_HEIGHT * 0.2f;
@@ -97,10 +90,39 @@ public:
 	const int SCORE_Y_ = DXE_WINDOW_HEIGHT * 0.05f;
 	const int SCORE_NUM_X_ = SCORE_X_ + 80;
 	const int SCORE_NUM_Y_ = SCORE_Y_;
+	const int SCORE_WINDOW_X_ = SCORE_X_ + 90;
+	const int SCORE_WINDOW_Y_ = SCORE_Y_ + 16;
+	const int SCORE_WINDOW_W_ = 220;
+	const int SCORE_WINDOW_H_ = 50;
+
 
 	//判定
 	const float JUDGE_X_[4] = { DXE_WINDOW_WIDTH * 0.2f,DXE_WINDOW_WIDTH * 0.4f,DXE_WINDOW_WIDTH * 0.6f,DXE_WINDOW_WIDTH * 0.8f }; //4つのレーンの座標
-	const float JUDGE_Y_ = DXE_WINDOW_HEIGHT * 0.75f; 
+	const float JUDGE_Y_ = DXE_WINDOW_HEIGHT * 0.75f;
+
+	//ウィンドウ
+	const int COMMAND_Y_ = DXE_WINDOW_HEIGHT * 0.85f;
+	const int COMMAND_H_ = DXE_WINDOW_HEIGHT * 0.2f;
+	const int COMMAND_X1_ = DXE_WINDOW_WIDTH * 0.1f;
+	const int COMMAND_W1_ = DXE_WINDOW_WIDTH * 0.2f;
+	const int COMMAND_X2_ = DXE_WINDOW_WIDTH * 0.35f;
+	const int COMMAND_W2_ = DXE_WINDOW_WIDTH * 0.3f;
+	const int COMMAND_X3_ = DXE_WINDOW_WIDTH * 0.75f;
+	const int COMMAND_W3_ = DXE_WINDOW_WIDTH * 0.5f;
+	const int STATUS_X_ = DXE_WINDOW_WIDTH * 0.5f;
+	const int STATUS_W_ = DXE_WINDOW_WIDTH;
+	const int STATUS_Y_ = DXE_WINDOW_HEIGHT * 0.975f;
+	const int STATUS_H_ = DXE_WINDOW_HEIGHT * 0.05f;
+	const int STATUS_GAUGE_X1_ = DXE_WINDOW_WIDTH * 0.36f;
+	const int STATUS_GAUGE_X2_ = DXE_WINDOW_WIDTH * 0.86f;
+	const int STATUS_NUM_Y_ = STATUS_Y_ - 16;
+	const int STATUS_NUM_X1_ = STATUS_GAUGE_X1_ - 350;
+	const int STATUS_NUM_X2_ = STATUS_GAUGE_X2_ - 350;
+
+	//コマンド座標
+	const int COMMAND_MAIN_X_ = DXE_WINDOW_WIDTH * 0.03f;
+	float COMMAND_LIST_Y_[4] = { DXE_WINDOW_HEIGHT * 0.76f, DXE_WINDOW_HEIGHT * 0.76f + 35, DXE_WINDOW_HEIGHT * 0.76f + 70, DXE_WINDOW_HEIGHT * 0.76f + 105};
+
 };
 
 class SubUiJudge {
