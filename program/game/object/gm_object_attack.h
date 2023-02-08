@@ -1,6 +1,10 @@
 #pragma once
 #include "../../dxlib_ext/dxlib_ext.h"
 #include "gm_object_actor.h"
+#include <unordered_map>
+#include <functional>
+#include <memory>
+
 class ScenePlay;
 
 class AttackNotes : public Actor {
@@ -274,11 +278,13 @@ public:
 
 };
 
+
 class SkillList {
 public:
 	SkillList() {}
 	~SkillList() {}
 	std::string name_ = "-"; //ñºëO
+	std::string class_name_ = "class -"; //ÉNÉâÉXñº
 	std::string exp1_ = "-"; //ê‡ñæï∂
 	std::string exp2_ = "-"; //ê‡ñæï∂
 	std::string exp3_ = "-"; //ê‡ñæï∂

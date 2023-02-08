@@ -5,6 +5,7 @@
 #include "object/gm_object_ground.h"
 #include "gm_camera.h"
 #include "object/gm_object_attack.h"
+#include "object/gm_object_skill_map.h"
 
 Boss::~Boss() {
 	delete field_l1_;
@@ -12,7 +13,7 @@ Boss::~Boss() {
 	delete field_l2_;
 	delete field_r2_;
 	delete road_;
-	delete skills_;
+	//delete skills_;
 }
 
 Boss::Boss(ScenePlay* scene) {
@@ -79,11 +80,20 @@ void Boss::update(float delta_time) {
 
 	//次のターンに移る処理
 	if (next_turn_) nextTurn();
+
+	//勝利処理
+	if (win_) win();
+
+	//敗北処理
+	if (lose_) lose();
 	
 	//スキル処理
 	if (skills_ != nullptr) {
 		skills_->update(delta_time);
 	}
+
+	//値のクランプ
+	hp_ = std::clamp(hp_, 0, hp_max_);
 
 	// ========== デバッグ等 ==========
 
@@ -154,57 +164,34 @@ void Boss::changeAngleBattle() {
 	}
 }
 
-void Boss::switchSkill() {
-	switch (player_action_[action_num_]) {
-	case 0:
-		skills_ = new SkillNormalA(scene_);
-		break;
-	case 1:
-		skills_ = new SkillNormalB(scene_);
-		break;
-	case 2:
-		skills_ = new SkillComboA(scene_);
-		break;
-	case 3:
-		skills_ = new SkillComboB(scene_);
-		break;
-	case 4:
-		skills_ = new SkillComboC(scene_);
-		break;
-	case 5:
-		skills_ = new SkillComboD(scene_);
-		break;
-	case 6:
-		skills_ = new SkillPowerA(scene_);
-		break;
-	case 7:
-		skills_ = new SkillPowerB(scene_);
-		break;
-	case 8:
-		skills_ = new SkillPowerC(scene_);
-		break;
-	case 9:
-		skills_ = new SkillOtherA(scene_);
-		break;
-	}
-}
-
 void Boss::battle() {
 	if (skills_ != nullptr) {
 		if (skills_->finish_) {
-			delete skills_;
+			//delete skills_;
 			skills_ = nullptr;
-			enemy_->action_ = enemy_action_[action_num_];
+			if (hp_ == 0) {
+				battle_ = false;
+				win_ = true;
+			}
+			else {
+				enemy_->action_ = enemy_action_[action_num_];
+			}
 		}
 	}
 	if (skills_ == nullptr && enemy_->action_ == -1) {
-		action_num_++;
-		if (action_num_ < 3) {
-			switchSkill();
+		if (scene_->hp_ == 0) {
+			battle_ = false;
+			lose_ = true;
 		}
 		else {
-			battle_ = false;
-			next_turn_ = true;
+			action_num_++;
+			if (action_num_ < 3) {
+				skills_ = generator_map[scene_->skill_[player_action_[action_num_]]->class_name_](scene_);
+			}
+			else {
+				battle_ = false;
+				next_turn_ = true;
+			}
 		}
 	}
 }
@@ -239,7 +226,15 @@ void Boss::command() {
 		}
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
-		if (main_command_) main_command_ = false; //メインコマンドならサブコマンドに移る
+		if (main_command_) {
+			if (index_main_ != 3) {
+				main_command_ = false; //メインコマンドならサブコマンドに移る
+			}
+			else {
+				command_ = false;
+				lose_ = true;
+			}
+		}
 		else {
 			//コマンドを登録する
 			if (select_num_ < 3) {
@@ -329,4 +324,12 @@ void Boss::nextTurn() {
 		init_progress_ = false;
 		command_ = true;
 	}
+}
+
+void Boss::win() {
+
+}
+
+void Boss::lose() {
+
 }

@@ -225,6 +225,7 @@ void ScenePlay::getSkill() {
 		skill_[i]->exp1_ = csv_skill_[i + 1][2].c_str();
 		skill_[i]->exp2_ = csv_skill_[i + 1][3].c_str();
 		skill_[i]->exp3_ = csv_skill_[i + 1][4].c_str();
+		skill_[i]->class_name_ = csv_skill_[i + 1][5].c_str();
 	}
 }
 

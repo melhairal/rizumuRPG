@@ -357,5 +357,8 @@
     <ClInclude Include="program\game\object\gm_object_attack.h">
       <Filter>program\game\object</Filter>
     </ClInclude>
+    <ClInclude Include="program\game\object\gm_object_skill_map.h">
+      <Filter>program\game\object</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

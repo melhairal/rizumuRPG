@@ -1,4 +1,4 @@
-﻿  gm_scene_play.cpp
+﻿  gm_object_attack.cpp
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(86,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(91,40): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(92,41): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
@@ -21,4 +21,25 @@ C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(131,47): warning
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(132,46): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(136,46): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(152,44): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(77,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(129,67): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(134,67): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(157,67): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(162,67): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(185,67): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(190,67): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(215,67): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(220,67): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(246,67): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(251,67): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(277,67): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(282,67): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(305,74): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(310,74): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(335,75): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(340,67): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(365,75): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(372,75): warning C4244: '-=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(395,13): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(402,13): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
   dx_game.vcxproj -> C:\Users\vantan\Documents\GitHub\rizumuRPG\Debug\dx_game.exe

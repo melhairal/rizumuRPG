@@ -302,12 +302,12 @@ void SkillPowerA::update(float delta_time) {
 
 void SkillPowerA::notesPerfect() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f) * 8;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * 8.0f * (1 + (float)scene_->combo_ * 0.02f);
 }
 
 void SkillPowerA::notesGood() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f) * 8;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * 8.0f * (1 + (float)scene_->combo_ * 0.01f);
 }
 
 SkillPowerB::SkillPowerB(ScenePlay* scene) {
@@ -330,9 +330,9 @@ void SkillPowerB::update(float delta_time) {
 
 void SkillPowerB::notesPerfect() {
 	scene_->combo_++;
-	int power = 1;
-	if (judges_[0] == AttackNotes::perfect && judges_[1] == AttackNotes::perfect) power = 16;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f) * power;
+	float power = 1.0f;
+	if (judges_[0] == AttackNotes::perfect && judges_[1] == AttackNotes::perfect) power = 16.0f;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * power * (1 + (float)scene_->combo_ * 0.02f);
 }
 
 void SkillPowerB::notesGood() {
@@ -360,16 +360,16 @@ void SkillPowerC::update(float delta_time) {
 
 void SkillPowerC::notesPerfect() {
 	scene_->combo_++;
-	int power = 1;
-	if (scene_->combo_ >= 100) power = 40;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f) * power;
+	float power = 1.0f;
+	if (scene_->combo_ >= 100) power = 40.0f;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * power * (1 + (float)scene_->combo_ * 0.02f);
 }
 
 void SkillPowerC::notesGood() {
 	scene_->combo_++;
-	int power = 1;
-	if (scene_->combo_ >= 100) power = 40;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f) * power;
+	float power = 1.0f;
+	if (scene_->combo_ >= 100) power = 40.0f;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * power * (1 + (float)scene_->combo_ * 0.01f);
 }
 
 SkillOtherA::SkillOtherA(ScenePlay* scene) {

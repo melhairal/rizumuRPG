@@ -16,11 +16,12 @@ public:
 	void initialize(); //初期遷移
 	void changeAngleCommand(); //コマンド選択のカメラアングルに遷移
 	void changeAngleBattle(); //バトルのカメラアングルに遷移
-	void switchSkill(); //数値と発動させるスキルを対応させる
 	void command(); //コマンド選択処理
 	void progress(); //進行演出処理
 	void battle(); //戦闘開始(ノーツが流れ始める)
-	void nextTurn();
+	void nextTurn(); //ターン進行演出
+	void win(); //勝利処理
+	void lose(); //敗北処理
 
 	// ========== 基本ステータス ==========
 
@@ -31,7 +32,8 @@ public:
 	dxe::Mesh* field_l2_ = nullptr; //床補完用(左下)
 	dxe::Mesh* field_r2_ = nullptr; //床補完用(右下)
 	dxe::Mesh* road_ = nullptr; //床補完用(道)
-	SkillBase* skills_ = nullptr; //スキル
+	//SkillBase* skills_ = nullptr; //スキル
+	std::shared_ptr<SkillBase> skills_ = nullptr;
 
 	const float LEFT_X_ = -300.0f; //補完床用X座標
 	const float RIGHT_X_ = 300.0f; //補完床用X座標
@@ -67,4 +69,7 @@ public:
 	int select_num_ = 0; //選択した行動数
 
 	bool init_progress_ = false; //演出初期処理
+
+	bool win_ = false; //勝ちフラグ
+	bool lose_ = false; //負けフラグ
 };
