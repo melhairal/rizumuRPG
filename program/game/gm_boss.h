@@ -53,10 +53,14 @@ public:
 	bool command_ = false; //コマンドフラグ
 	bool battle_ = false; //バトル開始フラグ
 	int action_num_ = -1; //アクション回数
-	int player_action_[5] = { 1,2,3,4,5 }; //プレイヤーの行動を予約
-	int enemy_action_[5] = { 0,1,2,3,5 }; //エネミーの行動を予約
+	int player_action_[3] = { 1,2,3 }; //プレイヤーの行動を予約
+	int enemy_action_[3] = { 0,1,2 }; //エネミーの行動を予約
 
+	const int INDEX_MAX_ = 3; //インデックス最大数
 	int index_main_ = 0; //メインコマンド選択用インデックス
 	int index_sub_ = 0; //サブコマンド選択用インデックス
+	int index_sub_list_ = 0; //サブコマンドリスト位置用インデックス
 	bool main_command_ = true; //メインコマンドかどうか
+	int select_num_ = 0; //選択した行動数
+	int select_action_[3] = { -1,-1,-1 }; //選択した行動
 };

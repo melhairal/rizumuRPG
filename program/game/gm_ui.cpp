@@ -2,11 +2,13 @@
 #include "scene/gm_scene_play.h"
 #include "gm_sheet_music.h"
 #include "gm_boss.h"
+#include "object/gm_object_attack.h"
 
 Ui::Ui(ScenePlay* scene) {
 	scene_ = scene;
 	//フォント読み込み
 	font_rondo_16_ = LoadFontDataToHandle("font/Rondo16.dft", 0);
+	font_rondo_24_ = LoadFontDataToHandle("font/Rondo24.dft", 0);
 	font_rondo_32_ = LoadFontDataToHandle("font/Rondo32.dft", 0);
 	font_rondo_64_ = LoadFontDataToHandle("font/Rondo64.dft", 0);
 	font_rondo_128_ = LoadFontDataToHandle("font/Rondo128.dft", 0);
@@ -21,10 +23,35 @@ Ui::Ui(ScenePlay* scene) {
 
 	//ウィンドウ読み込み
 	getWindow();
+
+	//カーソル読み込み
+	cursol_ = LoadGraph("graphics/ui/cursol.png");
+
+	//攻撃ウィンドウ読み込み
+	window_attack_player_ = LoadGraph("graphics/ui/window_attack_player.png");
+	window_attack_boss_ = LoadGraph("graphics/ui/attack_boss.png");
 }
 
 void Ui::update(float delta_time) {
+	if (scene_->boss_ != nullptr) {
+		//選択中のコマンドの文字の色を変える
+		for (int i = 0; i < 4; i++) {
+			command_color_[i] = BROWN;
+			command_sub_color_[i] = BROWN;
+		}
+		if (scene_->boss_->main_command_) command_color_[scene_->boss_->index_main_] = -1;
+		else command_sub_color_[scene_->boss_->index_sub_] = -1;
 
+		if (scene_->boss_->command_) { //コマンド選択中
+			//登録中の攻撃ウィンドウの座標をずらす
+			for (int i = 0; i < 3; i++) {
+				attack_window_x_[i] = ATTACK_WINDOW_X_DEF_;
+				attack_str_x_[i] = ATTACK_STR_X_DEF_;
+			}
+			attack_window_x_[scene_->boss_->select_num_] = ATTACK_WINDOW_X_SEL_;
+			attack_str_x_[scene_->boss_->select_num_] = ATTACK_STR_X_SEL_;
+		}
+	}
 }
 
 void Ui::render() {
@@ -41,10 +68,51 @@ void Ui::render() {
 			DrawWindow(COMMAND_X2_, COMMAND_Y_, COMMAND_W2_, COMMAND_H_, eBrown);
 			DrawWindow(COMMAND_X3_, COMMAND_Y_, COMMAND_W3_, COMMAND_H_, eBrown);
 			DrawWindow(STATUS_X_, STATUS_Y_, STATUS_W_, STATUS_H_, eBrown);
-			DrawStringToHandle(COMMAND_MAIN_X_, COMMAND_LIST_Y_[0], "こうげき", BROWN, font_rondo_32_);
-			DrawStringToHandle(COMMAND_MAIN_X_, COMMAND_LIST_Y_[1], "スキル", BROWN, font_rondo_32_);
-			DrawStringToHandle(COMMAND_MAIN_X_, COMMAND_LIST_Y_[2], "どうぐ", BROWN, font_rondo_32_);
-			DrawStringToHandle(COMMAND_MAIN_X_, COMMAND_LIST_Y_[3], "にげる", BROWN, font_rondo_32_);
+			if (scene_->boss_->main_command_) DrawExtendGraph(COMMAND_MAIN_X_, COMMAND_LIST_Y_[scene_->boss_->index_main_], COMMAND_MAIN_X_ + 150, COMMAND_LIST_Y_[scene_->boss_->index_main_] + 35 , cursol_, true);
+			DrawStringToHandle(COMMAND_MAIN_X_, COMMAND_LIST_Y_[0], "こうげき", command_color_[0], font_rondo_32_);
+			DrawStringToHandle(COMMAND_MAIN_X_, COMMAND_LIST_Y_[1], "スキル", command_color_[1], font_rondo_32_);
+			DrawStringToHandle(COMMAND_MAIN_X_, COMMAND_LIST_Y_[2], "どうぐ", command_color_[2], font_rondo_32_);
+			DrawStringToHandle(COMMAND_MAIN_X_, COMMAND_LIST_Y_[3], "にげる", command_color_[3], font_rondo_32_);
+			//サブコマンド
+			switch (scene_->boss_->index_main_) {
+			case 0:
+				DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[0], scene_->skill_[0]->name_.c_str(), command_sub_color_[0], font_rondo_32_);
+				DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[1], scene_->skill_[1]->name_.c_str(), command_sub_color_[1], font_rondo_32_);
+				if (!scene_->boss_->main_command_) {
+					//説明文
+					DrawStringToHandle(COMMAND_EXP_X_, COMMAND_LIST_Y_[0], scene_->skill_[scene_->boss_->index_sub_]->exp1_.c_str(), BROWN, font_rondo_32_);
+					DrawStringToHandle(COMMAND_EXP_X_, COMMAND_LIST_Y_[1], scene_->skill_[scene_->boss_->index_sub_]->exp2_.c_str(), BROWN, font_rondo_32_);
+					DrawStringToHandle(COMMAND_EXP_X_, COMMAND_LIST_Y_[2], scene_->skill_[scene_->boss_->index_sub_]->exp3_.c_str(), BROWN, font_rondo_32_);
+					DrawFormatStringToHandle(COMMAND_EXP_X_, COMMAND_LIST_Y_[3], BROWN, font_rondo_32_, "消費MP:%d", scene_->skill_[scene_->boss_->index_sub_]->mp_);
+				}
+				break;
+			case 1:
+				DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[0], scene_->skill_[2 + 0 + scene_->boss_->index_sub_list_]->name_.c_str(), command_sub_color_[0], font_rondo_32_);
+				DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[1], scene_->skill_[2 + 1 + scene_->boss_->index_sub_list_]->name_.c_str(), command_sub_color_[1], font_rondo_32_);
+				DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[2], scene_->skill_[2 + 2 + scene_->boss_->index_sub_list_]->name_.c_str(), command_sub_color_[2], font_rondo_32_);
+				DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[3], scene_->skill_[2 + 3 + scene_->boss_->index_sub_list_]->name_.c_str(), command_sub_color_[3], font_rondo_32_);
+				if (!scene_->boss_->main_command_) {
+					//説明文
+					DrawStringToHandle(COMMAND_EXP_X_, COMMAND_LIST_Y_[0], scene_->skill_[2 + scene_->boss_->index_sub_ + scene_->boss_->index_sub_list_]->exp1_.c_str(), BROWN, font_rondo_32_);
+					DrawStringToHandle(COMMAND_EXP_X_, COMMAND_LIST_Y_[1], scene_->skill_[2 + scene_->boss_->index_sub_ + scene_->boss_->index_sub_list_]->exp2_.c_str(), BROWN, font_rondo_32_);
+					DrawStringToHandle(COMMAND_EXP_X_, COMMAND_LIST_Y_[2], scene_->skill_[2 + scene_->boss_->index_sub_ + scene_->boss_->index_sub_list_]->exp3_.c_str(), BROWN, font_rondo_32_);
+					DrawFormatStringToHandle(COMMAND_EXP_X_, COMMAND_LIST_Y_[3], BROWN, font_rondo_32_, "消費MP:%d", scene_->skill_[2 + scene_->boss_->index_sub_ + scene_->boss_->index_sub_list_]->mp_);
+				}
+				break;
+			case 2:
+
+				break;
+			case 3:
+				break;
+			}
+			//攻撃表示ウィンドウ
+			DrawRotaGraph(attack_window_x_[0], ATTACK_WINDOW_Y_[0], 1.2f, 0, window_attack_player_, true);
+			DrawRotaGraph(attack_window_x_[1], ATTACK_WINDOW_Y_[1], 1.2f, 0, window_attack_player_, true);
+			DrawRotaGraph(attack_window_x_[2], ATTACK_WINDOW_Y_[2], 1.2f, 0, window_attack_player_, true);
+			//攻撃表示文字
+			if (scene_->boss_->select_num_ >= 1) DrawStringToHandle(attack_str_x_[0], ATTACK_STR_Y_[0], scene_->skill_[scene_->boss_->select_action_[0]]->name_.c_str(), BROWN, font_rondo_24_);
+			if (scene_->boss_->select_num_ >= 2) DrawStringToHandle(attack_str_x_[1], ATTACK_STR_Y_[1], scene_->skill_[scene_->boss_->select_action_[1]]->name_.c_str(), BROWN, font_rondo_24_);
+			if (scene_->boss_->select_num_ >= 3) DrawStringToHandle(attack_str_x_[2], ATTACK_STR_Y_[2], scene_->skill_[scene_->boss_->select_action_[2]]->name_.c_str(), BROWN, font_rondo_24_);
 		}
 	}
 

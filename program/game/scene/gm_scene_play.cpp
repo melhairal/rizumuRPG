@@ -11,6 +11,7 @@
 #include "../object/gm_object_actor.h"
 #include "../object/gm_object_player.h"
 #include "../object/gm_object_enemy.h"
+#include "../object/gm_object_attack.h"
 #include "../gm_boss.h"
 
 
@@ -27,6 +28,7 @@ ScenePlay::~ScenePlay() {
 	for (auto object : objects_) delete object;
 	for (auto actor : actors_) delete actor;
 	for (auto ui : subUis_) delete ui;
+	for (auto skill : skill_) delete skill;
 }
 
 
@@ -55,6 +57,8 @@ void ScenePlay::initialzie() {
 
 	//プレイヤーの生成
 	player_ = actors_.emplace_back(new Player(this));
+
+	getSkill();
 }
 
 void ScenePlay::update(float delta_time)
@@ -210,6 +214,19 @@ void ScenePlay::deleteList() {
 	}
 }
 
+void ScenePlay::getSkill() {
+	for (int i = 0; i < 10; ++i) {
+		csv_skill_ = tnl::LoadCsv("csv/skill.csv");
+		skill_[i] = new SkillList();
+		skill_[i]->name_ = csv_skill_[i + 1][0].c_str();
+		skill_[i]->mp_ = std::atoi(csv_skill_[i + 1][1].c_str());
+		skill_[i]->exp1_ = csv_skill_[i + 1][2].c_str();
+		skill_[i]->exp2_ = csv_skill_[i + 1][3].c_str();
+		skill_[i]->exp3_ = csv_skill_[i + 1][4].c_str();
+	}
+}
+
+
 void ScenePlay::Debug(float delta_time) {
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_A)) {
 		make_ = new MakeSheet(this);
@@ -243,8 +260,4 @@ void ScenePlay::Debug(float delta_time) {
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_6)) {
 		boss_->enemy_->action_ = 5;
 	}
-
-
-	//デバッグ用（スキルアップデート）
-
 }

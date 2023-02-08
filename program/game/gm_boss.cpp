@@ -68,6 +68,9 @@ void Boss::update(float delta_time) {
 	if (is_changing_angle_ && is_battle_angle_) changeAngleCommand();
 	if (is_changing_angle_ && is_command_angle_) changeAngleBattle();
 
+	//コマンド処理
+	if (command_) command();
+
 	//バトル処理
 	if (battle_) battle();
 	
@@ -196,11 +199,11 @@ void Boss::battle() {
 	}
 	if (skills_ == nullptr && enemy_->action_ == -1) {
 		action_num_++;
-		if (action_num_ != 5) {
+		if (action_num_ != 3) {
 			switchSkill();
 		}
 		else {
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < 3; i++) {
 				player_action_[i] = -1;
 				enemy_action_[i] = -1;
 			}
@@ -211,21 +214,83 @@ void Boss::battle() {
 }
 
 void Boss::command() {
+	//上キーを入力したとき
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
-		if (main_command_) index_main_ -= 1;
-		else index_sub_ -= 1;
+		if (main_command_) {
+			index_main_ -= 1;
+		}
+		else {
+			if (index_sub_ > 0) {
+				index_sub_ -= 1;
+			}
+			else {
+				index_sub_list_ -= 1;
+			}
+		}
 	}
+	//下キーを入力したとき
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
-		if (main_command_) index_main_ += 1;
-		else index_sub_ += 1;
+		if (main_command_) {
+			index_main_ += 1;
+		}
+		else {
+			if (index_sub_ < INDEX_MAX_) {
+				index_sub_ += 1;
+			}
+			else {
+				index_sub_list_ += 1;
+			}
+		}
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		if (main_command_) main_command_ = false; //メインコマンドならサブコマンドに移る
 		else {
+			//コマンドを登録する
+			switch (index_main_) {
+			case 0:
+				select_action_[select_num_] = index_sub_;
+				break;
+			case 1:
+				select_action_[select_num_] = index_sub_ + index_sub_list_ + 2;
+				break;
+			case 3:
+				break;
+			}
+			select_num_++;
+			if (select_num_ == 3) {
+				//アクション開始
 
+			}
 		}
 	}
-	index_main_ = std::clamp(index_main_, 0, 3);
-	index_sub_ = std::clamp(index_sub_, 0, 5);
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE)) {
+		if (!main_command_) {
+			index_sub_ = 0;
+			index_sub_list_ = 0;
+			main_command_ = true; //サブコマンドならメインコマンドに戻る
+		}
+		else {
+			//コマンドを削除する
+			if (select_num_ > 0) {
+				select_num_--;
+				select_action_[select_num_] = -1;
+			}
+		}
+	}
 
+	index_main_ = std::clamp(index_main_, 0, INDEX_MAX_);
+	switch (index_main_) {
+	case 0:
+		index_sub_ = std::clamp(index_sub_, 0, 1);
+		index_sub_list_ = std::clamp(index_sub_list_, 0, 0);
+		break;
+	case 1:
+		index_sub_ = std::clamp(index_sub_, 0, 4);
+		index_sub_list_ = std::clamp(index_sub_list_, 0, 4);
+		break;
+	case 2:
+		index_sub_ = std::clamp(index_sub_, 0, 0);
+		index_sub_list_ = std::clamp(index_sub_list_, 0, 0);
+		break;
+	}
 }

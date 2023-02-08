@@ -47,6 +47,7 @@ public:
 
 	//フォント
 	int font_rondo_16_ = 0;
+	int font_rondo_24_ = 0;
 	int font_rondo_32_ = 0;
 	int font_rondo_64_ = 0;
 	int font_rondo_128_ = 0;
@@ -66,6 +67,13 @@ public:
 	int window_bot_left_[4] = { 0,0,0,0 };
 	int window_bot_center_[4] = { 0,0,0,0 };
 	int window_bot_right_[4] = { 0,0,0,0 };
+
+	//カーソル
+	int cursol_ = 0;
+
+	//攻撃表示ウィンドウ
+	int window_attack_player_ = 0;
+	int window_attack_boss_ = 0;
 
 	// ========== 座標 ==========
 
@@ -121,7 +129,23 @@ public:
 
 	//コマンド座標
 	const int COMMAND_MAIN_X_ = DXE_WINDOW_WIDTH * 0.03f;
+	const int COMMAND_SUB_X_ = DXE_WINDOW_WIDTH * 0.23f;
 	float COMMAND_LIST_Y_[4] = { DXE_WINDOW_HEIGHT * 0.76f, DXE_WINDOW_HEIGHT * 0.76f + 35, DXE_WINDOW_HEIGHT * 0.76f + 70, DXE_WINDOW_HEIGHT * 0.76f + 105};
+	int command_color_[4] = { 0,0,0,0 };
+	int command_sub_color_[4] = { 0,0,0,0 };
+	const int COMMAND_EXP_X_ = DXE_WINDOW_WIDTH * 0.51f;
+
+	//攻撃ウィンドウ座標
+	//ウィンドウ
+	const int ATTACK_WINDOW_Y_[6] = { 100,150,200,250,300,350 };
+	int attack_window_x_[6] = { 20,20,20,20,20,20 };
+	const int ATTACK_WINDOW_X_DEF_ = 20;
+	const int ATTACK_WINDOW_X_SEL_ = 40;
+	//文字
+	const int ATTACK_STR_Y_[6] = { 92,142,192,242,292,342 };
+	int attack_str_x_[6] = { 8,8,8,8,8,8 };
+	const int ATTACK_STR_X_DEF_ = 8;
+	const int ATTACK_STR_X_SEL_ = 28;
 
 };
 

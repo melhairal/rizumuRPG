@@ -10,6 +10,7 @@ class Bgm;
 class Sheet;
 class MakeSheet;
 class Boss;
+class SkillList;
 
 class ScenePlay : public SceneBase {
 public :
@@ -21,6 +22,8 @@ public :
 	void render() override;
 
 	// =========== 関数 ==========
+
+	void getSkill(); //スキル情報取得
 
 	void updateObject(float delta_time); //オブジェクト制御
 	void updateActor(float delta_time); //アクター制御
@@ -42,7 +45,8 @@ public :
 	Sheet* sheet_ = nullptr; //譜面ポインタ
 	MakeSheet* make_ = nullptr; //譜面作成用クラスポインタ
 	Boss* boss_ = nullptr; //ボス戦クラス用ポインタ
-
+	std::vector<std::vector<std::string>> csv_skill_; //スキル情報csv
+	SkillList* skill_[10] = { nullptr }; //スキルリスト
 
 	const float FIELD_H_ = 450.0f; //床の縦幅
 	const float FIELD_W_ = 300.0f; //床の横幅

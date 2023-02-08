@@ -76,7 +76,6 @@ public:
 
 class SkillNormalA : public SkillBase {
 public:
-public:
 	SkillNormalA(ScenePlay* scene);
 	~SkillNormalA() {}
 	void update(float delta_time);
@@ -96,7 +95,6 @@ public:
 };
 
 class SkillNormalB : public SkillBase {
-public:
 public:
 	SkillNormalB(ScenePlay* scene);
 	~SkillNormalB() {}
@@ -118,7 +116,6 @@ public:
 
 class SkillComboA : public SkillBase {
 public:
-public:
 	SkillComboA(ScenePlay* scene);
 	~SkillComboA() {}
 	void update(float delta_time);
@@ -138,7 +135,6 @@ public:
 };
 
 class SkillComboB : public SkillBase {
-public:
 public:
 	SkillComboB(ScenePlay* scene);
 	~SkillComboB() {}
@@ -160,7 +156,6 @@ public:
 
 class SkillComboC : public SkillBase {
 public:
-public:
 	SkillComboC(ScenePlay* scene);
 	~SkillComboC() {}
 	void update(float delta_time);
@@ -180,7 +175,6 @@ public:
 };
 
 class SkillComboD : public SkillBase {
-public:
 public:
 	SkillComboD(ScenePlay* scene);
 	~SkillComboD() {}
@@ -202,7 +196,6 @@ public:
 
 class SkillPowerA : public SkillBase {
 public:
-public:
 	SkillPowerA(ScenePlay* scene);
 	~SkillPowerA() {}
 	void update(float delta_time);
@@ -222,7 +215,6 @@ public:
 };
 
 class SkillPowerB : public SkillBase {
-public:
 public:
 	SkillPowerB(ScenePlay* scene);
 	~SkillPowerB() {}
@@ -244,7 +236,6 @@ public:
 
 class SkillPowerC : public SkillBase {
 public:
-public:
 	SkillPowerC(ScenePlay* scene);
 	~SkillPowerC() {}
 	void update(float delta_time);
@@ -265,7 +256,6 @@ public:
 
 class SkillOtherA : public SkillBase {
 public:
-public:
 	SkillOtherA(ScenePlay* scene);
 	~SkillOtherA() {}
 	void update(float delta_time);
@@ -282,4 +272,15 @@ public:
 	const int MAX_NUM_ = 3; //ÉmÅ[Éhêî
 	const int INTERVAL_ = 24; //ÉmÅ[Éhê∂ê¨ä‘äu
 
+};
+
+class SkillList {
+public:
+	SkillList() {}
+	~SkillList() {}
+	std::string name_ = "-"; //ñºëO
+	std::string exp1_ = "-"; //ê‡ñæï∂
+	std::string exp2_ = "-"; //ê‡ñæï∂
+	std::string exp3_ = "-"; //ê‡ñæï∂
+	int mp_ = 0; //è¡îÔMP
 };
