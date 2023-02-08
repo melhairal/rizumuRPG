@@ -14,12 +14,13 @@ public:
 	// =========== 関数 ==========
 
 	void initialize(); //初期遷移
-	void getSkillList(); //スキルリストを取得
 	void changeAngleCommand(); //コマンド選択のカメラアングルに遷移
 	void changeAngleBattle(); //バトルのカメラアングルに遷移
 	void switchSkill(); //数値と発動させるスキルを対応させる
 	void command(); //コマンド選択処理
+	void progress(); //進行演出処理
 	void battle(); //戦闘開始(ノーツが流れ始める)
+	void nextTurn();
 
 	// ========== 基本ステータス ==========
 
@@ -52,9 +53,11 @@ public:
 
 	bool command_ = false; //コマンドフラグ
 	bool battle_ = false; //バトル開始フラグ
+	bool progress_ = false; //進行演出フラグ
+	bool next_turn_ = false;
 	int action_num_ = -1; //アクション回数
-	int player_action_[3] = { 1,2,3 }; //プレイヤーの行動を予約
-	int enemy_action_[3] = { 0,1,2 }; //エネミーの行動を予約
+	int player_action_[3] = { -1,-1,-1 }; //プレイヤーの行動を予約
+	int enemy_action_[3] = { -1,-1,-1 }; //エネミーの行動を予約
 
 	const int INDEX_MAX_ = 3; //インデックス最大数
 	int index_main_ = 0; //メインコマンド選択用インデックス
@@ -62,5 +65,6 @@ public:
 	int index_sub_list_ = 0; //サブコマンドリスト位置用インデックス
 	bool main_command_ = true; //メインコマンドかどうか
 	int select_num_ = 0; //選択した行動数
-	int select_action_[3] = { -1,-1,-1 }; //選択した行動
+
+	bool init_progress_ = false; //演出初期処理
 };

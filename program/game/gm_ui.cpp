@@ -48,8 +48,22 @@ void Ui::update(float delta_time) {
 				attack_window_x_[i] = ATTACK_WINDOW_X_DEF_;
 				attack_str_x_[i] = ATTACK_STR_X_DEF_;
 			}
-			attack_window_x_[scene_->boss_->select_num_] = ATTACK_WINDOW_X_SEL_;
-			attack_str_x_[scene_->boss_->select_num_] = ATTACK_STR_X_SEL_;
+			if (scene_->boss_->select_num_ >= 0 && scene_->boss_->select_num_ < 3) {
+				attack_window_x_[scene_->boss_->select_num_] = ATTACK_WINDOW_X_SEL_;
+				attack_str_x_[scene_->boss_->select_num_] = ATTACK_STR_X_SEL_;
+			}
+		}
+
+		if (scene_->boss_->battle_) { //バトル中
+			//行動中の攻撃ウィンドウの座標をずらす
+			for (int i = 0; i < 3; i++) {
+				attack_window_x_[i] = ATTACK_WINDOW_X_DEF_;
+				attack_str_x_[i] = ATTACK_STR_X_DEF_;
+			}
+			if (scene_->boss_->action_num_ >= 0 && scene_->boss_->action_num_ < 3) {
+				attack_window_x_[scene_->boss_->action_num_] = ATTACK_WINDOW_X_SEL_;
+				attack_str_x_[scene_->boss_->action_num_] = ATTACK_STR_X_SEL_;
+			}
 		}
 	}
 }
@@ -105,15 +119,15 @@ void Ui::render() {
 			case 3:
 				break;
 			}
-			//攻撃表示ウィンドウ
-			DrawRotaGraph(attack_window_x_[0], ATTACK_WINDOW_Y_[0], 1.2f, 0, window_attack_player_, true);
-			DrawRotaGraph(attack_window_x_[1], ATTACK_WINDOW_Y_[1], 1.2f, 0, window_attack_player_, true);
-			DrawRotaGraph(attack_window_x_[2], ATTACK_WINDOW_Y_[2], 1.2f, 0, window_attack_player_, true);
-			//攻撃表示文字
-			if (scene_->boss_->select_num_ >= 1) DrawStringToHandle(attack_str_x_[0], ATTACK_STR_Y_[0], scene_->skill_[scene_->boss_->select_action_[0]]->name_.c_str(), BROWN, font_rondo_24_);
-			if (scene_->boss_->select_num_ >= 2) DrawStringToHandle(attack_str_x_[1], ATTACK_STR_Y_[1], scene_->skill_[scene_->boss_->select_action_[1]]->name_.c_str(), BROWN, font_rondo_24_);
-			if (scene_->boss_->select_num_ >= 3) DrawStringToHandle(attack_str_x_[2], ATTACK_STR_Y_[2], scene_->skill_[scene_->boss_->select_action_[2]]->name_.c_str(), BROWN, font_rondo_24_);
 		}
+		//攻撃表示ウィンドウ
+		DrawRotaGraph(attack_window_x_[0], ATTACK_WINDOW_Y_[0], 1.2f, 0, window_attack_player_, true);
+		DrawRotaGraph(attack_window_x_[1], ATTACK_WINDOW_Y_[1], 1.2f, 0, window_attack_player_, true);
+		DrawRotaGraph(attack_window_x_[2], ATTACK_WINDOW_Y_[2], 1.2f, 0, window_attack_player_, true);
+		//攻撃表示文字
+		if (scene_->boss_->select_num_ >= 1) DrawStringToHandle(attack_str_x_[0], ATTACK_STR_Y_[0], scene_->skill_[scene_->boss_->player_action_[0]]->name_.c_str(), BROWN, font_rondo_24_);
+		if (scene_->boss_->select_num_ >= 2) DrawStringToHandle(attack_str_x_[1], ATTACK_STR_Y_[1], scene_->skill_[scene_->boss_->player_action_[1]]->name_.c_str(), BROWN, font_rondo_24_);
+		if (scene_->boss_->select_num_ >= 3) DrawStringToHandle(attack_str_x_[2], ATTACK_STR_Y_[2], scene_->skill_[scene_->boss_->player_action_[2]]->name_.c_str(), BROWN, font_rondo_24_);
 	}
 
 	//プレイヤーゲージ表示

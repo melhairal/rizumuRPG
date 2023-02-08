@@ -71,8 +71,14 @@ void Boss::update(float delta_time) {
 	//コマンド処理
 	if (command_) command();
 
+	//進行演出処理
+	if (progress_) progress();
+
 	//バトル処理
 	if (battle_) battle();
+
+	//次のターンに移る処理
+	if (next_turn_) nextTurn();
 	
 	//スキル処理
 	if (skills_ != nullptr) {
@@ -80,12 +86,6 @@ void Boss::update(float delta_time) {
 	}
 
 	// ========== デバッグ等 ==========
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_C)) {
-		is_changing_angle_ = true;
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_V)) {
-		battle_ = true;
-	}
 
 }
 
@@ -199,16 +199,12 @@ void Boss::battle() {
 	}
 	if (skills_ == nullptr && enemy_->action_ == -1) {
 		action_num_++;
-		if (action_num_ != 3) {
+		if (action_num_ < 3) {
 			switchSkill();
 		}
 		else {
-			for (int i = 0; i < 3; i++) {
-				player_action_[i] = -1;
-				enemy_action_[i] = -1;
-			}
-			action_num_ = -1;
 			battle_ = false;
+			next_turn_ = true;
 		}
 	}
 }
@@ -246,20 +242,23 @@ void Boss::command() {
 		if (main_command_) main_command_ = false; //メインコマンドならサブコマンドに移る
 		else {
 			//コマンドを登録する
-			switch (index_main_) {
-			case 0:
-				select_action_[select_num_] = index_sub_;
-				break;
-			case 1:
-				select_action_[select_num_] = index_sub_ + index_sub_list_ + 2;
-				break;
-			case 3:
-				break;
+			if (select_num_ < 3) {
+				switch (index_main_) {
+				case 0:
+					player_action_[select_num_] = index_sub_;
+					break;
+				case 1:
+					player_action_[select_num_] = index_sub_ + index_sub_list_ + 2;
+					break;
+				case 3:
+					break;
+				}
+				select_num_++;
 			}
-			select_num_++;
 			if (select_num_ == 3) {
 				//アクション開始
-
+				command_ = false;
+				progress_ = true;
 			}
 		}
 	}
@@ -273,7 +272,7 @@ void Boss::command() {
 			//コマンドを削除する
 			if (select_num_ > 0) {
 				select_num_--;
-				select_action_[select_num_] = -1;
+				player_action_[select_num_] = -1;
 			}
 		}
 	}
@@ -292,5 +291,42 @@ void Boss::command() {
 		index_sub_ = std::clamp(index_sub_, 0, 0);
 		index_sub_list_ = std::clamp(index_sub_list_, 0, 0);
 		break;
+	}
+}
+
+void Boss::progress() {
+	if (!init_progress_) {
+		init_progress_ = true;
+		is_changing_angle_ = true;
+		enemy_action_[0] = rand() % 6;
+		enemy_action_[1] = rand() % 6;
+		enemy_action_[2] = rand() % 6;
+	}
+	if (!is_changing_angle_) {
+		progress_ = false;
+		init_progress_ = false;
+		battle_ = true;
+	}
+}
+
+void Boss::nextTurn() {
+	if (!init_progress_) {
+		init_progress_ = true;
+		is_changing_angle_ = true;
+		for (int i = 0; i < 3; i++) {
+			player_action_[i] = -1;
+			enemy_action_[i] = -1;
+		}
+		select_num_ = 0;
+		action_num_ = -1;
+		main_command_ = true;
+		index_main_ = 0;
+		index_sub_ = 0;
+		index_sub_list_ = 0;
+	}
+	if (!is_changing_angle_) {
+		next_turn_ = false;
+		init_progress_ = false;
+		command_ = true;
 	}
 }

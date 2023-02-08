@@ -223,6 +223,7 @@ void BossNotes::judge() {
 		if (judgeKey()) {
 			//パーフェクト判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, perfect, lane_));
+			scene_->score_ += 10 * scene_->combo_ * 2;
 			scene_->bgm_->perfect_ = true;
 			judge_ = perfect;
 			scene_->combo_++;
@@ -232,6 +233,7 @@ void BossNotes::judge() {
 		if (judgeKey()) {
 			//グッド判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, good, lane_));
+			scene_->score_ += 10 * scene_->combo_;
 			scene_->bgm_->perfect_ = true;
 			judge_ = good;
 			scene_->combo_++;
@@ -255,6 +257,7 @@ void BossNotes::judgeAll() {
 			//パーフェクト判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, perfect, lane_));
 			scene_->actors_.emplace_back(new EffectGard(scene_, lane_));
+			scene_->score_ += 30 * scene_->combo_ * 2;
 			scene_->bgm_->perfect_ = true;
 			judge_ = perfect;
 			scene_->combo_++;
@@ -266,6 +269,7 @@ void BossNotes::judgeAll() {
 			//グッド判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, good, lane_));
 			scene_->actors_.emplace_back(new EffectGard(scene_, lane_));
+			scene_->score_ += 30 * scene_->combo_;
 			scene_->bgm_->perfect_ = true;
 			judge_ = good;
 			scene_->combo_++;

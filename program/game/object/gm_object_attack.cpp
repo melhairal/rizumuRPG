@@ -45,6 +45,7 @@ void AttackNotes::judge() {
 			//パーフェクト判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, perfect, lane_));
 			scene_->actors_.emplace_back(new EffectSkillPerfect(scene_, lane_));
+			scene_->score_ += 100 * scene_->combo_ * 2;
 			scene_->bgm_->perfect_ = true;
 			judge_ = perfect;
 			alive_ = false;
@@ -55,6 +56,7 @@ void AttackNotes::judge() {
 			//グッド判定処理
 			scene_->subUis_.emplace_back(new SubUiJudge(scene_, good, lane_));
 			scene_->actors_.emplace_back(new EffectSkillGood(scene_, lane_));
+			scene_->score_ += 100 * scene_->combo_;
 			scene_->bgm_->perfect_ = true;
 			judge_ = good;
 			alive_ = false;
@@ -391,13 +393,13 @@ void SkillOtherA::update(float delta_time) {
 void SkillOtherA::notesPerfect() {
 	scene_->combo_++;
 	int damage = scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f);
-	scene_->hp_ += damage / 10;
+	scene_->hp_ += damage / 2;
 	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage;
 }
 
 void SkillOtherA::notesGood() {
 	scene_->combo_++;
 	int damage = scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);
-	scene_->hp_ += damage / 10;
+	scene_->hp_ += damage / 2;
 	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage;
 }
