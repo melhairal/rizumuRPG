@@ -147,6 +147,14 @@ public:
 	const int ATTACK_STR_X_DEF_ = 8;
 	const int ATTACK_STR_X_SEL_ = 28;
 
+
+	//ターン進行演出用座標
+	const int PROGRESS_Y_ = DXE_WINDOW_HEIGHT * 0.3f;
+	int progress_x_ = 0;
+	int progress_x_speed_ = 25;
+	int progress_x_speed_center_ = 1;
+	int progress_elapsed_ = 0;
+
 };
 
 class SubUiJudge {

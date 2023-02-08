@@ -14,7 +14,6 @@
 #include "../object/gm_object_attack.h"
 #include "../gm_boss.h"
 
-
 tnl::Quaternion	fix_rot;
 
 ScenePlay::~ScenePlay() {
@@ -33,6 +32,9 @@ ScenePlay::~ScenePlay() {
 
 
 void ScenePlay::initialzie() {
+	//乱数シード値の取得
+	srand((unsigned int)time(NULL));
+
 	//カメラの生成
 	camera_ = new GmCamera();
 	camera_->target_ = { 0,0,0 };

@@ -65,6 +65,18 @@ void Ui::update(float delta_time) {
 				attack_str_x_[scene_->boss_->action_num_] = ATTACK_STR_X_SEL_;
 			}
 		}
+
+		if (scene_->boss_->progress_ || scene_->boss_->next_turn_ || !scene_->boss_->init_) { //ターン進行中
+			if (scene_->boss_->elapsed_ < scene_->boss_->ANGLE_TIMER_ / 12 || scene_->boss_->elapsed_ > scene_->boss_->ANGLE_TIMER_ / 12 * 10) {
+				progress_x_ += progress_x_speed_;
+			}
+			else {
+				progress_x_ += progress_x_speed_center_;
+			}
+		}
+		else {
+			progress_x_ = 0;
+		}
 	}
 }
 
@@ -128,6 +140,17 @@ void Ui::render() {
 		if (scene_->boss_->select_num_ >= 1) DrawStringToHandle(attack_str_x_[0], ATTACK_STR_Y_[0], scene_->skill_[scene_->boss_->player_action_[0]]->name_.c_str(), BROWN, font_rondo_24_);
 		if (scene_->boss_->select_num_ >= 2) DrawStringToHandle(attack_str_x_[1], ATTACK_STR_Y_[1], scene_->skill_[scene_->boss_->player_action_[1]]->name_.c_str(), BROWN, font_rondo_24_);
 		if (scene_->boss_->select_num_ >= 3) DrawStringToHandle(attack_str_x_[2], ATTACK_STR_Y_[2], scene_->skill_[scene_->boss_->player_action_[2]]->name_.c_str(), BROWN, font_rondo_24_);
+		
+		//進行中演出
+		if (scene_->boss_->progress_) {
+			DrawStringToHandle(progress_x_, PROGRESS_Y_, "BATTLE!!", RED, font_rondo_128_);
+		}
+		if (scene_->boss_->next_turn_) {
+			DrawStringToHandle(progress_x_, PROGRESS_Y_, "NEXT TURN!", BLUE, font_rondo_128_);
+		}
+		if (!scene_->boss_->init_) {
+			DrawStringToHandle(progress_x_, PROGRESS_Y_, "WARNING!", YELLOW, font_rondo_128_);
+		}
 	}
 
 	//プレイヤーゲージ表示
