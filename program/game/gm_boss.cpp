@@ -178,7 +178,7 @@ void Boss::battle() {
 			}
 		}
 	}
-	if (skills_ == nullptr && enemy_->action_ == -1) {
+	else if (enemy_->action_ == -1) {
 		if (scene_->hp_ == 0) {
 			battle_ = false;
 			lose_ = true;

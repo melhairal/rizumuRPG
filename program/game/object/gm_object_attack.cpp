@@ -106,10 +106,14 @@ void SkillBase::checkJudge() {
 	}
 }
 
+void SkillBase::damage() {
+	float r = 90 + rand() % 20;
+	damage_good_ = ((float)scene_->atk_ * (float)(1.0f + (float)scene_->combo_ * 0.01f)) * (r / 100.0f);
+	damage_perfect_ = (float)scene_->atk_ * (float)(1.0f + (float)scene_->combo_ * 0.02f) * (r / 100.0f);
+}
+
 SkillNormalA::SkillNormalA(ScenePlay* scene) {
 	scene_ = scene;
-	name_ = NAME_;
-	mp_ = MP_;
 }
 
 void SkillNormalA::update(float delta_time) {
@@ -126,18 +130,20 @@ void SkillNormalA::update(float delta_time) {
 
 void SkillNormalA::notesPerfect() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f);
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_perfect_, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_perfect_;
 }
 
 void SkillNormalA::notesGood() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_good_, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_good_;
 }
 
 SkillNormalB::SkillNormalB(ScenePlay* scene) {
 	scene_ = scene;
-	name_ = NAME_;
-	mp_ = MP_;
 }
 
 void SkillNormalB::update(float delta_time) {
@@ -154,18 +160,20 @@ void SkillNormalB::update(float delta_time) {
 
 void SkillNormalB::notesPerfect() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f);
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_perfect_, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_perfect_;
 }
 
 void SkillNormalB::notesGood() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_good_, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_good_;
 }
 
 SkillComboA::SkillComboA(ScenePlay* scene) {
 	scene_ = scene;
-	name_ = NAME_;
-	mp_ = MP_;
 }
 
 void SkillComboA::update(float delta_time) {
@@ -182,18 +190,20 @@ void SkillComboA::update(float delta_time) {
 
 void SkillComboA::notesPerfect() {
 	scene_->combo_+= 3;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f);
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_perfect_, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_perfect_;
 }
 
 void SkillComboA::notesGood() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_good_, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_good_;
 }
 
 SkillComboB::SkillComboB(ScenePlay* scene) {
 	scene_ = scene;
-	name_ = NAME_;
-	mp_ = MP_;
 }
 
 void SkillComboB::update(float delta_time) {
@@ -210,20 +220,22 @@ void SkillComboB::update(float delta_time) {
 
 void SkillComboB::notesPerfect() {
 	scene_->combo_ += 2;
+	damage();
 	if (judges_[0] == AttackNotes::perfect && judges_[1] == AttackNotes::perfect && judges_[2] == AttackNotes::perfect
 		&& judges_[3] == AttackNotes::perfect && judges_[4] == AttackNotes::perfect) scene_->combo_ += 10;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f);
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_perfect_, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_perfect_;
 }
 
 void SkillComboB::notesGood() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_good_, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_good_;
 }
 
 SkillComboC::SkillComboC(ScenePlay* scene) {
 	scene_ = scene;
-	name_ = NAME_;
-	mp_ = MP_;
 }
 
 void SkillComboC::update(float delta_time) {
@@ -241,20 +253,22 @@ void SkillComboC::update(float delta_time) {
 
 void SkillComboC::notesPerfect() {
 	scene_->combo_ ++;
+	damage();
 	if (judges_[0] == AttackNotes::perfect && judges_[1] == AttackNotes::perfect && judges_[2] == AttackNotes::perfect
 		&& judges_[3] == AttackNotes::perfect) scene_->combo_ *= 2;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f);
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_perfect_, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_perfect_;
 }
 
 void SkillComboC::notesGood() {
 	scene_->combo_ /= 2;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_good_, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_good_;
 }
 
 SkillComboD::SkillComboD(ScenePlay* scene) {
 	scene_ = scene;
-	name_ = NAME_;
-	mp_ = MP_;
 }
 
 void SkillComboD::update(float delta_time) {
@@ -272,20 +286,22 @@ void SkillComboD::update(float delta_time) {
 
 void SkillComboD::notesPerfect() {
 	scene_->combo_ ++;
+	damage();
 	if (judges_[0] == AttackNotes::perfect && judges_[1] == AttackNotes::perfect && judges_[2] == AttackNotes::perfect
 		&& judges_[3] == AttackNotes::perfect && judges_[4] == AttackNotes::perfect && judges_[5] == AttackNotes::perfect) scene_->combo_ *= 3;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f);
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_perfect_, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_perfect_;
 }
 
 void SkillComboD::notesGood() {
 	scene_->combo_ /= 2;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_good_, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_good_;
 }
 
 SkillPowerA::SkillPowerA(ScenePlay* scene) {
 	scene_ = scene;
-	name_ = NAME_;
-	mp_ = MP_;
 }
 
 void SkillPowerA::update(float delta_time) {
@@ -302,18 +318,20 @@ void SkillPowerA::update(float delta_time) {
 
 void SkillPowerA::notesPerfect() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * 8.0f * (1 + (float)scene_->combo_ * 0.02f);
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_perfect_ * 8, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_perfect_ * 8;
 }
 
 void SkillPowerA::notesGood() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * 8.0f * (1 + (float)scene_->combo_ * 0.01f);
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_good_ * 8, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_good_ * 8;
 }
 
 SkillPowerB::SkillPowerB(ScenePlay* scene) {
 	scene_ = scene;
-	name_ = NAME_;
-	mp_ = MP_;
 }
 
 void SkillPowerB::update(float delta_time) {
@@ -330,20 +348,22 @@ void SkillPowerB::update(float delta_time) {
 
 void SkillPowerB::notesPerfect() {
 	scene_->combo_++;
-	float power = 1.0f;
-	if (judges_[0] == AttackNotes::perfect && judges_[1] == AttackNotes::perfect) power = 16.0f;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * power * (1 + (float)scene_->combo_ * 0.02f);
+	damage();
+	int power = 1;
+	if (judges_[0] == AttackNotes::perfect && judges_[1] == AttackNotes::perfect) power = 16;
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_perfect_ * power, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_perfect_ * power;
 }
 
 void SkillPowerB::notesGood() {
 	scene_->combo_++;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_good_, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_good_;
 }
 
 SkillPowerC::SkillPowerC(ScenePlay* scene) {
 	scene_ = scene;
-	name_ = NAME_;
-	mp_ = MP_;
 }
 
 void SkillPowerC::update(float delta_time) {
@@ -360,22 +380,24 @@ void SkillPowerC::update(float delta_time) {
 
 void SkillPowerC::notesPerfect() {
 	scene_->combo_++;
-	float power = 1.0f;
-	if (scene_->combo_ >= 100) power = 40.0f;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * power * (1 + (float)scene_->combo_ * 0.02f);
+	damage();
+	int power = 1;
+	if (scene_->combo_ >= 100) power = 40;
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_perfect_ * power, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_perfect_ * power;
 }
 
 void SkillPowerC::notesGood() {
 	scene_->combo_++;
-	float power = 1.0f;
-	if (scene_->combo_ >= 100) power = 40.0f;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= scene_->atk_ * power * (1 + (float)scene_->combo_ * 0.01f);
+	damage();
+	int power = 1;
+	if (scene_->combo_ >= 100) power = 40;
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_good_ * power, scene_->player_->lane_));
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_good_ * power;
 }
 
 SkillOtherA::SkillOtherA(ScenePlay* scene) {
 	scene_ = scene;
-	name_ = NAME_;
-	mp_ = MP_;
 }
 
 void SkillOtherA::update(float delta_time) {
@@ -392,14 +414,16 @@ void SkillOtherA::update(float delta_time) {
 
 void SkillOtherA::notesPerfect() {
 	scene_->combo_++;
-	int damage = scene_->atk_ * (1 + (float)scene_->combo_ * 0.02f);
-	scene_->hp_ += damage / 2;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage;
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_perfect_, scene_->player_->lane_));
+	scene_->hp_ += damage_perfect_ / 2;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_perfect_;
 }
 
 void SkillOtherA::notesGood() {
 	scene_->combo_++;
-	int damage = scene_->atk_ * (1 + (float)scene_->combo_ * 0.01f);
-	scene_->hp_ += damage / 2;
-	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage;
+	damage();
+	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_good_, scene_->player_->lane_));
+	scene_->hp_ += damage_good_ / 2;
+	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_good_;
 }

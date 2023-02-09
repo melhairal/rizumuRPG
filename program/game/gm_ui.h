@@ -157,7 +157,24 @@ public:
 
 };
 
-class SubUiJudge {
+class SubUiBase {
+public:
+	SubUiBase() {}
+	virtual ~SubUiBase() {}
+	virtual void update(float delta_time) {}
+	virtual void render() {}
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	ScenePlay* scene_ = nullptr; //シーンの変数を取得するためのポインタ
+	bool alive_ = true; //生存フラグ
+	bool move_ = true; //動作フラグ
+
+};
+
+class SubUiJudge : public SubUiBase {
 public:
 	SubUiJudge(ScenePlay* scene, int judge, int lane);
 	~SubUiJudge(){}
@@ -167,10 +184,6 @@ public:
 	// =========== 関数 ==========
 
 	// ========== 基本ステータス ==========
-
-	ScenePlay* scene_ = nullptr; //シーンの変数を取得するためのポインタ
-	bool alive_ = true; //生存フラグ
-	bool move_ = true; //動作フラグ
 
 	enum {
 		perfect,
@@ -186,5 +199,27 @@ public:
 	//座標
 	const float JUDGE_X_[4] = { DXE_WINDOW_WIDTH * 0.2f - 20,DXE_WINDOW_WIDTH * 0.4f - 20,DXE_WINDOW_WIDTH * 0.6f - 20,DXE_WINDOW_WIDTH * 0.8f - 20 }; //4つのレーンの座標
 	float judge_y_ = DXE_WINDOW_HEIGHT * 0.75f;
+
+};
+
+class SubUiDamage : public SubUiBase {
+public:
+	SubUiDamage(ScenePlay* scene, int damage, int lane);
+	~SubUiDamage() {}
+	void update(float delta_time);
+	void render();
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	int damage_ = 0;
+	int lane_ = 0;
+	int elapsed_ = 0;
+	const int RENDER_TIME_ = 30; //表示時間
+
+	//座標
+	const float DAMAGE_X_[4] = { DXE_WINDOW_WIDTH * 0.2f - 20,DXE_WINDOW_WIDTH * 0.4f - 20,DXE_WINDOW_WIDTH * 0.6f - 20,DXE_WINDOW_WIDTH * 0.8f - 20 }; //4つのレーンの座標
+	float damage_y_ = DXE_WINDOW_HEIGHT * 0.5f;
 
 };

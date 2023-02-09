@@ -279,3 +279,24 @@ void SubUiJudge::render() {
 		break;
 	}
 }
+
+SubUiDamage::SubUiDamage(ScenePlay* scene, int damage, int lane) {
+	scene_ = scene;
+	damage_ = damage;
+	lane_ = lane;
+}
+
+void SubUiDamage::update(float delta_time) {
+	elapsed_++;
+	damage_y_ -= 1.0f;
+	if (elapsed_ >= RENDER_TIME_) alive_ = false;
+}
+
+void SubUiDamage::render() {
+	if (damage_ < 100) {
+		DrawFormatStringToHandle(DAMAGE_X_[lane_], damage_y_, scene_->ui_->RED, scene_->ui_->font_rondo_64_, "%d", damage_);
+	}
+	else {
+		DrawFormatStringToHandle(DAMAGE_X_[lane_], damage_y_, scene_->ui_->RED, scene_->ui_->font_rondo_64_, "%d!!", damage_);
+	}
+}

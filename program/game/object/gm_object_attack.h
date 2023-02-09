@@ -57,6 +57,8 @@ public:
 
 	// =========== 関数 ==========
 
+	void damage(); //ダメージ計算
+
 	void randomPop(); //ランダムなレーンに生成
 	void checkJudge(); //判定を確認
 
@@ -66,8 +68,6 @@ public:
 	// ========== 基本ステータス ==========
 
 	ScenePlay* scene_ = nullptr; //シーンポインタ
-	std::string name_ = "-"; //技の名前
-	int mp_ = 0; //消費MP
 	int num_ = 0; //何個目のノーツか
 	bool finish_ = false; //処理が終わったかどうか
 
@@ -75,7 +75,10 @@ public:
 	int judges_[6] = { -1,-1,-1,-1,-1,-1 }; //判定リスト
 
 	int elapsed_ = 0; //時間計測用
-	const int SKILL_INTERVAL_ = 100; //スキルとスキルの間隔
+	const int SKILL_INTERVAL_ = 150; //スキルとスキルの間隔
+
+	int damage_good_ = 0;
+	int damage_perfect_ = 0;
 };
 
 class SkillNormalA : public SkillBase {
@@ -91,8 +94,6 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const std::string NAME_ = "連続斬り"; //技の名前
-	const int MP_ = 5; //消費MP
 	const int MAX_NUM_ = 2; //ノード数
 	const int INTERVAL_ = 24; //ノード生成間隔
 
@@ -111,8 +112,6 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const std::string NAME_ = "三連斬り"; //技の名前
-	const int MP_ = 10; //消費MP
 	const int MAX_NUM_ = 3; //ノード数
 	const int INTERVAL_ = 24; //ノード生成間隔
 
@@ -131,8 +130,6 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const std::string NAME_ = "隼斬り"; //技の名前
-	const int MP_ = 20; //消費MP
 	const int MAX_NUM_ = 3; //ノード数
 	const int INTERVAL_ = 18; //ノード生成間隔
 
@@ -151,8 +148,6 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const std::string NAME_ = "神速斬り"; //技の名前
-	const int MP_ = 30; //消費MP
 	const int MAX_NUM_ = 5; //ノード数
 	const int INTERVAL_ = 18; //ノード生成間隔
 
@@ -171,8 +166,6 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const std::string NAME_ = "ダブルアップ"; //技の名前
-	const int MP_ = 50; //消費MP
 	const int MAX_NUM_ = 4; //ノード数
 	const int INTERVAL_ = 24; //ノード生成間隔
 
@@ -191,8 +184,6 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const std::string NAME_ = "トリプルアップ"; //技の名前
-	const int MP_ = 60; //消費MP
 	const int MAX_NUM_ = 6; //ノード数
 	const int INTERVAL_ = 18; //ノード生成間隔
 
@@ -211,8 +202,6 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const std::string NAME_ = "溜め斬り"; //技の名前
-	const int MP_ = 20; //消費MP
 	const int MAX_NUM_ = 1; //ノード数
 	const int INTERVAL_ = 24; //ノード生成間隔
 
@@ -231,8 +220,6 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const std::string NAME_ = "燕返し"; //技の名前
-	const int MP_ = 30; //消費MP
 	const int MAX_NUM_ = 2; //ノード数
 	const int INTERVAL_ = 18; //ノード生成間隔
 
@@ -251,8 +238,6 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const std::string NAME_ = "百の剣"; //技の名前
-	const int MP_ = 100; //消費MP
 	const int MAX_NUM_ = 1; //ノード数
 	const int INTERVAL_ = 24; //ノード生成間隔
 
@@ -271,8 +256,6 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const std::string NAME_ = "吸血斬り"; //技の名前
-	const int MP_ = 50; //消費MP
 	const int MAX_NUM_ = 3; //ノード数
 	const int INTERVAL_ = 24; //ノード生成間隔
 

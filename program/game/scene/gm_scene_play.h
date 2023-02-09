@@ -5,7 +5,7 @@ class GmCamera;
 class ObjectBase;
 class Actor;
 class Ui;
-class SubUiJudge;
+class SubUiBase;
 class Bgm;
 class Sheet;
 class MakeSheet;
@@ -40,7 +40,7 @@ public :
 	dxe::Mesh* frame_ = nullptr; //床の線
 	std::list<ObjectBase*> objects_; //オブジェクトリスト
 	std::list<Actor*> actors_; //アクターリスト
-	std::list<SubUiJudge*> subUis_; //サブUIリスト
+	std::list<SubUiBase*> subUis_; //サブUIリスト
 	Actor* player_ = nullptr; //プレイヤーポインタ
 	Sheet* sheet_ = nullptr; //譜面ポインタ
 	MakeSheet* make_ = nullptr; //譜面作成用クラスポインタ
