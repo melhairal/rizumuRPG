@@ -300,3 +300,30 @@ void SubUiDamage::render() {
 		DrawFormatStringToHandle(DAMAGE_X_[lane_], damage_y_, scene_->ui_->RED, scene_->ui_->font_rondo_64_, "%d!!", damage_);
 	}
 }
+
+SubUiPlayerDamage::SubUiPlayerDamage(ScenePlay* scene, int damage, int lane) {
+	scene_ = scene;
+	damage_ = damage;
+	lane_ = lane;
+}
+
+void SubUiPlayerDamage::update(float delta_time) {
+	elapsed_++;
+	damage_y_ -= 1.0f;
+	if (elapsed_ >= RENDER_TIME_) alive_ = false;
+}
+
+void SubUiPlayerDamage::render() {
+	if (damage_ <= -100) {
+		DrawFormatStringToHandle(DAMAGE_X_[lane_], damage_y_, scene_->ui_->GREEN, scene_->ui_->font_rondo_64_, "%d!!", -damage_);
+	}
+	else if (damage_ < 0) {
+		DrawFormatStringToHandle(DAMAGE_X_[lane_], damage_y_, scene_->ui_->GREEN, scene_->ui_->font_rondo_64_, "%d", -damage_);
+	}
+	else if (damage_ < 100) {
+		DrawFormatStringToHandle(DAMAGE_X_[lane_], damage_y_, scene_->ui_->RED, scene_->ui_->font_rondo_64_, "%d", damage_);
+	}
+	else {
+		DrawFormatStringToHandle(DAMAGE_X_[lane_], damage_y_, scene_->ui_->RED, scene_->ui_->font_rondo_64_, "%d!!", damage_);
+	}
+}

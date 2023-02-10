@@ -115,6 +115,7 @@ void EnemyBase::notesEnemy() {
 		//Ž¸”s”»’èˆ—
 		scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
 		scene_->actors_.emplace_back(new EffectHit(scene_, lane_));
+		scene_->subUis_.emplace_back(new SubUiPlayerDamage(scene_, atk_, scene_->player_->lane_));
 		scene_->combo_ = 0;
 		scene_->hp_ -= atk_;
 	}
@@ -157,6 +158,7 @@ void EnemyBase::notesBullet() {
 		//Ž¸”s”»’èˆ—
 		scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
 		scene_->actors_.emplace_back(new EffectHit(scene_, lane_));
+		scene_->subUis_.emplace_back(new SubUiPlayerDamage(scene_, atk_, scene_->player_->lane_));
 		scene_->combo_ = 0;
 		scene_->hp_ -= atk_;
 		alive_ = false;

@@ -1,7 +1,4 @@
-﻿  gm_boss.cpp
-  gm_sheet_music.cpp
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_sheet_music.cpp(24,13): warning C4018: '<': signed と unsigned の数値を比較しようとしました。
-  gm_ui.cpp
+﻿  gm_ui.cpp
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(86,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(91,40): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(92,41): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
@@ -62,6 +59,14 @@ C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.cpp(297,46): warni
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.cpp(297,43): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.cpp(300,46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.cpp(300,43): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.cpp(318,46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.cpp(318,43): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.cpp(321,46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.cpp(321,43): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.cpp(324,46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.cpp(324,43): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.cpp(327,46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.cpp(327,43): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
   gm_object_attack.cpp
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(86,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(91,40): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
@@ -89,6 +94,98 @@ C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(110,10): warning C4244: '初期化中': 'int' から 'float' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(111,87): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_attack.cpp(112,88): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  gm_object_boss.cpp
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(86,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(91,40): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(92,41): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(97,40): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(98,41): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(112,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(113,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(114,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(115,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(116,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(117,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(118,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(119,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(120,41): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(122,42): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(123,42): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(124,48): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(125,48): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(131,47): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(132,46): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(136,46): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(152,44): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(300,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(309,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(319,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+  gm_object_enemy.cpp
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(86,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(91,40): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(92,41): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(97,40): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(98,41): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(112,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(113,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(114,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(115,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(116,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(117,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(118,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(119,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(120,41): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(122,42): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(123,42): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(124,48): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(125,48): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(131,47): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(132,46): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(136,46): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(152,44): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(38,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(93,49): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(105,21): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(137,49): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(148,21): warning C4244: '+=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(176,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(191,42): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(194,14): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(207,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(221,19): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(224,14): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(239,19): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(244,42): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(247,14): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(261,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(272,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(287,42): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(290,14): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(304,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(318,19): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(321,14): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(336,19): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(341,42): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(344,14): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(358,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(369,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(384,42): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(387,14): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(400,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(414,19): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(417,14): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(429,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(445,42): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(448,14): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(461,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(479,19): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(483,19): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(486,14): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(503,42): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(507,19): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(513,42): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(516,14): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_enemy.cpp(530,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
   gm_scene_play.cpp
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(86,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(91,40): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。

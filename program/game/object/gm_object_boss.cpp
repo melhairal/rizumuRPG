@@ -244,6 +244,7 @@ void BossNotes::judge() {
 		//Ž¸”s”»’èˆ—
 		scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
 		scene_->actors_.emplace_back(new EffectHit(scene_, lane_));
+		scene_->subUis_.emplace_back(new SubUiPlayerDamage(scene_, damage_, scene_->player_->lane_));
 		judge_ = miss;
 		scene_->hp_ -= damage_;
 		scene_->combo_ = 0;
@@ -283,6 +284,7 @@ void BossNotes::judgeAll() {
 		//Ž¸”s”»’èˆ—
 		scene_->subUis_.emplace_back(new SubUiJudge(scene_, miss, lane_));
 		scene_->actors_.emplace_back(new EffectHit(scene_, lane_));
+		scene_->subUis_.emplace_back(new SubUiPlayerDamage(scene_, damage_, scene_->player_->lane_));
 		judge_ = miss;
 		scene_->hp_ -= damage_;
 		scene_->combo_ = 0;

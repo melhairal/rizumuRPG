@@ -223,3 +223,24 @@ public:
 	float damage_y_ = DXE_WINDOW_HEIGHT * 0.5f;
 
 };
+
+class SubUiPlayerDamage : public SubUiBase {
+public:
+	SubUiPlayerDamage(ScenePlay* scene, int damage, int lane);
+	~SubUiPlayerDamage() {}
+	void update(float delta_time);
+	void render();
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	int damage_ = 0;
+	int lane_ = 0;
+	int elapsed_ = 0;
+	const int RENDER_TIME_ = 30; //表示時間
+
+	//座標
+	const float DAMAGE_X_[4] = { DXE_WINDOW_WIDTH * 0.2f - 20,DXE_WINDOW_WIDTH * 0.4f - 20,DXE_WINDOW_WIDTH * 0.6f - 20,DXE_WINDOW_WIDTH * 0.8f - 20 }; //4つのレーンの座標
+	float damage_y_ = DXE_WINDOW_HEIGHT * 0.8f;
+};
