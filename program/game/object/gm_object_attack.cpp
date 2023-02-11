@@ -132,6 +132,7 @@ void SkillNormalA::notesPerfect() {
 	scene_->combo_++;
 	damage();
 	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_perfect_, scene_->player_->lane_));
+	scene_->mp_ += damage_perfect_ / 2;
 	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_perfect_;
 }
 
@@ -139,6 +140,7 @@ void SkillNormalA::notesGood() {
 	scene_->combo_++;
 	damage();
 	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_good_, scene_->player_->lane_));
+	scene_->mp_ += damage_good_ / 2;
 	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_good_;
 }
 
@@ -162,6 +164,7 @@ void SkillNormalB::notesPerfect() {
 	scene_->combo_++;
 	damage();
 	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_perfect_, scene_->player_->lane_));
+	scene_->mp_ += damage_perfect_ / 2;
 	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_perfect_;
 }
 
@@ -169,6 +172,7 @@ void SkillNormalB::notesGood() {
 	scene_->combo_++;
 	damage();
 	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_good_, scene_->player_->lane_));
+	scene_->mp_ += damage_good_ / 2;
 	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_good_;
 }
 

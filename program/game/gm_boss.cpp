@@ -13,7 +13,6 @@ Boss::~Boss() {
 	delete field_l2_;
 	delete field_r2_;
 	delete road_;
-	//delete skills_;
 }
 
 Boss::Boss(ScenePlay* scene) {
@@ -243,7 +242,13 @@ void Boss::command() {
 					player_action_[select_num_] = index_sub_;
 					break;
 				case 1:
-					player_action_[select_num_] = index_sub_ + index_sub_list_ + 2;
+					if (scene_->mp_ >= scene_->skill_[index_sub_ + index_sub_list_ + 2]->mp_) {
+						scene_->mp_ -= scene_->skill_[index_sub_ + index_sub_list_ + 2]->mp_;
+						player_action_[select_num_] = index_sub_ + index_sub_list_ + 2;
+					}
+					else {
+						select_num_--;
+					}
 					break;
 				case 3:
 					break;
@@ -267,6 +272,7 @@ void Boss::command() {
 			//ƒRƒ}ƒ“ƒh‚ðíœ‚·‚é
 			if (select_num_ > 0) {
 				select_num_--;
+				scene_->mp_ += scene_->skill_[player_action_[select_num_]]->mp_;
 				player_action_[select_num_] = -1;
 			}
 		}
