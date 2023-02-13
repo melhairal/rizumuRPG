@@ -244,3 +244,29 @@ public:
 	const float DAMAGE_X_[4] = { DXE_WINDOW_WIDTH * 0.2f - 20,DXE_WINDOW_WIDTH * 0.4f - 20,DXE_WINDOW_WIDTH * 0.6f - 20,DXE_WINDOW_WIDTH * 0.8f - 20 }; //4つのレーンの座標
 	float damage_y_ = DXE_WINDOW_HEIGHT * 0.8f;
 };
+
+
+class SubUiClear : public SubUiBase {
+public:
+	SubUiClear(ScenePlay* scene);
+	~SubUiClear() {}
+	void update(float delta_time);
+	void render();
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	int elapsed_ = 0;
+	const int ADD_INTERVAL_ = 10; //文字追加間隔
+	int add_num_ = 0; //文字数
+	bool turn_pos_y_ = true; //Y座標反転用
+
+	//座標
+	const float POS_X_ = DXE_WINDOW_WIDTH * 0.42f;
+	const float BASE_POS_Y_ = DXE_WINDOW_HEIGHT * 0.5f - 64;
+	float pos_y_ = BASE_POS_Y_;
+
+	const float SUB_POS_X_ = DXE_WINDOW_WIDTH * 0.42f;
+	const float SUB_POS_Y_ = DXE_WINDOW_HEIGHT * 0.5f;
+};

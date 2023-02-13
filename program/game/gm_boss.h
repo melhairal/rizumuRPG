@@ -32,7 +32,6 @@ public:
 	dxe::Mesh* field_l2_ = nullptr; //床補完用(左下)
 	dxe::Mesh* field_r2_ = nullptr; //床補完用(右下)
 	dxe::Mesh* road_ = nullptr; //床補完用(道)
-	//SkillBase* skills_ = nullptr; //スキル
 	std::shared_ptr<SkillBase> skills_ = nullptr;
 
 	const float LEFT_X_ = -300.0f; //補完床用X座標
@@ -50,7 +49,7 @@ public:
 	bool is_command_angle_ = false; //コマンド画面アングル
 	bool is_battle_angle_ = true; //バトル画面アングル
 
-	int hp_max_ = 3000; //ボスHP
+	int hp_max_ = 10; //ボスHP
 	int hp_ = hp_max_;
 
 	bool command_ = false; //コマンドフラグ
@@ -72,4 +71,7 @@ public:
 
 	bool win_ = false; //勝ちフラグ
 	bool lose_ = false; //負けフラグ
+
+	bool init_win_ = false; //勝ち演出の初期処理
+	bool turn_result_ = false; //リザルト画面へ遷移するフラグ
 };

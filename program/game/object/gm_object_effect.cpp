@@ -143,3 +143,21 @@ void EffectGard::update(float delta_time) {
 		alive_ = false;
 	}
 }
+
+EffectClear::EffectClear(ScenePlay* scene) {
+	scene_ = scene;
+	getImage();
+	mesh_ = dxe::Mesh::CreatePlane({ MESH_W_ * 5, MESH_H_ * 5, 0 });
+	mesh_->setTexture(dxe::Texture::CreateFromFile(*it));
+	it++;
+	mesh_->pos_ = { 0,POS_Y_,0 };
+	mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(60));
+}
+
+void EffectClear::update(float delta_time) {
+	//アニメーション更新
+	animation(FRAME_);
+	if (it == images_.begin()) {
+		alive_ = false;
+	}
+}

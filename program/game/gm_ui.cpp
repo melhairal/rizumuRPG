@@ -327,3 +327,32 @@ void SubUiPlayerDamage::render() {
 		DrawFormatStringToHandle(DAMAGE_X_[lane_], damage_y_, scene_->ui_->RED, scene_->ui_->font_rondo_64_, "%d!!", damage_);
 	}
 }
+
+SubUiClear::SubUiClear(ScenePlay* scene) {
+	scene_ = scene;
+}
+
+void SubUiClear::update(float delta_time) {
+	elapsed_++;
+	if (elapsed_ >= ADD_INTERVAL_) {
+		elapsed_ = 0;
+		if (add_num_ < 6) add_num_++;
+	}
+	if (pos_y_ > BASE_POS_Y_) turn_pos_y_ = false;
+	if (pos_y_ < BASE_POS_Y_ - 40) turn_pos_y_ = true;
+	if (turn_pos_y_) pos_y_ += 0.5f;
+	else pos_y_ -= 0.5f;
+}
+
+void SubUiClear::render() {
+	if (add_num_ == 0) 	DrawStringToHandle(POS_X_, pos_y_, "C", -1, scene_->ui_->font_rondo_64_);
+	if (add_num_ == 1) 	DrawStringToHandle(POS_X_, pos_y_, "CL", -1, scene_->ui_->font_rondo_64_);
+	if (add_num_ == 2) 	DrawStringToHandle(POS_X_, pos_y_, "CLE", -1, scene_->ui_->font_rondo_64_);
+	if (add_num_ == 3) 	DrawStringToHandle(POS_X_, pos_y_, "CLEA", -1, scene_->ui_->font_rondo_64_);
+	if (add_num_ == 4) 	DrawStringToHandle(POS_X_, pos_y_, "CLEAR", -1, scene_->ui_->font_rondo_64_);
+	if (add_num_ == 5) 	DrawStringToHandle(POS_X_, pos_y_, "CLEAR!", -1, scene_->ui_->font_rondo_64_);
+	if (add_num_ == 6) {
+		DrawStringToHandle(POS_X_, pos_y_, "CLEAR!!", -1, scene_->ui_->font_rondo_64_);
+		DrawStringToHandle(SUB_POS_X_, SUB_POS_Y_, "-press [Enter]-", -1, scene_->ui_->font_rondo_32_);
+	}
+}

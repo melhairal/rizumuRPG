@@ -5,7 +5,9 @@
 #include "object/gm_object_ground.h"
 #include "gm_camera.h"
 #include "object/gm_object_attack.h"
+#include "object/gm_object_effect.h"
 #include "object/gm_object_skill_map.h"
+#include "gm_ui.h"
 
 Boss::~Boss() {
 	delete field_l1_;
@@ -333,7 +335,15 @@ void Boss::nextTurn() {
 }
 
 void Boss::win() {
-
+	if (!init_win_) {
+		enemy_->mesh_->pos_ = { 0,-300,0 };
+		scene_->actors_.emplace_back(new EffectClear(scene_));
+		scene_->subUis_.emplace_back(new SubUiClear(scene_));
+		init_win_ = true;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		turn_result_ = true;
+	}
 }
 
 void Boss::lose() {

@@ -15,8 +15,7 @@ public:
 	// ========== 基本ステータス ==========
 
 	const float POS_Z_ = -100.0f; //Z座標
-	const int FRAME_ = 3
-		; //アニメーション更新フレーム
+	const int FRAME_ = 3; //アニメーション更新フレーム
 
 	void getImage() override {
 		// ====================================
@@ -43,8 +42,7 @@ public:
 	// ========== 基本ステータス ==========
 
 	const float POS_Z_ = -100.0f; //Z座標
-	const int FRAME_ = 3
-		; //アニメーション更新フレーム
+	const int FRAME_ = 3; //アニメーション更新フレーム
 
 	void getImage() override {
 		// ====================================
@@ -75,8 +73,7 @@ public:
 	// ========== 基本ステータス ==========
 
 	const float POS_Z_ = -100.0f; //Z座標
-	const int FRAME_ = 3
-		; //アニメーション更新フレーム
+	const int FRAME_ = 3; //アニメーション更新フレーム
 
 	void getImage() override {
 		// ====================================
@@ -107,8 +104,7 @@ public:
 	// ========== 基本ステータス ==========
 
 	const float POS_Z_ = -40.0f; //Z座標
-	const int FRAME_ = 3
-		; //アニメーション更新フレーム
+	const int FRAME_ = 3; //アニメーション更新フレーム
 
 	void getImage() override {
 		// ====================================
@@ -139,8 +135,7 @@ public:
 	// ========== 基本ステータス ==========
 
 	const float POS_Z_ = -40.0f; //Z座標
-	const int FRAME_ = 3
-		; //アニメーション更新フレーム
+	const int FRAME_ = 3; //アニメーション更新フレーム
 
 	void getImage() override {
 		// ====================================
@@ -171,8 +166,7 @@ public:
 	// ========== 基本ステータス ==========
 
 	const float POS_Z_ = -90.0f; //Z座標
-	const int FRAME_ = 3
-		; //アニメーション更新フレーム
+	const int FRAME_ = 3; //アニメーション更新フレーム
 
 	void getImage() override {
 		// ====================================
@@ -202,8 +196,7 @@ public:
 	// ========== 基本ステータス ==========
 
 	const float POS_Z_ = -90.0f; //Z座標
-	const int FRAME_ = 3
-		; //アニメーション更新フレーム
+	const int FRAME_ = 3; //アニメーション更新フレーム
 
 	void getImage() override {
 		// ====================================
@@ -235,8 +228,7 @@ public:
 	// ========== 基本ステータス ==========
 
 	const float POS_Z_ = -110.0f; //Z座標
-	const int FRAME_ = 3
-		; //アニメーション更新フレーム
+	const int FRAME_ = 3; //アニメーション更新フレーム
 
 	void getImage() override {
 		// ====================================
@@ -252,6 +244,42 @@ public:
 		images_.emplace_back("graphics/effect/gard/gard_008.png");
 		images_.emplace_back("graphics/effect/gard/gard_009.png");
 		images_.emplace_back("graphics/effect/gard/gard_010.png");
+		it = images_.begin();
+	}
+};
+
+class EffectClear : public Actor {
+public:
+	EffectClear(ScenePlay* scene);
+	~EffectClear() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+
+	// ========== 基本ステータス ==========
+
+	const int FRAME_ = 5; //アニメーション更新フレーム
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/pikapika/pika_001.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_002.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_003.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_004.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_005.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_006.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_007.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_008.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_009.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_010.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_011.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_012.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_013.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_014.png");
+		images_.emplace_back("graphics/effect/pikapika/pika_015.png");
 		it = images_.begin();
 	}
 };
