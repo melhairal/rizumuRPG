@@ -386,7 +386,7 @@ void SkillPowerC::notesPerfect() {
 	scene_->combo_++;
 	damage();
 	int power = 1;
-	if (scene_->combo_ >= 100) power = 40;
+	if (scene_->combo_ >= 100) power = 30;
 	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_perfect_ * power, scene_->player_->lane_));
 	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_perfect_ * power;
 }
@@ -395,7 +395,7 @@ void SkillPowerC::notesGood() {
 	scene_->combo_++;
 	damage();
 	int power = 1;
-	if (scene_->combo_ >= 100) power = 40;
+	if (scene_->combo_ >= 100) power = 30;
 	scene_->subUis_.emplace_back(new SubUiDamage(scene_, damage_good_ * power, scene_->player_->lane_));
 	if (scene_->boss_ != nullptr) scene_->boss_->hp_ -= damage_good_ * power;
 }

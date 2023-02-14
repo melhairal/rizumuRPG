@@ -23,7 +23,9 @@ public :
 
 	// =========== 関数 ==========
 
+	void getStatus(); //ステータス取得
 	void getSkill(); //スキル情報取得
+	void setScore(); //スコア情報を記録
 
 	void updateObject(float delta_time); //オブジェクト制御
 	void updateActor(float delta_time); //アクター制御
@@ -63,16 +65,17 @@ public :
 	// ========== ゲーム内ステータス ==========
 
 	const int COMBO_MAX_ = 999; //最大コンボ数
+	const int mp_max_ = 1000; //プレイヤー最大MP
 	int combo_ = 0; //コンボ
-
 	int score_ = 0; //スコア
-
-	int hp_max_ = 1000; //プレイヤー最大HP
-	int hp_ = 100; //プレイヤーHP
-
-	int mp_max_ = 1000; //プレイヤー最大MP
+	int hp_max_ = 0; //プレイヤー最大HP
+	int hp_ = 0; //プレイヤーHP
 	int mp_ = 0; //プレイヤーMP
+	int atk_ = 0; //プレイヤー攻撃力
 
-	int atk_ = 10; //プレイヤー攻撃力
+	bool score_judge_ = true; //勝ったかどうか
+	int score_perfect_ = 0; //パーフェクト数
+	int score_good_ = 0; //グッド数
+	int score_miss_ = 0; //ミス数
+	int score_max_combo_ = 0; //最大コンボ数
 };
-

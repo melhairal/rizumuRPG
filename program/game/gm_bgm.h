@@ -21,6 +21,8 @@ public:
 	int se_select_ = 0; //コマンド選択音
 	int se_esc_ = 0; //キャンセル音
 	int sound_warning_ = 0; //警告音
+	int sound_clear_ = 0; //成功音
+	int sound_failed_ = 0; //失敗音
 
 	int bgm_stage_ = 0; //BGM
 	int bgm_boss_ = 0; //ボスBGM

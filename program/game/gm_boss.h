@@ -49,7 +49,7 @@ public:
 	bool is_command_angle_ = false; //コマンド画面アングル
 	bool is_battle_angle_ = true; //バトル画面アングル
 
-	int hp_max_ = 10; //ボスHP
+	int hp_max_ = 3000; //ボスHP
 	int hp_ = hp_max_;
 
 	bool command_ = false; //コマンドフラグ

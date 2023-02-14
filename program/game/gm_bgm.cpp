@@ -11,6 +11,8 @@ Bgm::Bgm(ScenePlay* scene) {
 	se_select_ = LoadSoundMem("sound/select.mp3");
 	se_esc_ = LoadSoundMem("sound/escape.mp3");
 	sound_warning_ = LoadSoundMem("sound/warning.mp3");
+	sound_clear_ = LoadSoundMem("sound/clear.mp3");
+	sound_failed_ = LoadSoundMem("sound/gameover.mp3");
 
 	bgm_boss_ = LoadSoundMem("sound/stage_2_boss.mp3");
 

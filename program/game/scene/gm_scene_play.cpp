@@ -60,6 +60,7 @@ void ScenePlay::initialzie() {
 	//プレイヤーの生成
 	player_ = actors_.emplace_back(new Player(this));
 
+	getStatus();
 	getSkill();
 }
 
@@ -104,15 +105,36 @@ void ScenePlay::update(float delta_time)
 	combo_ = std::clamp(combo_, 0, 999);
 	score_ = std::clamp(score_, 0, 9999999);
 
+	//最大コンボの記録
+	if (score_max_combo_ < combo_) {
+		score_max_combo_ = combo_;
+	}
+
+	//リザルト画面への遷移
+	if (boss_ != nullptr) {
+		if (boss_->win_result_) {
+			score_judge_ = true;
+			setScore();
+			mgr->chengeScene(new SceneResult());
+		}
+		if (boss_->lose_result_) {
+			score_judge_ = true;
+			setScore();
+			mgr->chengeScene(new SceneResult());
+		}
+	}
+	if (sheet_ != nullptr) {
+		if (sheet_->lose_result_) {
+			score_judge_ = false;
+			setScore();
+			mgr->chengeScene(new SceneResult());
+		}
+	}
+
 	// ==================== デバッグ等 ====================
 	
 	Debug(delta_time);
 
-	/*
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
-		mgr->chengeScene(new SceneResult());
-	}
-	*/
 }
 
 void ScenePlay::render()
@@ -215,6 +237,14 @@ void ScenePlay::deleteList() {
 	}
 }
 
+void ScenePlay::getStatus() {
+	GameManager* mgr = GameManager::GetInstance();
+	hp_max_ = mgr->player_hp_;
+	hp_ = hp_max_;
+	atk_ = mgr->player_atk_;
+	mp_ = mgr->player_mp_;
+}
+
 void ScenePlay::getSkill() {
 	for (int i = 0; i < 10; ++i) {
 		csv_skill_ = tnl::LoadCsv("csv/skill.csv");
@@ -226,6 +256,16 @@ void ScenePlay::getSkill() {
 		skill_[i]->exp3_ = csv_skill_[i + 1][4].c_str();
 		skill_[i]->class_name_ = csv_skill_[i + 1][5].c_str();
 	}
+}
+
+void ScenePlay::setScore() {
+	GameManager* mgr = GameManager::GetInstance();
+	mgr->result_judge_ = score_judge_;
+	mgr->result_score_ = score_;
+	mgr->result_max_combo_ = score_max_combo_;
+	mgr->result_perfect_ = score_perfect_;
+	mgr->result_good_ = score_good_;
+	mgr->result_miss_ = score_miss_;
 }
 
 

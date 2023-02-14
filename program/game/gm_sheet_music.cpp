@@ -26,6 +26,7 @@ void Sheet::update(float delta_time) {
 	if (scene_->hp_ == 0) {
 		if (!init_lose_) {
 			StopSoundMem(scene_->bgm_->bgm_stage_);
+			PlaySoundMem(scene_->bgm_->sound_failed_, DX_PLAYTYPE_BACK);
 			scene_->subUis_.emplace_back(new SubUiFailed(scene_));
 			init_lose_ = true;
 		}

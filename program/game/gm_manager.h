@@ -52,7 +52,23 @@ public :
 
 	// ゲーム全体で参照したい変数はここで用意
 
+	//プレイヤーステータス
+	int player_atk_ = 10;
+	int player_hp_ = 1000;
+	int player_mp_ = 0;
+	int player_exp_ = 0;
 
+	//リザルト画面用
+	bool result_judge_ = true;
+	int result_score_ = 0;
+	int result_max_combo_ = 0;
+	int result_perfect_ = 0;
+	int result_good_ = 0;
+	int result_miss_ = 0;
+
+	//進行フラグ(クリアフラグ)
+	int flag_stage_ = 0;
+	int max_score_[6] = { 0,0,0,0,0,0 };
 };
 
 

@@ -258,6 +258,17 @@ SubUiJudge::SubUiJudge(ScenePlay* scene, int judge, int lane) {
 	scene_ = scene;
 	judge_ = judge;
 	lane_ = lane;
+	switch (judge_) {
+	case perfect:
+		scene_->score_perfect_++;
+		break;
+	case good:
+		scene_->score_good_++;
+		break;
+	case miss:
+		scene_->score_miss_++;
+		break;
+	}
 }
 
 void SubUiJudge::update(float delta_time) {

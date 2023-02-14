@@ -341,12 +341,14 @@ void Boss::nextTurn() {
 void Boss::win() {
 	if (!init_win_) {
 		StopSoundMem(scene_->bgm_->bgm_boss_);
+		PlaySoundMem(scene_->bgm_->sound_clear_, DX_PLAYTYPE_BACK);
 		enemy_->mesh_->pos_ = { 0,-300,0 };
 		scene_->actors_.emplace_back(new EffectClear(scene_));
 		scene_->subUis_.emplace_back(new SubUiClear(scene_));
 		init_win_ = true;
 	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		StopSoundMem(scene_->bgm_->sound_clear_);
 		win_result_ = true;
 	}
 }
@@ -354,10 +356,12 @@ void Boss::win() {
 void Boss::lose() {
 	if (!init_lose_) {
 		StopSoundMem(scene_->bgm_->bgm_boss_);
+		PlaySoundMem(scene_->bgm_->sound_failed_, DX_PLAYTYPE_BACK);
 		scene_->subUis_.emplace_back(new SubUiFailed(scene_));
 		init_lose_ = true;
 	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+	else if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		StopSoundMem(scene_->bgm_->sound_failed_);
 		lose_result_ = true;
 	}
 }
