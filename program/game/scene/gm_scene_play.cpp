@@ -148,7 +148,6 @@ void ScenePlay::render()
 
 	// ==================== デバッグ等 ====================
 
-	DrawStringEx(50, 50, -1, "scene play");
 }
 
 void ScenePlay::updateObject(float delta_time) {
@@ -244,23 +243,5 @@ void ScenePlay::Debug(float delta_time) {
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Z)) {
 		sheet_ = new Sheet(this, stage_2_csv_);
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_1)) {
-		boss_->enemy_->action_ = 0;
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_2)) {
-		boss_->enemy_->action_ = 1;
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_3)) {
-		boss_->enemy_->action_ = 2;
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_4)) {
-		boss_->enemy_->action_ = 3;
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_5)) {
-		boss_->enemy_->action_ = 4;
-	}
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_6)) {
-		boss_->enemy_->action_ = 5;
 	}
 }

@@ -32,7 +32,7 @@ public:
 	dxe::Mesh* field_l2_ = nullptr; //床補完用(左下)
 	dxe::Mesh* field_r2_ = nullptr; //床補完用(右下)
 	dxe::Mesh* road_ = nullptr; //床補完用(道)
-	std::shared_ptr<SkillBase> skills_ = nullptr;
+	std::shared_ptr<SkillBase> skills_ = nullptr; //スキルポインタ
 
 	const float LEFT_X_ = -300.0f; //補完床用X座標
 	const float RIGHT_X_ = 300.0f; //補完床用X座標
@@ -73,5 +73,8 @@ public:
 	bool lose_ = false; //負けフラグ
 
 	bool init_win_ = false; //勝ち演出の初期処理
-	bool turn_result_ = false; //リザルト画面へ遷移するフラグ
+	bool win_result_ = false; //リザルト画面へ遷移するフラグ
+
+	bool init_lose_ = false; //負け演出の初期処理
+	bool lose_result_ = false; //リザルト画面へ遷移するフラグ
 };

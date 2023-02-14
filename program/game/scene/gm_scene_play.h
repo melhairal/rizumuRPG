@@ -68,7 +68,7 @@ public :
 	int score_ = 0; //スコア
 
 	int hp_max_ = 1000; //プレイヤー最大HP
-	int hp_ = hp_max_; //プレイヤーHP
+	int hp_ = 100; //プレイヤーHP
 
 	int mp_max_ = 1000; //プレイヤー最大MP
 	int mp_ = 0; //プレイヤーMP

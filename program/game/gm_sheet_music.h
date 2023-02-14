@@ -25,7 +25,6 @@ public:
 	ScenePlay* scene_ = nullptr; //シーンの変数を取得するためのポインタ
 	ObjectBase* line_ = nullptr; //ラインのポインタ
 	std::vector<std::vector<std::string>> csv_; //譜面csv
-	int bgm_ = 0; //bgm
 	int type_ = plains; //ステージタイプ
 
 	int elapsed_ = 0; //時間計測用
@@ -37,4 +36,7 @@ public:
 	int csv_y_ = 2; //csvの何行目か
 
 	bool alive_ = true; //生存フラグ
+
+	bool init_lose_ = false; //負け初期処理フラグ
+	bool lose_result_ = false; //負け画面遷移フラグ
 };

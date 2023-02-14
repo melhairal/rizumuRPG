@@ -356,3 +356,30 @@ void SubUiClear::render() {
 		DrawStringToHandle(SUB_POS_X_, SUB_POS_Y_, "-press [Enter]-", -1, scene_->ui_->font_rondo_32_);
 	}
 }
+
+SubUiFailed::SubUiFailed(ScenePlay* scene) {
+	scene_ = scene;
+	img_fade_ = LoadGraph("graphics/ui/fade.png");
+}
+
+void SubUiFailed::update(float delta_time) {
+	elapsed_++;
+	if (elapsed_ >= ADD_INTERVAL_) {
+		elapsed_ = 0;
+		if (add_num_ < 6) add_num_++;
+	}
+}
+
+void SubUiFailed::render() {
+	DrawExtendGraph(0, 0, DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT, img_fade_, true); //画面を暗くするためのフィルター
+	if (add_num_ == 0) 	DrawStringToHandle(POS_X_, POS_Y_, "F", scene_->ui_->BLUE, scene_->ui_->font_rondo_64_);
+	if (add_num_ == 1) 	DrawStringToHandle(POS_X_, POS_Y_, "FA", scene_->ui_->BLUE, scene_->ui_->font_rondo_64_);
+	if (add_num_ == 2) 	DrawStringToHandle(POS_X_, POS_Y_, "FAI", scene_->ui_->BLUE, scene_->ui_->font_rondo_64_);
+	if (add_num_ == 3) 	DrawStringToHandle(POS_X_, POS_Y_, "FAIL", scene_->ui_->BLUE, scene_->ui_->font_rondo_64_);
+	if (add_num_ == 4) 	DrawStringToHandle(POS_X_, POS_Y_, "FAILE", scene_->ui_->BLUE, scene_->ui_->font_rondo_64_);
+	if (add_num_ == 5) 	DrawStringToHandle(POS_X_, POS_Y_, "FAILED", scene_->ui_->BLUE, scene_->ui_->font_rondo_64_);
+	if (add_num_ == 6) {
+		DrawStringToHandle(POS_X_, POS_Y_, "FAILED", scene_->ui_->BLUE, scene_->ui_->font_rondo_64_);
+		DrawStringToHandle(SUB_POS_X_, SUB_POS_Y_, "-press [Enter]-", -1, scene_->ui_->font_rondo_32_);
+	}
+}

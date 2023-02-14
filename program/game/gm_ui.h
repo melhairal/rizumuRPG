@@ -245,7 +245,6 @@ public:
 	float damage_y_ = DXE_WINDOW_HEIGHT * 0.8f;
 };
 
-
 class SubUiClear : public SubUiBase {
 public:
 	SubUiClear(ScenePlay* scene);
@@ -266,6 +265,31 @@ public:
 	const float POS_X_ = DXE_WINDOW_WIDTH * 0.42f;
 	const float BASE_POS_Y_ = DXE_WINDOW_HEIGHT * 0.5f - 64;
 	float pos_y_ = BASE_POS_Y_;
+
+	const float SUB_POS_X_ = DXE_WINDOW_WIDTH * 0.42f;
+	const float SUB_POS_Y_ = DXE_WINDOW_HEIGHT * 0.5f;
+};
+
+class SubUiFailed : public SubUiBase {
+public:
+	SubUiFailed(ScenePlay* scene);
+	~SubUiFailed() {}
+	void update(float delta_time);
+	void render();
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	int img_fade_ = 0;
+
+	int elapsed_ = 0;
+	const int ADD_INTERVAL_ = 10; //文字追加間隔
+	int add_num_ = 0; //文字数
+
+	//座標
+	const float POS_X_ = DXE_WINDOW_WIDTH * 0.43f;
+	const float POS_Y_ = DXE_WINDOW_HEIGHT * 0.5f - 64;
 
 	const float SUB_POS_X_ = DXE_WINDOW_WIDTH * 0.42f;
 	const float SUB_POS_Y_ = DXE_WINDOW_HEIGHT * 0.5f;

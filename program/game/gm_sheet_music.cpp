@@ -2,23 +2,39 @@
 #include "scene/gm_scene_play.h"
 #include "object/gm_object_enemy.h"
 #include "object/gm_object_ground.h"
+#include "gm_bgm.h"
+#include "gm_ui.h"
 #include "gm_boss.h"
 
 Sheet::Sheet(ScenePlay* scene, std::string csv) {
 	scene_ = scene;
 	csv_ = tnl::LoadCsv(csv);
-	bgm_ = LoadSoundMem(csv_[0][0].c_str());
+	scene_->bgm_->bgm_stage_ = LoadSoundMem(csv_[0][0].c_str());
 	type_ = std::atoi(csv_[1][0].c_str());
 }
 
 void Sheet::update(float delta_time) {
 	//BGM
 	if (bgm_timer_ == START_INTERVAL_) {
-		PlaySoundMem(bgm_, DX_PLAYTYPE_BACK);
+		PlaySoundMem(scene_->bgm_->bgm_stage_, DX_PLAYTYPE_BACK);
 	}
 	if (bgm_timer_ <= START_INTERVAL_) {
 		bgm_timer_++;
 	}
+
+	//失敗フラグ
+	if (scene_->hp_ == 0) {
+		if (!init_lose_) {
+			StopSoundMem(scene_->bgm_->bgm_stage_);
+			scene_->subUis_.emplace_back(new SubUiFailed(scene_));
+			init_lose_ = true;
+		}
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+			lose_result_ = true;
+		}
+		return;
+	}
+
 
 	//ノーツ情報取得
 	if (csv_y_ < csv_.size()) { //再生中
@@ -36,6 +52,7 @@ void Sheet::update(float delta_time) {
 		}
 	}
 	else { //再生終了
+		StopSoundMem(scene_->bgm_->bgm_stage_);
 		line_->alive_ = false;
 		for (auto object : scene_->objects_) {
 			object->alive_ = false;

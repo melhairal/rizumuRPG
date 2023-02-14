@@ -8,6 +8,7 @@
 #include "object/gm_object_effect.h"
 #include "object/gm_object_skill_map.h"
 #include "gm_ui.h"
+#include "gm_bgm.h"
 
 Boss::~Boss() {
 	delete field_l1_;
@@ -112,6 +113,8 @@ void Boss::render() {
 void Boss::initialize() {
 	//アングルの変更が終わったら
 	if (!is_changing_angle_) {
+		if (elapsed_ == 0) {
+		}
 		//ボスを前進させる
 		if (elapsed_ < INIT_TIMER_) {
 			elapsed_++;
@@ -119,6 +122,7 @@ void Boss::initialize() {
 		}
 		else if(elapsed_ == INIT_TIMER_) {
 			//初期化終了
+			PlaySoundMem(scene_->bgm_->bgm_boss_, DX_PLAYTYPE_LOOP);
 			command_ = true;
 			elapsed_ = 0;
 			init_ = true;
@@ -336,16 +340,24 @@ void Boss::nextTurn() {
 
 void Boss::win() {
 	if (!init_win_) {
+		StopSoundMem(scene_->bgm_->bgm_boss_);
 		enemy_->mesh_->pos_ = { 0,-300,0 };
 		scene_->actors_.emplace_back(new EffectClear(scene_));
 		scene_->subUis_.emplace_back(new SubUiClear(scene_));
 		init_win_ = true;
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
-		turn_result_ = true;
+		win_result_ = true;
 	}
 }
 
 void Boss::lose() {
-
+	if (!init_lose_) {
+		StopSoundMem(scene_->bgm_->bgm_boss_);
+		scene_->subUis_.emplace_back(new SubUiFailed(scene_));
+		init_lose_ = true;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		lose_result_ = true;
+	}
 }
