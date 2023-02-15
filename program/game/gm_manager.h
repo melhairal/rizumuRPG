@@ -66,7 +66,7 @@ public :
 	int result_good_ = 0;
 	int result_miss_ = 0;
 
-	int now_stage_ = 4; //選んだステージ
+	int now_stage_ = 5; //選んだステージ
 
 	//進行フラグ(クリアフラグ)
 	int flag_stage_ = 0;

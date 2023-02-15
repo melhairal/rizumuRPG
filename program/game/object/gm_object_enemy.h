@@ -252,7 +252,7 @@ public:
 	// ========== 基本ステータス ==========
 
 	const float SHOT_Z_ = 170.0f; //弾を発射するZ座標
-	const int TIME_SHOT_ = 24; //弾を飛ばすまでの時間
+	const int TIME_SHOT_ = 36; //弾を飛ばすまでの時間
 	const int TIME_STOP_ = 60; //停止時間
 
 	const int ATK_ = 20;

@@ -67,7 +67,7 @@ void ScenePlay::initialzie() {
 	getSkill();
 
 	//ステージ情報の取得と譜面の再生
-	sheet_ = new Sheet(this, stage_csv_[stage_]);
+	//sheet_ = new Sheet(this, stage_csv_[stage_]);
 }
 
 void ScenePlay::update(float delta_time)
