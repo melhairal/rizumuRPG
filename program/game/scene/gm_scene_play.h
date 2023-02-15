@@ -58,11 +58,13 @@ public :
 	std::string road_img = "graphics/base/road.png"; //道画像パス
 	std::string back_img = "graphics/base/ground.png"; //背景画像パス
 
-	std::string stage_2_csv_ = "csv/stage_2.csv"; //csvパス
+	std::string stage_2_csv_ = "csv/stage_5.csv"; //csvパス
 
 	const int NOTES_SPEED_ = 4; //ノーツの流れる速度
 
 	// ========== ゲーム内ステータス ==========
+
+	int stage_ = 2; //ステージ
 
 	const int COMBO_MAX_ = 999; //最大コンボ数
 	const int mp_max_ = 1000; //プレイヤー最大MP

@@ -65,6 +65,7 @@ public :
 	int result_perfect_ = 0;
 	int result_good_ = 0;
 	int result_miss_ = 0;
+	int result_stage_ = 0;
 
 	//進行フラグ(クリアフラグ)
 	int flag_stage_ = 0;

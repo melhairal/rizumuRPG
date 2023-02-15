@@ -16,7 +16,7 @@ MakeSheet::~MakeSheet() {
 
 MakeSheet::MakeSheet(ScenePlay* scene) {
 	scene_ = scene;
-	bgm_ = LoadSoundMem("sound/stage_2.mp3");
+	bgm_ = LoadSoundMem("sound/stage_5.mp3");
 }
 
 void MakeSheet::update(float delta_time) {

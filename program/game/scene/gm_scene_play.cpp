@@ -118,7 +118,7 @@ void ScenePlay::update(float delta_time)
 			mgr->chengeScene(new SceneResult());
 		}
 		if (boss_->lose_result_) {
-			score_judge_ = true;
+			score_judge_ = false;
 			setScore();
 			mgr->chengeScene(new SceneResult());
 		}
@@ -266,6 +266,7 @@ void ScenePlay::setScore() {
 	mgr->result_perfect_ = score_perfect_;
 	mgr->result_good_ = score_good_;
 	mgr->result_miss_ = score_miss_;
+	mgr->result_stage_ = stage_;
 }
 
 
