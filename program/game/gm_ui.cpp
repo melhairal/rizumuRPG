@@ -24,6 +24,10 @@ Ui::Ui(ScenePlay* scene) {
 	//ウィンドウ読み込み
 	getWindow();
 
+	//ボタン読み込み
+	menu_button_[0] = LoadGraph("graphics/ui/menu_button_1.png");
+	menu_button_[1] = LoadGraph("graphics/ui/menu_button_2.png");
+
 	//カーソル読み込み
 	cursol_ = LoadGraph("graphics/ui/cursol.png");
 
@@ -169,8 +173,16 @@ void Ui::render() {
 	//スコア表示
 	DrawWindow(SCORE_WINDOW_X_, SCORE_WINDOW_Y_, SCORE_WINDOW_W_, SCORE_WINDOW_H_, eGlay);
 	DrawStringToHandle(SCORE_X_, SCORE_Y_, "Score", -1, font_rondo_32_);
-	DrawFormatStringToHandle(SCORE_NUM_X_, SCORE_NUM_Y_, -1, font_rondo_32_, "%7.0d", scene_->score_);
+	DrawFormatStringToHandle(SCORE_NUM_X_, SCORE_NUM_Y_, -1, font_rondo_32_, "%8.0d", scene_->score_);
 
+	//ポーズ画面表示
+	if (scene_->isPause_) {
+		DrawRotaGraph(BUTTON_X1_ , BUTTON_Y_, 1.5f, 0, menu_button_[button_left_], true);
+		DrawRotaGraph(BUTTON_X2_ , BUTTON_Y_, 1.5f, 0, menu_button_[button_right_], true);
+		DrawStringToHandle(BUTTON_STR_X1_, BUTTON_STR_Y_, "続ける", menu_button_col_[button_left_], font_rondo_32_);
+		DrawStringToHandle(BUTTON_STR_X2_, BUTTON_STR_Y_, "やめる", menu_button_col_[button_right_], font_rondo_32_);
+		DrawStringToHandle(PAUSE_X_, PAUSE_Y_, "ポーズ中", -1, font_rondo_64_);
+	}
 }
 
 void Ui::getWindow() {

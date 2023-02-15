@@ -26,6 +26,7 @@ public :
 	void getStatus(); //ステータス取得
 	void getSkill(); //スキル情報取得
 	void setScore(); //スコア情報を記録
+	void getSheet(); //ステージを取得
 
 	void updateObject(float delta_time); //オブジェクト制御
 	void updateActor(float delta_time); //アクター制御
@@ -55,16 +56,39 @@ public :
 	const float BACK_W_ = 700.0f; //背景の横幅
 	const float FIELD_Z1_ = 75.0f; //床画像1枚目の初期Z座標
 	const float FIELD_Z2_ = 525.0f; //床画像2枚目の初期Z座標
-	std::string road_img = "graphics/base/road.png"; //道画像パス
-	std::string back_img = "graphics/base/ground.png"; //背景画像パス
+	std::string road_img_[6] = {
+		"graphics/base/road.png",
+		"graphics/base/road.png",
+		"graphics/base/road.png",
+		"graphics/base/road.png",
+		"graphics/base/road.png",
+		"graphics/base/road.png"
+	}; //道画像パス
+	std::string back_img_[6] = {
+		"graphics/base/ground.png",
+		"graphics/base/ground.png",
+		"graphics/base/cave_wall.jpeg",
+		"graphics/base/cave_wall.jpeg",
+		"graphics/base/sea.jpg",
+		"graphics/base/ground.png"
+	}; //背景画像パス
 
-	std::string stage_2_csv_ = "csv/stage_5.csv"; //csvパス
+	std::string stage_csv_[6] = {
+		"csv/stage_1.csv",
+		"csv/stage_2.csv",
+		"csv/stage_3.csv",
+		"csv/stage_4.csv",
+		"csv/stage_5.csv",
+		"csv/stage_6.csv"
+	};
 
 	const int NOTES_SPEED_ = 4; //ノーツの流れる速度
 
 	// ========== ゲーム内ステータス ==========
 
-	int stage_ = 2; //ステージ
+	bool isPause_ = false; //一時停止
+
+	int stage_ = 1; //ステージ
 
 	const int COMBO_MAX_ = 999; //最大コンボ数
 	const int mp_max_ = 1000; //プレイヤー最大MP

@@ -89,7 +89,7 @@ void SceneResult::getScore() {
 	score_miss_ = mgr->result_miss_;
 	score_max_combo_ = mgr->result_max_combo_;
 	score_ = mgr->result_score_;
-	stage_ = mgr->result_stage_;
+	stage_ = mgr->now_stage_;
 }
 
 void SceneResult::drawWindow(int x, int y, int width, int height) {
@@ -110,22 +110,22 @@ void SceneResult::drawWindow(int x, int y, int width, int height) {
 
 void SceneResult::drawTitle(int stage) {
 	switch (stage) {
-	case 1:
+	case 0:
 		DrawStringToHandle(TITLE_X_, TITLE_Y_, "—·—§‚¿", -1, font_rondo_64_);
 		break;
-	case 2:
+	case 1:
 		DrawStringToHandle(TITLE_X_, TITLE_Y_, "‘Œ´‚ğ‹ì‚¯”²‚¯‚Ä", -1, font_rondo_64_);
 		break;
-	case 3:
+	case 2:
 		DrawStringToHandle(TITLE_X_, TITLE_Y_, "–‚b‚Ì“´ŒA", -1, font_rondo_64_);
 		break;
-	case 4:
+	case 3:
 		DrawStringToHandle(TITLE_X_, TITLE_Y_, "“´ŒA‚ğ”²‚¯‚Ä", -1, font_rondo_64_);
 		break;
-	case 5:
+	case 4:
 		DrawStringToHandle(TITLE_X_, TITLE_Y_, "‘åŠC‚ğ‰‚­", -1, font_rondo_64_);
 		break;
-	case 6:
+	case 5:
 		DrawStringToHandle(TITLE_X_, TITLE_Y_, "ˆÅ‚ÌX", -1, font_rondo_64_);
 		break;
 	}

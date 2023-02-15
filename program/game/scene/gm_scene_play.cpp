@@ -35,6 +35,9 @@ void ScenePlay::initialzie() {
 	//乱数シード値の取得
 	srand((unsigned int)time(NULL));
 
+	//ステータスの取得
+	getStatus();
+
 	//カメラの生成
 	camera_ = new GmCamera();
 	camera_->target_ = { 0,0,0 };
@@ -52,21 +55,47 @@ void ScenePlay::initialzie() {
 	frame_->pos_ = { 0, 0, FIELD_Z1_ };
 
 	//背景と床の生成
-	objects_.emplace_back(new Ground(this, BACK_W_, FIELD_H_, FIELD_Z1_, back_img));
-	objects_.emplace_back(new Ground(this, BACK_W_, FIELD_H_, FIELD_Z2_, back_img));
-	objects_.emplace_back(new Ground(this, FIELD_W_, FIELD_H_, FIELD_Z1_, road_img));
-	objects_.emplace_back(new Ground(this, FIELD_W_, FIELD_H_, FIELD_Z2_, road_img));
+	objects_.emplace_back(new Ground(this, BACK_W_, FIELD_H_, FIELD_Z1_, back_img_[stage_]));
+	objects_.emplace_back(new Ground(this, BACK_W_, FIELD_H_, FIELD_Z2_, back_img_[stage_]));
+	objects_.emplace_back(new Ground(this, FIELD_W_, FIELD_H_, FIELD_Z1_, road_img_[stage_]));
+	objects_.emplace_back(new Ground(this, FIELD_W_, FIELD_H_, FIELD_Z2_, road_img_[stage_]));
 
 	//プレイヤーの生成
 	player_ = actors_.emplace_back(new Player(this));
 
-	getStatus();
+	//スキル情報の取得
 	getSkill();
+
+	//ステージ情報の取得と譜面の再生
+	sheet_ = new Sheet(this, stage_csv_[stage_]);
 }
 
 void ScenePlay::update(float delta_time)
 {
 	GameManager* mgr = GameManager::GetInstance();
+
+	//一時停止
+	if (isPause_) {
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT)) {
+			ui_->button_left_ = 0;
+			ui_->button_right_ = 1;
+		}
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RIGHT)) {
+			ui_->button_left_ = 1;
+			ui_->button_right_ = 0;
+		}
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+			if (ui_->button_left_ < ui_->button_right_) {
+				PlaySoundMem(bgm_->bgm_stage_, DX_PLAYTYPE_BACK, false);
+				isPause_ = false;
+			}
+			else {
+				isPause_ = false;
+				hp_ = 0;
+			}
+		}
+		return;
+	}
 
 	//aliveがfalseになったオブジェクトを消す
 	deleteList();
@@ -103,7 +132,7 @@ void ScenePlay::update(float delta_time)
 	hp_ = std::clamp(hp_, 0, hp_max_);
 	mp_ = std::clamp(mp_, 0, mp_max_);
 	combo_ = std::clamp(combo_, 0, 999);
-	score_ = std::clamp(score_, 0, 9999999);
+	score_ = std::clamp(score_, 0, 99999999);
 
 	//最大コンボの記録
 	if (score_max_combo_ < combo_) {
@@ -243,6 +272,7 @@ void ScenePlay::getStatus() {
 	hp_ = hp_max_;
 	atk_ = mgr->player_atk_;
 	mp_ = mgr->player_mp_;
+	stage_ = mgr->now_stage_;
 }
 
 void ScenePlay::getSkill() {
@@ -266,7 +296,6 @@ void ScenePlay::setScore() {
 	mgr->result_perfect_ = score_perfect_;
 	mgr->result_good_ = score_good_;
 	mgr->result_miss_ = score_miss_;
-	mgr->result_stage_ = stage_;
 }
 
 
@@ -280,9 +309,5 @@ void ScenePlay::Debug(float delta_time) {
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_W)) {
 		combo_ = 0;
-	}
-
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_Z)) {
-		sheet_ = new Sheet(this, stage_2_csv_);
 	}
 }

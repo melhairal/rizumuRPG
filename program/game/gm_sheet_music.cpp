@@ -14,6 +14,13 @@ Sheet::Sheet(ScenePlay* scene, std::string csv) {
 }
 
 void Sheet::update(float delta_time) {
+	
+	//ˆê’â~
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE) && scene_->hp_ > 0) {
+		scene_->isPause_ = true;
+		StopSoundMem(scene_->bgm_->bgm_stage_);
+	}
+
 	//BGM
 	if (bgm_timer_ == START_INTERVAL_) {
 		PlaySoundMem(scene_->bgm_->bgm_stage_, DX_PLAYTYPE_BACK);
@@ -31,6 +38,7 @@ void Sheet::update(float delta_time) {
 			init_lose_ = true;
 		}
 		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+			StopSoundMem(scene_->bgm_->sound_failed_);
 			lose_result_ = true;
 		}
 		return;

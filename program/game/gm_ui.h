@@ -68,6 +68,12 @@ public:
 	int window_bot_center_[4] = { 0,0,0,0 };
 	int window_bot_right_[4] = { 0,0,0,0 };
 
+	//ボタン
+	int menu_button_[2] = { 0,0 };
+	int menu_button_col_[2] = { BROWN,-1 };
+	int button_left_ = 0;
+	int button_right_ = 1;
+
 	//カーソル
 	int cursol_ = 0;
 
@@ -103,7 +109,6 @@ public:
 	const int SCORE_WINDOW_W_ = 220;
 	const int SCORE_WINDOW_H_ = 50;
 
-
 	//判定
 	const float JUDGE_X_[4] = { DXE_WINDOW_WIDTH * 0.2f,DXE_WINDOW_WIDTH * 0.4f,DXE_WINDOW_WIDTH * 0.6f,DXE_WINDOW_WIDTH * 0.8f }; //4つのレーンの座標
 	const float JUDGE_Y_ = DXE_WINDOW_HEIGHT * 0.75f;
@@ -126,6 +131,17 @@ public:
 	const int STATUS_NUM_Y_ = STATUS_Y_ - 16;
 	const int STATUS_NUM_X1_ = STATUS_GAUGE_X1_ - 350;
 	const int STATUS_NUM_X2_ = STATUS_GAUGE_X2_ - 350;
+
+	//ボタン座標
+	const int BUTTON_X1_ = DXE_WINDOW_WIDTH / 2 - 150;
+	const int BUTTON_X2_ = DXE_WINDOW_WIDTH / 2 + 150;
+	const int BUTTON_Y_ = DXE_WINDOW_HEIGHT / 2;
+	const int BUTTON_STR_X1_ = BUTTON_X1_ - 50;
+	const int BUTTON_STR_X2_ = BUTTON_X2_ - 50;
+	const int BUTTON_STR_Y_ = BUTTON_Y_ - 16;
+	const int PAUSE_X_ = DXE_WINDOW_WIDTH / 2 - 130;
+	const int PAUSE_Y_ = DXE_WINDOW_HEIGHT / 2 - 200;
+
 
 	//コマンド座標
 	const int COMMAND_MAIN_X_ = DXE_WINDOW_WIDTH * 0.03f;
