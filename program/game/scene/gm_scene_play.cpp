@@ -21,6 +21,8 @@ ScenePlay::~ScenePlay() {
 	delete ui_;
 	delete bgm_;
 	delete frame_;
+	delete back_black1_;
+	delete back_black2_;
 	if (sheet_ != nullptr) delete sheet_;
 	if (make_ != nullptr) delete make_;
 	if (boss_ != nullptr) delete boss_;
@@ -54,6 +56,16 @@ void ScenePlay::initialzie() {
 	frame_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(90));
 	frame_->pos_ = { 0, 0, FIELD_Z1_ };
 
+	//°‰º’n‚Ì¶¬
+	back_black1_ = dxe::Mesh::CreatePlane({ BACK_W_,FIELD_H_,0 });
+	back_black1_->setTexture(dxe::Texture::CreateFromFile("graphics/base/black.png"));
+	back_black1_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(90));
+	back_black1_->pos_ = { 0, -1, FIELD_Z1_ };
+	back_black2_ = dxe::Mesh::CreatePlane({ BACK_W_,FIELD_H_,0 });
+	back_black2_->setTexture(dxe::Texture::CreateFromFile("graphics/base/black.png"));
+	back_black2_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(90));
+	back_black2_->pos_ = { 0, -1, FIELD_Z2_ };
+
 	//”wŒi‚Æ°‚Ì¶¬
 	objects_.emplace_back(new Ground(this, BACK_W_, FIELD_H_, FIELD_Z1_, back_img_[stage_]));
 	objects_.emplace_back(new Ground(this, BACK_W_, FIELD_H_, FIELD_Z2_, back_img_[stage_]));
@@ -67,7 +79,7 @@ void ScenePlay::initialzie() {
 	getSkill();
 
 	//ƒXƒe[ƒWî•ñ‚Ìæ“¾‚Æ•ˆ–Ê‚ÌÄ¶
-	//sheet_ = new Sheet(this, stage_csv_[stage_]);
+	sheet_ = new Sheet(this, stage_csv_[stage_]);
 }
 
 void ScenePlay::update(float delta_time)
@@ -170,6 +182,9 @@ void ScenePlay::render()
 {
 	camera_->update();
 	DrawGridGround(camera_, 50, 20);
+
+	back_black1_->render(camera_);
+	back_black2_->render(camera_);
 
 	//ƒ{ƒXí•`‰æ
 	if (boss_ != nullptr) boss_->render();

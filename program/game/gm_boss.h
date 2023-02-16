@@ -41,7 +41,7 @@ public:
 		"graphics/base/cave.jpeg",
 		"graphics/base/cave.jpeg",
 		"graphics/base/sky.jpg",
-		"graphics/base/sky.jpg"
+		"graphics/base/dark.jpg"
 	};
 
 	const float LEFT_X_ = -300.0f; //•âŠ®°—pXÀ•W

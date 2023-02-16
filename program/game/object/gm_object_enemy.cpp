@@ -496,13 +496,7 @@ void EnemyKingGrifin::update(float delta_time) {
 	checkJudge();
 	notesEnemy();
 
-	if (mesh_->pos_.z < SHOT_Z1_) {
-		if (elapsed_ < TIME_STOP_) elapsed_++;
-		if (elapsed_ == TIME_SHOT1_) shot(new EnemyKingGrifinBullet(scene_, lane_));
-		if (elapsed_ == TIME_SHOT2_) shot(new EnemyKingGrifinBullet(scene_, lane_));
-		if (elapsed_ == TIME_STOP_) flow(scene_->NOTES_SPEED_);
-	}
-	else if (mesh_->pos_.z < SHIFT_Z_) {
+	if (mesh_->pos_.z < SHIFT_Z_) {
 		if (!isShift_) shift();
 		else flow(scene_->NOTES_SPEED_);
 	}

@@ -41,6 +41,8 @@ public :
 	Ui* ui_ = nullptr; //メインUI
 	Bgm* bgm_ = nullptr; //BGM,SE
 	dxe::Mesh* frame_ = nullptr; //床の線
+	dxe::Mesh* back_black1_ = nullptr; //背景用下地の黒画像
+	dxe::Mesh* back_black2_ = nullptr; //背景用下地の黒画像
 	std::list<ObjectBase*> objects_; //オブジェクトリスト
 	std::list<Actor*> actors_; //アクターリスト
 	std::list<SubUiBase*> subUis_; //サブUIリスト
@@ -56,6 +58,7 @@ public :
 	const float BACK_W_ = 700.0f; //背景の横幅
 	const float FIELD_Z1_ = 75.0f; //床画像1枚目の初期Z座標
 	const float FIELD_Z2_ = 525.0f; //床画像2枚目の初期Z座標
+
 	std::string road_img_[6] = {
 		"graphics/base/road.png",
 		"graphics/base/road.png",
@@ -70,7 +73,7 @@ public :
 		"graphics/base/cave_wall.jpeg",
 		"graphics/base/cave_wall.jpeg",
 		"graphics/base/sea.jpg",
-		"graphics/base/ground.png"
+		"graphics/base/kuraimori4.jpg"
 	}; //背景画像パス
 
 	std::string stage_csv_[6] = {
