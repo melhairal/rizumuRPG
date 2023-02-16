@@ -122,15 +122,77 @@ public:
 
 	// ========== 基本ステータス ==========
 
-	const int ATK_MELEE_ = 90;
-	const int ATK_RANGE_ = 40;
-	const int ATK_BULLET_ = 50;
+	const int ATK_MELEE_ = 100;
+	const int ATK_RANGE_ = 50;
+	const int ATK_BULLET_ = 60;
 
 	void getImage() override {
 		// ====================================
 		//  ここにアニメーションの画像を並べる
 		// ====================================
 		images_.emplace_back("graphics/chara/enemy/keruberos.png");
+		it = images_.begin();
+	}
+};
+
+class BossSkall : public BossEnemy {
+public:
+	BossSkall(ScenePlay* scene);
+	~BossSkall() {}
+	void update(float delta_time);
+
+	// =========== 関数 ==========
+
+	void attackMeleeA(); //近接攻撃1
+	void attackMeleeB(); //近接攻撃2
+	void attackRangeA(); //全体攻撃1
+	void attackRangeB(); //全体攻撃2
+	void attackBulletA(); //遠隔攻撃1
+	void attackBulletB(); //遠隔攻撃2
+
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_MELEE_ = 120;
+	const int ATK_RANGE_ = 0;
+	const int ATK_BULLET_ = 80;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/skall.png");
+		it = images_.begin();
+	}
+};
+
+class BossAnkou : public BossEnemy {
+public:
+	BossAnkou(ScenePlay* scene);
+	~BossAnkou() {}
+	void update(float delta_time);
+
+	// =========== 関数 ==========
+
+	void attackMeleeA(); //近接攻撃1
+	void attackMeleeB(); //近接攻撃2
+	void attackRangeA(); //全体攻撃1
+	void attackRangeB(); //全体攻撃2
+	void attackBulletA(); //遠隔攻撃1
+	void attackBulletB(); //遠隔攻撃2
+
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_MELEE_ = 100;
+	const int ATK_RANGE_ = 0;
+	const int ATK_BULLET_ = 160;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/ankou.png");
 		it = images_.begin();
 	}
 };
@@ -276,6 +338,44 @@ public:
 		//  ここにアニメーションの画像を並べる
 		// ====================================
 		images_.emplace_back("graphics/effect/blackball1.png");
+		it = images_.begin();
+	}
+};
+
+class NotesSkallSward : public BossNotes {
+public:
+	NotesSkallSward(ScenePlay* scene, int damage, int lane);
+	~NotesSkallSward() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/dark_sward.png");
+		it = images_.begin();
+	}
+};
+
+class NotesAnkouBless : public BossNotes {
+public:
+	NotesAnkouBless(ScenePlay* scene, int damage, int lane);
+	~NotesAnkouBless() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/thunder2.png");
 		it = images_.begin();
 	}
 };

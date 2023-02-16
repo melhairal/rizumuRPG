@@ -144,6 +144,24 @@ void EffectBite::update(float delta_time) {
 	}
 }
 
+EffectEnemySward::EffectEnemySward(ScenePlay* scene, int lane) {
+	scene_ = scene;
+	getImage();
+	mesh_ = dxe::Mesh::CreatePlane({ MESH_W_ * 3, MESH_H_ * 3, 0 });
+	mesh_->setTexture(dxe::Texture::CreateFromFile(*it));
+	it++;
+	mesh_->pos_ = { POS_X_[lane],POS_Y_,POS_Z_ };
+	mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(60));
+}
+
+void EffectEnemySward::update(float delta_time) {
+	//アニメーション更新
+	animation(FRAME_);
+	if (it == images_.begin()) {
+		alive_ = false;
+	}
+}
+
 EffectMaho::EffectMaho(ScenePlay* scene, int loop) {
 	scene_ = scene;
 	getImage();

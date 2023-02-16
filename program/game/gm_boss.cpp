@@ -134,21 +134,33 @@ void Boss::getBossClass() {
 	switch (scene_->stage_) {
 	case 0:
 		enemy_ = scene_->actors_.emplace_back(new BossGorem(scene_));
+		hp_max_ = 500;
+		hp_ = hp_max_;
 		break;
 	case 1:
 		enemy_ = scene_->actors_.emplace_back(new BossDragon(scene_));
+		hp_max_ = 1000;
+		hp_ = hp_max_;
 		break;
 	case 2:
 		enemy_ = scene_->actors_.emplace_back(new BossKeruberos(scene_));
+		hp_max_ = 2000;
+		hp_ = hp_max_;
 		break;
 	case 3:
-		enemy_ = scene_->actors_.emplace_back(new BossDragon(scene_));
+		enemy_ = scene_->actors_.emplace_back(new BossSkall(scene_));
+		hp_max_ = 3000;
+		hp_ = hp_max_;
 		break;
 	case 4:
-		enemy_ = scene_->actors_.emplace_back(new BossDragon(scene_));
+		enemy_ = scene_->actors_.emplace_back(new BossAnkou(scene_));
+		hp_max_ = 3500;
+		hp_ = hp_max_;
 		break;
 	case 5:
 		enemy_ = scene_->actors_.emplace_back(new BossKing(scene_));
+		hp_max_ = 5000;
+		hp_ = hp_max_;
 		break;
 	}
 }

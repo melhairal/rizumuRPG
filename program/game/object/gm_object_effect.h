@@ -246,6 +246,37 @@ public:
 	}
 };
 
+class EffectEnemySward : public Actor {
+public:
+	EffectEnemySward(ScenePlay* scene, int lane);
+	~EffectEnemySward() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+
+	// ========== 基本ステータス ==========
+
+	const float POS_Z_ = -90.0f; //Z座標
+	const int FRAME_ = 3; //アニメーション更新フレーム
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/perfect/perfect_001.png");
+		images_.emplace_back("graphics/effect/perfect/perfect_002.png");
+		images_.emplace_back("graphics/effect/perfect/perfect_003.png");
+		images_.emplace_back("graphics/effect/perfect/perfect_004.png");
+		images_.emplace_back("graphics/effect/perfect/perfect_005.png");
+		images_.emplace_back("graphics/effect/perfect/perfect_006.png");
+		images_.emplace_back("graphics/effect/perfect/perfect_007.png");
+		images_.emplace_back("graphics/effect/perfect/perfect_008.png");
+		images_.emplace_back("graphics/effect/perfect/perfect_009.png");
+		it = images_.begin();
+	}
+};
+
 class EffectMaho : public Actor {
 public:
 	EffectMaho(ScenePlay* scene, int loop);

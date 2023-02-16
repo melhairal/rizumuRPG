@@ -458,6 +458,269 @@ void BossKeruberos::update(float delta_time) {
 	if (action_ != -1)switchAction();
 }
 
+BossAnkou::BossAnkou(ScenePlay* scene) {
+	initialize(scene);
+}
+
+void BossAnkou::attackMeleeA() {
+	for (int i = 0; i < 7; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i) { //1つ目のノーツ生成
+			r_[i] = rand() % 4;
+			scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i]));
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+			setMove(POS_X_[r_[i]], MELEE_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			scene_->actors_.emplace_back(new EffectBite(scene_, r_[i]));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_SLOW_ * 7 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossAnkou::attackMeleeB() {
+	for (int i = 0; i < 4; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i) { //1つ目のノーツ生成
+			r_[i] = rand() % 3;
+			if (i > 0) {
+				if (r_[i] == r_[i - 1]) {
+					r_[i] = (r_[i] + 1) % 3;
+				}
+			}
+			scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i]));
+			scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i] + 1));
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+			setMove((POS_X_[r_[i]] + POS_X_[r_[i] + 1]) / 2, MELEE_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			scene_->actors_.emplace_back(new EffectBite(scene_, r_[i]));
+			scene_->actors_.emplace_back(new EffectBite(scene_, r_[i] + 1));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_SLOW_ * 4 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossAnkou::attackRangeA() {
+	attackBulletA();
+}
+
+void BossAnkou::attackRangeB() {
+	attackBulletB();
+}
+
+void BossAnkou::attackBulletA() {
+	for (int i = 0; i < 15; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i) { //1つ目のノーツ生成位置に移動
+			r_[i] = rand() % 4;
+			if (i > 0) {
+				if (r_[i] == r_[i - 1]) {
+					r_[i] = (r_[i] + 1) % 4;
+				}
+			}
+			setMove(POS_X_[r_[i]], BULLET_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + MOVE_SPEED_) { //1つ目のノーツ生成
+			scene_->actors_.emplace_back(new NotesAnkouBless(scene_, ATK_BULLET_, r_[i]));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_FAST_ * 15 + BULLET_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossAnkou::attackBulletB() {
+	for (int i = 0; i < 6; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i) { //1つ目のノーツ生成位置に移動
+			r_[i] = rand() % 4;
+			if (i > 0) {
+				if (r_[i] == r_[i - 1]) {
+					r_[i] = (r_[i] + 1) % 4;
+				}
+			}
+			setMove(0, BULLET_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + MOVE_SPEED_) { //1つ目のノーツ生成
+			scene_->actors_.emplace_back(new NotesAnkouBless(scene_, ATK_BULLET_, r_[i]));
+			r_[i] = (r_[i] + rand() % 3 + 1) % 4;
+			scene_->actors_.emplace_back(new NotesAnkouBless(scene_, ATK_BULLET_, r_[i]));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_SLOW_ * 6 + BULLET_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossAnkou::update(float delta_time) {
+	if (move_flame_ != 0) move(dir_x_, dir_z_);
+	if (action_ != -1)switchAction();
+}
+
+BossSkall::BossSkall(ScenePlay* scene) {
+	initialize(scene);
+}
+
+void BossSkall::attackMeleeA() {
+	for (int i = 0; i < 20; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i) { //1つ目のノーツ生成
+			r_[i] = rand() % 4;
+			if (i > 0) {
+				if (r_[i] == r_[i - 1]) {
+					r_[i] = (r_[i] + 1) % 4;
+				}
+			}
+			scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i]));
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+			setMove(POS_X_[r_[i]], MELEE_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			scene_->actors_.emplace_back(new EffectEnemySward(scene_, r_[i]));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_FAST_ * 20 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossSkall::attackMeleeB() {
+	for (int i = 0; i < 5; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i) { //1つ目のノーツ生成
+			r_[i] = rand() % 4;
+			if (i > 0) {
+				if (r_[i] == r_[i - 1]) {
+					r_[i] = (r_[i] + 1) % 4;
+				}
+			}
+			scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i]));
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+			setMove(POS_X_[r_[i]], MELEE_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			scene_->actors_.emplace_back(new EffectEnemySward(scene_, r_[i]));
+		}
+	}
+	for (int i = 5; i < 10; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * 4 + ATTACK_INTERVAL_FAST_ * (i - 4)) { //1つ目のノーツ生成
+			r_[i] = rand() % 4;
+			if (i > 0) {
+				if (r_[i] == r_[i - 1]) {
+					r_[i] = (r_[i] + 1) % 4;
+				}
+			}
+			scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i]));
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * 4 + ATTACK_INTERVAL_FAST_ * (i - 4) + FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+			setMove(POS_X_[r_[i]], MELEE_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * 4 + ATTACK_INTERVAL_FAST_ * (i - 4) + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			scene_->actors_.emplace_back(new EffectEnemySward(scene_, r_[i]));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_SLOW_ * 4 + ATTACK_INTERVAL_FAST_ * 5 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossSkall::attackRangeA() {
+	attackMeleeA();
+}
+
+void BossSkall::attackRangeB() {
+	attackMeleeB();
+}
+
+void BossSkall::attackBulletA() {
+	for (int i = 0; i < 6; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i) { //1つ目のノーツ生成位置に移動
+			r_[i] = rand() % 4;
+			if (i > 0) {
+				if (r_[i] == r_[i - 1]) {
+					r_[i] = (r_[i] + 1) % 4;
+				}
+			}
+			setMove(POS_X_[r_[i]], BULLET_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + MOVE_SPEED_) { //1つ目のノーツ生成
+			scene_->actors_.emplace_back(new NotesSkallSward(scene_, ATK_BULLET_, r_[i]));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_FAST_ * 6 + BULLET_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossSkall::attackBulletB() {
+	for (int i = 0; i < 4; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i) { //1つ目のノーツ生成位置に移動
+			r_[i] = rand() % 4;
+			if (i > 0) {
+				if (r_[i] == r_[i - 1]) {
+					r_[i] = (r_[i] + 1) % 4;
+				}
+			}
+			setMove(POS_X_[r_[i]], BULLET_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + MOVE_SPEED_) { //1つ目のノーツ生成
+			scene_->actors_.emplace_back(new NotesSkallSward(scene_, ATK_BULLET_, r_[i]));
+		}
+	}
+	for (int i = 4; i < 7; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * 3 + ATTACK_INTERVAL_FAST_ * (i - 3)) { //1つ目のノーツ生成
+			r_[i] = rand() % 4;
+			if (i > 0) {
+				if (r_[i] == r_[i - 1]) {
+					r_[i] = (r_[i] + 1) % 4;
+				}
+			}
+			scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i]));
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * 3 + ATTACK_INTERVAL_FAST_ * (i - 3) + FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+			setMove(POS_X_[r_[i]], MELEE_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * 3 + ATTACK_INTERVAL_FAST_ * (i - 3) + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			scene_->actors_.emplace_back(new EffectEnemySward(scene_, r_[i]));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_SLOW_ * 3 + ATTACK_INTERVAL_FAST_ * 4 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossSkall::update(float delta_time) {
+	if (move_flame_ != 0) move(dir_x_, dir_z_);
+	if (action_ != -1)switchAction();
+}
+
 BossKing::BossKing(ScenePlay* scene) {
 	initialize(scene);
 }
@@ -789,6 +1052,34 @@ NotesKeruberosBless::NotesKeruberosBless(ScenePlay* scene, int damage, int lane)
 }
 
 void NotesKeruberosBless::update(float delta_time) {
+	flow(scene_->NOTES_SPEED_);
+	judge();
+}
+
+NotesSkallSward::NotesSkallSward(ScenePlay* scene, int damage, int lane) {
+	scene_ = scene;
+	lane_ = lane;
+	damage_ = damage;
+	getImage();
+	mesh_ = dxe::Mesh::CreatePlane({ MESH_W_ * 0.5f, MESH_H_ * 2, 0 });
+	mesh_->setTexture(dxe::Texture::CreateFromFile(*it));
+	it++;
+	mesh_->pos_ = { POS_X_[lane_],POS_Y_,POS_Z_ };
+	mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(60));
+	mesh_->pos_.z = BULLET_POS_Z_;
+}
+
+void NotesSkallSward::update(float delta_time) {
+	flow(scene_->NOTES_SPEED_);
+	judge();
+}
+
+NotesAnkouBless::NotesAnkouBless(ScenePlay* scene, int damage, int lane) {
+	initialize(scene, damage, lane);
+	mesh_->pos_.z = BULLET_POS_Z_;
+}
+
+void NotesAnkouBless::update(float delta_time) {
 	flow(scene_->NOTES_SPEED_);
 	judge();
 }

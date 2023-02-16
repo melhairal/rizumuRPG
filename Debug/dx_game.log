@@ -21,9 +21,11 @@ C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(147,47): warning
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(148,46): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(152,46): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(168,44): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(763,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(772,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(782,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(792,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(802,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(1026,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(1035,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(1045,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(1055,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(1073,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(1083,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\object\gm_object_boss.cpp(1093,13): warning C4244: '引数': 'const int' から 'float' への変換です。データが失われる可能性があります。
   dx_game.vcxproj -> C:\Users\vantan\Documents\GitHub\rizumuRPG\Debug\dx_game.exe
