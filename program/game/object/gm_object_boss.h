@@ -135,6 +135,37 @@ public:
 	}
 };
 
+class BossKing : public BossEnemy {
+public:
+	BossKing(ScenePlay* scene);
+	~BossKing() {}
+	void update(float delta_time);
+
+	// =========== 関数 ==========
+
+	void attackMeleeA(); //近接攻撃1
+	void attackMeleeB(); //近接攻撃2
+	void attackRangeA(); //全体攻撃1
+	void attackRangeB(); //全体攻撃2
+	void attackBulletA(); //遠隔攻撃1
+	void attackBulletB(); //遠隔攻撃2
+
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_MELEE_ = 250;
+	const int ATK_RANGE_ = 190;
+	const int ATK_BULLET_ = 200;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/king.png");
+		it = images_.begin();
+	}
+};
+
 class BossNotes : public Actor {
 public:
 	BossNotes() {}
@@ -245,6 +276,25 @@ public:
 		//  ここにアニメーションの画像を並べる
 		// ====================================
 		images_.emplace_back("graphics/effect/blackball1.png");
+		it = images_.begin();
+	}
+};
+
+class NotesKingBless : public BossNotes {
+public:
+	NotesKingBless(ScenePlay* scene, int damage, int lane);
+	~NotesKingBless() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/blackball2.png");
 		it = images_.begin();
 	}
 };

@@ -144,6 +144,30 @@ void EffectBite::update(float delta_time) {
 	}
 }
 
+EffectMaho::EffectMaho(ScenePlay* scene, int loop) {
+	scene_ = scene;
+	getImage();
+	mesh_ = dxe::Mesh::CreatePlane({ MESH_W_ * 4, MESH_H_ * 3, 0 });
+	mesh_->setTexture(dxe::Texture::CreateFromFile(*it));
+	it++;
+	mesh_->pos_ = { 0,POS_Y_ * 3,POS_Z_ };
+	mesh_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(60));
+	loop_num_ = loop;
+}
+
+void EffectMaho::update(float delta_time) {
+	//アニメーション更新
+	animation(FRAME_);
+	if (it == images_.begin()) {
+		if (elapsed_ == 0) {
+			loop_count_++;
+		}
+		if (loop_count_ >= loop_num_) {
+			alive_ = false;
+		}
+	}
+}
+
 EffectGard::EffectGard(ScenePlay* scene, int lane) {
 	scene_ = scene;
 	getImage();

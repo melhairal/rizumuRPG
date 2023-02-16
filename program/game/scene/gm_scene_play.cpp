@@ -325,4 +325,5 @@ void ScenePlay::Debug(float delta_time) {
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_W)) {
 		combo_ = 0;
 	}
+
 }

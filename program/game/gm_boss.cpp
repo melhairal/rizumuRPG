@@ -148,7 +148,7 @@ void Boss::getBossClass() {
 		enemy_ = scene_->actors_.emplace_back(new BossDragon(scene_));
 		break;
 	case 5:
-		enemy_ = scene_->actors_.emplace_back(new BossDragon(scene_));
+		enemy_ = scene_->actors_.emplace_back(new BossKing(scene_));
 		break;
 	}
 }

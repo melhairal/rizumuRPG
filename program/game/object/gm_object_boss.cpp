@@ -458,6 +458,202 @@ void BossKeruberos::update(float delta_time) {
 	if (action_ != -1)switchAction();
 }
 
+BossKing::BossKing(ScenePlay* scene) {
+	initialize(scene);
+}
+
+void BossKing::attackMeleeA() {
+	for (int i = 0; i < 18; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i) { //1つ目のノーツ生成
+			r_[i] = rand() % 4;
+			if (i > 0) {
+				if (r_[i] == r_[i - 1]) {
+					r_[i] = (r_[i] + 1) % 4;
+				}
+			}
+			scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i]));
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+			setMove(POS_X_[r_[i]], MELEE_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			scene_->actors_.emplace_back(new EffectCrow(scene_, r_[i]));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_FAST_ * 18 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossKing::attackMeleeB() {
+	for (int i = 0; i < 10; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i) { //1つ目のノーツ生成
+			r_[i] = rand() % 3;
+			if (i > 0) {
+				if (r_[i] == r_[i - 1]) {
+					r_[i] = (r_[i] + 1) % 3;
+				}
+			}
+			scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i]));
+			scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i] + 1));
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+			setMove((POS_X_[r_[i]] + POS_X_[r_[i] + 1]) / 2, MELEE_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			scene_->actors_.emplace_back(new EffectBite(scene_, r_[i]));
+			scene_->actors_.emplace_back(new EffectBite(scene_, r_[i] + 1));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_SLOW_ * 10 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossKing::attackRangeA() {
+	for (int i = 0; i < 10; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i) { //1つ目のノーツ生成
+			if (i == 2 || i == 4 || i == 6 || i ==7 || i == 9) {
+				scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 0));
+				scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 1));
+				scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 2));
+				scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 3));
+			}
+			else {
+				r_[i] = rand() % 3;
+				scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i]));
+				scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i] + 1));
+			}
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + FLOW_INTERVAL_) { //1つ目のノーツに向かって移動
+			if (i == 2 || i == 4 || i == 6 || i == 7 || i == 9) {
+				setMove(0, MELEE_POS_Z_);
+			}
+			else {
+				setMove((POS_X_[r_[i]] + POS_X_[r_[i] + 1]) / 2, MELEE_POS_Z_);
+			}
+		}
+		if (elapsed_ == ATTACK_INTERVAL_SLOW_ * i + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			if (i == 2 || i == 4 || i == 6 || i == 7 || i == 9) {
+				scene_->actors_.emplace_back(new EffectTail(scene_));
+			}
+			else {
+				scene_->actors_.emplace_back(new EffectBite(scene_, r_[i]));
+				scene_->actors_.emplace_back(new EffectBite(scene_, r_[i] + 1));
+			}
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_SLOW_ * 10 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossKing::attackRangeB() {
+	for (int i = 0; i < 14; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i) { //1つ目のノーツ生成
+			if (i == 3 || i == 7 || i == 10 || i == 11 || i == 13) {
+				scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 0));
+				scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 1));
+				scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 2));
+				scene_->actors_.emplace_back(new NotesWarningAll(scene_, ATK_RANGE_, 3));
+			}
+			else {
+				r_[i] = rand() % 4;
+				if (i > 0) {
+					if (r_[i] == r_[i - 1]) {
+						r_[i] = (r_[i] + 1) % 4;
+					}
+				}
+				scene_->actors_.emplace_back(new NotesWarning(scene_, ATK_MELEE_, r_[i]));
+			}
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + FLOW_INTERVAL_ - MOVE_SPEED_) { //1つ目のノーツに向かって移動
+			if (i == 3 || i == 7 || i == 10 || i == 11 || i == 13) {
+				setMove(0, MELEE_POS_Z_);
+			}
+			else {
+				setMove(POS_X_[r_[i]], MELEE_POS_Z_);
+			}
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + FLOW_INTERVAL_) { //1つ目のノーツのエフェクトを生成
+			if (i == 3 || i == 7 || i == 10 || i == 11 || i == 13) {
+				scene_->actors_.emplace_back(new EffectTail(scene_));
+			}
+			else {
+				scene_->actors_.emplace_back(new EffectCrow(scene_, r_[i]));
+			}
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_FAST_ * 14 + FLOW_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossKing::attackBulletA() {
+	for (int i = 0; i < 15; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i) { //1つ目のノーツ生成位置に移動
+			r_[i] = rand() % 4;
+			if (i > 0) {
+				if (r_[i] == r_[i - 1]) {
+					r_[i] = (r_[i] + 2) % 4;
+				}
+			}
+			setMove(POS_X_[r_[i]], BULLET_POS_Z_);
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + MOVE_SPEED_) { //1つ目のノーツ生成
+			scene_->actors_.emplace_back(new NotesDragonBless(scene_, ATK_BULLET_, r_[i]));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_FAST_ * 15 + BULLET_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossKing::attackBulletB() {
+	for (int i = 0; i < 20; i++) {
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i) { //1つ目のノーツ生成位置に移動
+			r_[i] = rand() % 3 + 1;
+			if (i == 0) {
+				setMove(0, BULLET_POS_Z_);
+			}
+		}
+		if (elapsed_ == ATTACK_INTERVAL_FAST_ * i + MOVE_SPEED_) { //1つ目のノーツ生成
+			if (i == 0) {
+				scene_->actors_.emplace_back(new EffectMaho(scene_,5));
+			}
+			scene_->actors_.emplace_back(new NotesKingBless(scene_, ATK_BULLET_, r_[i]));
+			r_[i] = (r_[i] + rand() % 3 + 1) % 4;
+			scene_->actors_.emplace_back(new NotesKingBless(scene_, ATK_BULLET_, r_[i]));
+		}
+	}
+	elapsed_++;
+
+	if (elapsed_ >= ATTACK_INTERVAL_FAST_ * 20 + BULLET_INTERVAL_ + 1) { //終了
+		elapsed_ = 0;
+		action_ = -1;
+	}
+}
+
+void BossKing::update(float delta_time) {
+	if (move_flame_ != 0) move(dir_x_, dir_z_);
+	if (action_ != -1)switchAction();
+}
+
 void BossNotes::initialize(ScenePlay* scene, int damage, int lane) {
 	scene_ = scene;
 	lane_ = lane;
@@ -593,6 +789,16 @@ NotesKeruberosBless::NotesKeruberosBless(ScenePlay* scene, int damage, int lane)
 }
 
 void NotesKeruberosBless::update(float delta_time) {
+	flow(scene_->NOTES_SPEED_);
+	judge();
+}
+
+NotesKingBless::NotesKingBless(ScenePlay* scene, int damage, int lane) {
+	initialize(scene, damage, lane);
+	mesh_->pos_.z = BULLET_POS_Z_;
+}
+
+void NotesKingBless::update(float delta_time) {
 	flow(scene_->NOTES_SPEED_);
 	judge();
 }

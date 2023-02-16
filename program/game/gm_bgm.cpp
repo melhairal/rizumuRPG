@@ -14,7 +14,12 @@ Bgm::Bgm(ScenePlay* scene) {
 	sound_clear_ = LoadSoundMem("sound/clear.mp3");
 	sound_failed_ = LoadSoundMem("sound/gameover.mp3");
 
-	bgm_boss_ = LoadSoundMem("sound/boss.mp3");
+	if (scene_->stage_ != 5) {
+		bgm_boss_ = LoadSoundMem("sound/boss.mp3");
+	}
+	else {
+		bgm_boss_ = LoadSoundMem("sound/stage_6_boss.mp3");
+	}
 
 	prev_hp_ = scene_->hp_;
 }

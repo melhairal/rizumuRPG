@@ -246,6 +246,45 @@ public:
 	}
 };
 
+class EffectMaho : public Actor {
+public:
+	EffectMaho(ScenePlay* scene, int loop);
+	~EffectMaho() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+
+	// ========== 基本ステータス ==========
+
+	const float POS_Z_ = 70.0f; //Z座標
+	const int FRAME_ = 5; //アニメーション更新フレーム
+	int loop_num_ = 1; //アニメーションを何回ループさせるか
+	int loop_count_ = 0; //ループ回数カウント
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/maho/maho_001.png");
+		images_.emplace_back("graphics/effect/maho/maho_002.png");
+		images_.emplace_back("graphics/effect/maho/maho_003.png");
+		images_.emplace_back("graphics/effect/maho/maho_004.png");
+		images_.emplace_back("graphics/effect/maho/maho_005.png");
+		images_.emplace_back("graphics/effect/maho/maho_006.png");
+		images_.emplace_back("graphics/effect/maho/maho_007.png");
+		images_.emplace_back("graphics/effect/maho/maho_008.png");
+		images_.emplace_back("graphics/effect/maho/maho_009.png");
+		images_.emplace_back("graphics/effect/maho/maho_010.png");
+		images_.emplace_back("graphics/effect/maho/maho_011.png");
+		images_.emplace_back("graphics/effect/maho/maho_012.png");
+		images_.emplace_back("graphics/effect/maho/maho_013.png");
+		images_.emplace_back("graphics/effect/maho/maho_014.png");
+		images_.emplace_back("graphics/effect/maho/maho_015.png");
+		it = images_.begin();
+	}
+};
+
 class EffectGard : public Actor {
 public:
 	EffectGard(ScenePlay* scene, int lane);
