@@ -205,6 +205,9 @@
     <ClCompile Include="program\game\object\gm_object_attack.cpp">
       <Filter>program\game\object</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\scene\gm_scene_map.cpp">
+      <Filter>program\game\scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\library\picojson.h">
@@ -359,6 +362,9 @@
     </ClInclude>
     <ClInclude Include="program\game\object\gm_object_skill_map.h">
       <Filter>program\game\object</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\scene\gm_scene_map.h">
+      <Filter>program\game\scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

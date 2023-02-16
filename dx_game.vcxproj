@@ -54,6 +54,7 @@
     <ClCompile Include="program\game\object\gm_object_ground.cpp" />
     <ClCompile Include="program\game\object\gm_object_actor.cpp" />
     <ClCompile Include="program\game\object\gm_object_player.cpp" />
+    <ClCompile Include="program\game\scene\gm_scene_map.cpp" />
     <ClCompile Include="program\game\scene\gm_scene_play.cpp" />
     <ClCompile Include="program\game\scene\gm_scene_result.cpp" />
     <ClCompile Include="program\game\scene\gm_scene_title.cpp" />
@@ -98,6 +99,7 @@
     <ClInclude Include="program\game\object\gm_object_player.h" />
     <ClInclude Include="program\game\object\gm_object_skill_map.h" />
     <ClInclude Include="program\game\scene\gm_scene_base.h" />
+    <ClInclude Include="program\game\scene\gm_scene_map.h" />
     <ClInclude Include="program\game\scene\gm_scene_play.h" />
     <ClInclude Include="program\game\scene\gm_scene_result.h" />
     <ClInclude Include="program\game\scene\gm_scene_title.h" />
