@@ -34,12 +34,43 @@ public:
 	const int ATTACK_INTERVAL_FAST_ = 18; //攻撃間隔(短)
 	const int ATTACK_INTERVAL_SLOW_ = 36; //攻撃間隔(遅)
 
-	int r_[6] = { 0,0,0,0,0,0 }; //攻撃レーン乱数保存用
+	int r_[20] = { 0 }; //攻撃レーン乱数保存用
 	float dir_x_ = 0; //移動量を保存
 	float dir_z_ = 0; //移動量を保存
 
 	int move_flame_ = 0; //移動量計測用
 	int elapsed_ = 0; //時間計測
+};
+
+class BossGorem : public BossEnemy {
+public:
+	BossGorem(ScenePlay* scene);
+	~BossGorem() {}
+	void update(float delta_time);
+
+	// =========== 関数 ==========
+
+	void attackMeleeA(); //近接攻撃1
+	void attackMeleeB(); //近接攻撃2
+	void attackRangeA(); //全体攻撃1
+	void attackRangeB(); //全体攻撃2
+	void attackBulletA(); //遠隔攻撃1
+	void attackBulletB(); //遠隔攻撃2
+	
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_MELEE_ = 40;
+	const int ATK_RANGE_ = 20;
+	const int ATK_BULLET_ = 0;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/gorem.png");
+		it = images_.begin();
+	}
 };
 
 class BossDragon : public BossEnemy {
@@ -56,7 +87,7 @@ public:
 	void attackRangeB(); //全体攻撃2
 	void attackBulletA(); //遠隔攻撃1
 	void attackBulletB(); //遠隔攻撃2
-	
+
 
 	// ========== 基本ステータス ==========
 
@@ -69,6 +100,37 @@ public:
 		//  ここにアニメーションの画像を並べる
 		// ====================================
 		images_.emplace_back("graphics/chara/enemy/dragon.png");
+		it = images_.begin();
+	}
+};
+
+class BossKeruberos : public BossEnemy {
+public:
+	BossKeruberos(ScenePlay* scene);
+	~BossKeruberos() {}
+	void update(float delta_time);
+
+	// =========== 関数 ==========
+
+	void attackMeleeA(); //近接攻撃1
+	void attackMeleeB(); //近接攻撃2
+	void attackRangeA(); //全体攻撃1
+	void attackRangeB(); //全体攻撃2
+	void attackBulletA(); //遠隔攻撃1
+	void attackBulletB(); //遠隔攻撃2
+
+
+	// ========== 基本ステータス ==========
+
+	const int ATK_MELEE_ = 90;
+	const int ATK_RANGE_ = 40;
+	const int ATK_BULLET_ = 50;
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/chara/enemy/keruberos.png");
 		it = images_.begin();
 	}
 };
@@ -164,6 +226,25 @@ public:
 		//  ここにアニメーションの画像を並べる
 		// ====================================
 		images_.emplace_back("graphics/effect/fireball.png");
+		it = images_.begin();
+	}
+};
+
+class NotesKeruberosBless : public BossNotes {
+public:
+	NotesKeruberosBless(ScenePlay* scene, int damage, int lane);
+	~NotesKeruberosBless() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+	// ========== 基本ステータス ==========
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/blackball1.png");
 		it = images_.begin();
 	}
 };

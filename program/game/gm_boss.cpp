@@ -133,13 +133,13 @@ void Boss::initialize() {
 void Boss::getBossClass() {
 	switch (scene_->stage_) {
 	case 0:
-		enemy_ = scene_->actors_.emplace_back(new BossDragon(scene_));
+		enemy_ = scene_->actors_.emplace_back(new BossGorem(scene_));
 		break;
 	case 1:
 		enemy_ = scene_->actors_.emplace_back(new BossDragon(scene_));
 		break;
 	case 2:
-		enemy_ = scene_->actors_.emplace_back(new BossDragon(scene_));
+		enemy_ = scene_->actors_.emplace_back(new BossKeruberos(scene_));
 		break;
 	case 3:
 		enemy_ = scene_->actors_.emplace_back(new BossDragon(scene_));

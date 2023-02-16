@@ -216,6 +216,36 @@ public:
 	}
 };
 
+class EffectBite : public Actor {
+public:
+	EffectBite(ScenePlay* scene, int lane);
+	~EffectBite() {}
+	void update(float delta_time) override;
+
+	// =========== 関数 ==========
+
+
+	// ========== 基本ステータス ==========
+
+	const float POS_Z_ = -90.0f; //Z座標
+	const int FRAME_ = 3; //アニメーション更新フレーム
+
+	void getImage() override {
+		// ====================================
+		//  ここにアニメーションの画像を並べる
+		// ====================================
+		images_.emplace_back("graphics/effect/bite/bite_001.png");
+		images_.emplace_back("graphics/effect/bite/bite_002.png");
+		images_.emplace_back("graphics/effect/bite/bite_003.png");
+		images_.emplace_back("graphics/effect/bite/bite_004.png");
+		images_.emplace_back("graphics/effect/bite/bite_005.png");
+		images_.emplace_back("graphics/effect/bite/bite_006.png");
+		images_.emplace_back("graphics/effect/bite/bite_007.png");
+		images_.emplace_back("graphics/effect/bite/bite_008.png");
+		it = images_.begin();
+	}
+};
+
 class EffectGard : public Actor {
 public:
 	EffectGard(ScenePlay* scene, int lane);
