@@ -13,7 +13,6 @@ public:
 
 	void getScore(); //スコアを取得
 	void drawWindow(int x, int y, int width, int height); //ウィンドウを描画
-	void drawTitle(int stage); //ステージ名を描画
 
 	// ========== 基本ステータス ==========
 
@@ -46,6 +45,16 @@ public:
 	int bgm_ = 0;
 
 	int stage_ = 0; //ステージ
+
+		//ステージタイトル
+	const char* title_[6]{
+		"旅立ちの平原",
+		"竜の住む丘",
+		"洞窟を抜けて",
+		"悪霊の住処",
+		"大海を往く",
+		"闇の森"
+	};
 
 	bool score_judge_ = true; //勝ったかどうか
 	int score_ = 0; //スコア

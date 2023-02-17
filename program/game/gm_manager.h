@@ -69,7 +69,7 @@ public :
 	int now_stage_ = 4; //選んだステージ
 
 	//進行フラグ(クリアフラグ)
-	int flag_stage_ = 0;
+	int flag_stage_ = 6;
 	int max_score_[6] = { 0,0,0,0,0,0 };
 };
 

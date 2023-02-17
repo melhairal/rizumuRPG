@@ -63,7 +63,7 @@ void SceneResult::update(float delta_time)
 void SceneResult::render()
 {
 	drawWindow(DXE_WINDOW_WIDTH / 2, DXE_WINDOW_HEIGHT / 2, DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT);
-	drawTitle(stage_);
+	DrawStringToHandle(TITLE_X_, TITLE_Y_, title_[stage_], -1, font_rondo_64_);
 	
 	if (num_ >= 5)DrawFormatStringToHandle(SCORE_X_, SCORE_Y_, -1, font_rondo_128_, "Score %d", draw_score_);
 	if (num_ >= 1)DrawFormatStringToHandle(SCORE_X_, SCORE_SUB_Y_[0], -1, font_rondo_64_, "Max Combo %d", score_max_combo_);
@@ -106,27 +106,4 @@ void SceneResult::drawWindow(int x, int y, int width, int height) {
 	DrawExtendGraph(center_x2, center_y1 - 20, center_x2 + 20, center_y1, window_top_right_, true); //‰Eã
 	DrawExtendGraph(center_x1 - 20, center_y2, center_x1, center_y2 + 20, window_bot_left_, true); //¶‰º
 	DrawExtendGraph(center_x2, center_y2, center_x2 + 20, center_y2 + 20, window_bot_right_, true); //‰E‰º
-}
-
-void SceneResult::drawTitle(int stage) {
-	switch (stage) {
-	case 0:
-		DrawStringToHandle(TITLE_X_, TITLE_Y_, "—·—§‚¿", -1, font_rondo_64_);
-		break;
-	case 1:
-		DrawStringToHandle(TITLE_X_, TITLE_Y_, "‘Œ´‚ğ‹ì‚¯”²‚¯‚Ä", -1, font_rondo_64_);
-		break;
-	case 2:
-		DrawStringToHandle(TITLE_X_, TITLE_Y_, "–‚b‚Ì“´ŒA", -1, font_rondo_64_);
-		break;
-	case 3:
-		DrawStringToHandle(TITLE_X_, TITLE_Y_, "“´ŒA‚ğ”²‚¯‚Ä", -1, font_rondo_64_);
-		break;
-	case 4:
-		DrawStringToHandle(TITLE_X_, TITLE_Y_, "‘åŠC‚ğ‰‚­", -1, font_rondo_64_);
-		break;
-	case 5:
-		DrawStringToHandle(TITLE_X_, TITLE_Y_, "ˆÅ‚ÌX", -1, font_rondo_64_);
-		break;
-	}
 }
