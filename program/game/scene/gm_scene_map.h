@@ -21,11 +21,10 @@ public:
 	// ========== 基本ステータス ==========
 
 	//進行度に合わせたワールドマップ画像
-	const char* map_[7] = {
+	const char* map_[6] = {
 		"graphics/world/map_1.png",
 		"graphics/world/map_2.png",
 		"graphics/world/map_3.png",
-		"graphics/world/map_4.png",
 		"graphics/world/map_5.png",
 		"graphics/world/map_6.png",
 		"graphics/world/map_7.png"
@@ -61,9 +60,6 @@ public:
 		"graphics/chara/player_3d/player_003.png"
 	};
 
-	//進行度
-	int progress_ = 0;
-
 	//ステージタイトル
 	const char* title_[6]{
 		"旅立ちの平原",
@@ -84,7 +80,7 @@ public:
 
 	//選択中
 	int sel_ = 0;
-	const int MAX_INDEX_ = 6;
+	int max_index_ = 6;
 	const int MAX_INDEX_VILLAGE_ = 1;
 	int sel_label_ = 0;
 	const int MAX_INDEX_LABEL_ = 2;
@@ -122,8 +118,8 @@ public:
 	//プレイヤー座標
 	float player_x_ = 500;
 	float player_y_ = 500;
-	const float PLAYER_STAGE_X_[6] = { 742,642,720,300,800,900 };
-	const float PLAYER_STAGE_Y_[6] = { 88,70,180,350,500,600 };
+	const float PLAYER_STAGE_X_[6] = { 742,642,716,480,704,873 };
+	const float PLAYER_STAGE_Y_[6] = { 90,70,180,180,425,550 };
 	const float PLAYER_VILLAGE_X_[1] = { 825 };
 	const float PLAYER_VILLAGE_Y_[1] = { 120 };
 

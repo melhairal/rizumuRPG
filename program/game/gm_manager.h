@@ -53,8 +53,8 @@ public :
 	// ゲーム全体で参照したい変数はここで用意
 
 	//プレイヤーステータス
-	int player_atk_ = 10;
-	int player_hp_ = 1000;
+	int player_atk_ = 20;
+	int player_hp_ = 2000;
 	int player_mp_ = 0;
 	int player_exp_ = 0;
 

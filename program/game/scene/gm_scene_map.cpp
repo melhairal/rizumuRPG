@@ -17,7 +17,7 @@ void SceneMap::initialzie() {
 	font_rondo_64_ = LoadFontDataToHandle("font/Rondo64.dft", 0);
 
 	//マップ画像を取得
-	world_map_ = LoadGraph(map_[progress_]);
+	world_map_ = LoadGraph(map_[max_index_ - 1]);
 
 	//キャラ画像を取得
 	img_player_[0] = LoadGraph(img_player_pass_[0]);
@@ -38,7 +38,7 @@ void SceneMap::update(float delta_time)
 	}
 	switch (sel_label_) {
 	case 0:
-		sel_ = std::clamp(sel_, 0, MAX_INDEX_ - 1);
+		sel_ = std::clamp(sel_, 0, max_index_ - 1);
 		break;
 	case 1:
 		sel_ = std::clamp(sel_, 0, MAX_INDEX_VILLAGE_ - 1);
@@ -57,7 +57,7 @@ void SceneMap::update(float delta_time)
 
 
 	//選択中のタイトルを協調する
-	for (int i = 0; i < MAX_INDEX_; i++) {
+	for (int i = 0; i < max_index_; i++) {
 		title_x_[i] = TITLE_DEF_X_;
 		title_color_[i] = BROWN;
 	}
@@ -68,7 +68,14 @@ void SceneMap::update(float delta_time)
 	movePlayer();
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
-		mgr->chengeScene(new ScenePlay());
+		switch (sel_label_) {
+		case 0:
+			mgr->now_stage_ = sel_;
+			mgr->chengeScene(new ScenePlay());
+			break;
+		case 1:
+			break;
+		}
 	}
 }
 
@@ -85,7 +92,7 @@ void SceneMap::render()
 
 void SceneMap::getMgrStatus() {
 	GameManager* mgr = GameManager::GetInstance();
-	progress_ = mgr->flag_stage_;
+	max_index_ = mgr->flag_stage_;
 }
 
 void SceneMap::getWindow() {
@@ -144,7 +151,7 @@ void SceneMap::drawWindow(int x, int y, int width, int height) {
 void SceneMap::drawTitle() {
 	switch (sel_label_) {
 	case 0:
-		for (int i = 0; i < MAX_INDEX_; i++) {
+		for (int i = 0; i < max_index_; i++) {
 			DrawStringToHandle(title_x_[i], title_y_[i], title_[i], title_color_[i], font_rondo_32_);
 		}
 		DrawRotaGraph(RIGHT_X_, LR_Y_, 0.5f, 0, right_, true);

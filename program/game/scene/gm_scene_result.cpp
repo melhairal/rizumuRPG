@@ -1,6 +1,6 @@
 #include "../gm_manager.h"
 #include "gm_scene_result.h"
-#include "gm_scene_title.h"
+#include "gm_scene_map.h"
 
 void SceneResult::initialzie() {
 	//ウィンドウ画像読み込み
@@ -51,7 +51,7 @@ void SceneResult::update(float delta_time)
 		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 			if (finish_) {
 				StopSoundMem(bgm_);
-				mgr->chengeScene(new SceneTitle());
+				mgr->chengeScene(new SceneMap());
 			}
 			else {
 				draw_score_ = score_;
