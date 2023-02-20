@@ -93,6 +93,9 @@ void SceneMap::render()
 void SceneMap::getMgrStatus() {
 	GameManager* mgr = GameManager::GetInstance();
 	max_index_ = mgr->flag_stage_;
+	for (int i = 0; i < max_index_; i++) {
+		best_score_[i] = mgr->best_score_[i];
+	}
 }
 
 void SceneMap::getWindow() {

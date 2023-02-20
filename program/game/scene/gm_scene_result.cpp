@@ -92,6 +92,17 @@ void SceneResult::getScore() {
 	stage_ = mgr->now_stage_;
 }
 
+void SceneResult::setScore() {
+	GameManager* mgr = GameManager::GetInstance();
+	//経験値取得
+	mgr->player_exp_ += score_ / 1000;
+	//ハイスコアの更新
+	int best_score_ = mgr->best_score_[stage_];
+	if (best_score_ < score_) {
+		mgr->best_score_[stage_] = score_;
+	}
+}
+
 void SceneResult::drawWindow(int x, int y, int width, int height) {
 	int center_x1 = x - width / 2 + 20;
 	int center_x2 = x + width / 2 - 20;

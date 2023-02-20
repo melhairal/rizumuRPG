@@ -78,6 +78,9 @@ public:
 		"　拠点　"
 	};
 
+	//ハイスコア
+	int best_score_[6] = { 0,0,0,0,0,0 };
+
 	//選択中
 	int sel_ = 0;
 	int max_index_ = 6;

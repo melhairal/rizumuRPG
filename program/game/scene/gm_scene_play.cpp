@@ -213,7 +213,7 @@ void ScenePlay::render()
 
 
 	// ==================== デバッグ等 ====================
-
+	
 }
 
 void ScenePlay::updateObject(float delta_time) {

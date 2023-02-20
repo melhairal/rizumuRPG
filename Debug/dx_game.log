@@ -1,29 +1,4 @@
-﻿  gm_main.cpp
-  gm_manager.cpp
-  gm_scene_map.cpp
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(85,24): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(85,16): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(86,46): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(86,35): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(86,24): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(86,13): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(87,37): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(87,29): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(87,21): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(87,13): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(88,27): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(88,16): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(155,46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(155,33): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(157,27): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(157,17): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(161,46): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(161,33): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(163,26): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(163,17): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(166,31): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_map.cpp(166,21): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
-  gm_scene_play.cpp
+﻿  gm_scene_play.cpp
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(92,43): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(97,40): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(98,41): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
@@ -46,7 +21,4 @@ C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(147,47): warning
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(148,46): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(152,46): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
 C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_ui.h(168,44): warning C4244: '初期化中': 'float' から 'const int' への変換です。データが失われる可能性があります。
-  gm_scene_result.cpp
-  gm_scene_title.cpp
-  コードを生成中...
   dx_game.vcxproj -> C:\Users\vantan\Documents\GitHub\rizumuRPG\Debug\dx_game.exe
