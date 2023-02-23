@@ -1,13 +1,7 @@
-﻿  gm_3d_model.cpp
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\3d_object\gm_3d_sprite.h(10,1): warning C4150: 'AnimSprite3D' 型を削除するため delete 演算子が呼び出されましたが、定義がありません。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\3d_object\gm_3d_sprite.h(4): message : 'AnimSprite3D' の宣言を確認してください
-  gm_3d_sprite.cpp
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\3d_object\gm_3d_sprite.h(10,1): warning C4150: 'AnimSprite3D' 型を削除するため delete 演算子が呼び出されましたが、定義がありません。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\3d_object\gm_3d_sprite.h(4): message : 'AnimSprite3D' の宣言を確認してください
-  gm_scene_field.cpp
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(139,33): warning C4244: '引数': 'const int' から 'const float' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(150,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(151,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
-  gm_scene_title.cpp
-  コードを生成中...
+﻿  gm_scene_field.cpp
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(149,33): warning C4244: '引数': 'const int' から 'const float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(167,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(168,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(174,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(175,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
   dx_game.vcxproj -> C:\Users\vantan\Documents\GitHub\rizumuRPG\Debug\dx_game.exe

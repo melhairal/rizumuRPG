@@ -17,6 +17,7 @@ SpritePlayer::SpritePlayer(SceneField* scene) {
 	sprite_->regist(32, 32, "walk_left", "graphics/chara/player_3d/player_left.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 32, 0);
 	sprite_->regist(32, 32, "walk_right", "graphics/chara/player_3d/player_right.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 32, 0);
 	sprite_->setCurrentAnim("walk_front");
+	prev_pos_ = sprite_->pos_;
 }
 
 void SpritePlayer::update(float delta_time) {
@@ -46,6 +47,7 @@ void SpritePlayer::update(float delta_time) {
 	if (tnl::Input::IsKeyDown(eKeys::KB_W, eKeys::KB_D, eKeys::KB_S, eKeys::KB_A)) {
 		move_v.normalize();
 		sprite_->rot_.slerp(tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + move_v), 0.3f);
+		prev_pos_ = sprite_->pos_;
 		sprite_->pos_ += move_v * speed_;
 	}
 	sprite_->update(delta_time);

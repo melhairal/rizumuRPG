@@ -12,6 +12,7 @@ public:
 	// =========== 関数 ==========
 
 	void hitPlayer(tnl::Vector3 size); //プレイヤーとの衝突判定
+	bool rotateHit(tnl::Vector3 pos, float w, float h, float rot); //回転した衝突判定
 
 	// =========== 基本ステータス ==========
 
@@ -26,7 +27,7 @@ public:
 
 class ModelHouse : public ModelBase {
 public:
-	ModelHouse(SceneField* scene, tnl::Vector3 pos, tnl::Vector3 rot);
+	ModelHouse(SceneField* scene, tnl::Vector3 pos, float rot);
 	~ModelHouse() {}
 	void update(float delta_time);
 	void render();
@@ -36,4 +37,8 @@ public:
 	// =========== 基本ステータス ==========
 
 	tnl::Vector3 size_ = { 200,200,200 }; //衝突判定用大きさ
+	float rot_ = 0; //回転してる角度
+
+	const float width_ = 140.0f; //横幅
+	const float height_ = 220.0f; //立幅
 };

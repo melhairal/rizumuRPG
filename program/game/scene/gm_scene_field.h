@@ -21,6 +21,8 @@ public:
 	void updateSprites(float delta_time); //スプライト制御
 	void updateModels(float delta_time); //モデル制御
 
+	void outField(); //フィールドから出る処理
+
 	void setField1(); //フィールド1番を生成
 
 	// ========== 基本ステータス ==========
@@ -32,6 +34,7 @@ public:
 
 	int img_back_ = 0; //背景画像
 	dxe::Mesh* field_ = nullptr; //床
+	dxe::Mesh* load_ = nullptr; //道
 
 	const float CAM_ROT_SPEED_ = 1.0f; //カメラ回転速度
 	const float CAM_ROT_MAX_ = 60.0f; //カメラ回転上限

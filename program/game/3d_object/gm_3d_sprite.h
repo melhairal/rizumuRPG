@@ -22,6 +22,7 @@ public:
 
 	AnimSprite3D* sprite_ = nullptr; //スプライト情報
 	tnl::Vector3 pos_ = { 0,0,0 }; //座標
+	tnl::Vector3 prev_pos_ = { 0,0,0 }; //座標
 
 	bool move_ = true; //動作フラグ
 	bool alive_ = true; //生存フラグ

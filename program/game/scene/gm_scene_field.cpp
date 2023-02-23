@@ -10,6 +10,8 @@ extern tnl::Quaternion fix_rot;
 
 SceneField::~SceneField() {
 	delete camera_;
+	delete field_;
+	delete load_;
 	for (auto sprite : sprites_) delete sprite;
 	for (auto model : models_) delete model;
 }
@@ -44,9 +46,9 @@ void SceneField::update(float delta_time)
 	//ÉÇÉfÉãêßå‰
 	updateModels(delta_time);
 
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
-		mgr->chengeScene(new SceneMap());
-	}
+	//ÉtÉBÅ[ÉãÉhÇ©ÇÁèoÇÈèàóù
+	outField();
+
 }
 
 void SceneField::render()
@@ -57,6 +59,7 @@ void SceneField::render()
 
 	DrawRotaGraph(DXE_WINDOW_WIDTH / 2, DXE_WINDOW_HEIGHT / 2, 2.5f, 0, img_back_, true); //îwåiÇÃï`âÊ
 	field_->render(camera_); //è∞ÇÃï`âÊ
+	load_->render(camera_); //ìπÇÃï`âÊ
 
 	for (auto model : models_) model->render(); //ÉÇÉfÉãÇÃï`âÊ
 	for (auto sprite : sprites_) sprite->render(); //ÉXÉvÉâÉCÉgÇÃï`âÊ
@@ -127,13 +130,20 @@ void SceneField::updateModels(float delta_time) {
 	}
 }
 
+void SceneField::outField() {
+	if (player_->sprite_->pos_.z > 410 || player_->sprite_->pos_.z < -410) {
+		GameManager* mgr = GameManager::GetInstance();
+		mgr->chengeScene(new SceneMap());
+	}
+}
+
 void SceneField::setField1() {
 	//â∆
-	models_.emplace_back(new ModelHouse(this, { -300,0,0 }, { 0,tnl::ToRadian(0),0 }));
-	models_.emplace_back(new ModelHouse(this, { -200,0,250 }, { 0,tnl::ToRadian(45),0 }));
-	models_.emplace_back(new ModelHouse(this, { -200,0,-250 }, { 0,tnl::ToRadian(-45),0 }));
-	models_.emplace_back(new ModelHouse(this, { 200,0,150 }, { 0,tnl::ToRadian(150),0 }));
-	models_.emplace_back(new ModelHouse(this, { 200,0,-150 }, { 0,tnl::ToRadian(-150),0 }));
+	models_.emplace_back(new ModelHouse(this, { -300,0,0 }, 0));
+	models_.emplace_back(new ModelHouse(this, { -200,0,250 }, 45));
+	//models_.emplace_back(new ModelHouse(this, { -200,0,-250 }, -45));
+	models_.emplace_back(new ModelHouse(this, { 200,0,150 }, 150));
+	models_.emplace_back(new ModelHouse(this, { 200,0,-150 }, -150));
 
 	//è∞
 	field_ = dxe::Mesh::CreateDisk(FIELD_R_);
@@ -141,14 +151,28 @@ void SceneField::setField1() {
 	field_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(90));
 	field_->pos_ = { 0, FIELD_H_, 0 };
 
+	//ìπ
+	load_ = dxe::Mesh::CreatePlane({ 150, 1600, 0 });
+	load_->setTexture(dxe::Texture::CreateFromFile("graphics/base/road.png"));
+	load_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(90));
+	load_->pos_ = { 0, FIELD_H_ + 1, 0 };
+	
 	//îwåi
 	img_back_ = LoadGraph("graphics/base/sky.jpg");
 
 	//ñÿ
 	for (int i = 0; i < 30; ++i) {
+		if (i == 7 || i == 8 || i == 22 || i == 23) continue;
 		double th = ((double)i / (double)30) * 3.14f * 2;
-		float x = 380.0f * cos(th);
-		float y = 380.0f * sin(th);
+		float x = 390.0f * cos(th);
+		float y = 390.0f * sin(th);
+		sprites_.emplace_back(new SpriteTree(this, { x,25,y }));
+	}
+	for (int i = 0; i < 30; ++i) {
+		if (i == 11 || i == 26) continue;
+		double th = ((double)i / (double)30) * 3.14f * 2 + 15;
+		float x = 450.0f * cos(th);
+		float y = 450.0f * sin(th);
 		sprites_.emplace_back(new SpriteTree(this, { x,25,y }));
 	}
 }
