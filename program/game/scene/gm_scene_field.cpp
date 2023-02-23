@@ -1,0 +1,154 @@
+#include "../gm_manager.h"
+#include "../gm_camera.h"
+#include "../model/gm_anim_sprite3d.h"
+#include "gm_scene_field.h"
+#include "gm_scene_map.h"
+#include "../3d_object/gm_3d_model.h"
+#include "../3d_object/gm_3d_sprite.h"
+
+extern tnl::Quaternion fix_rot;
+
+SceneField::~SceneField() {
+	delete camera_;
+	for (auto sprite : sprites_) delete sprite;
+	for (auto model : models_) delete model;
+}
+
+
+void SceneField::initialzie() {
+	SetUseLighting(FALSE);
+
+	//カメラ
+	camera_ = new GmCamera();
+	camera_->pos_ = { 0, 150, -300 };
+	camera_->free_look_angle_xy_.x = tnl::ToRadian(CAM_ROT_MIN_);
+
+	//プレイヤー
+	player_ = sprites_.emplace_back(new SpritePlayer(this));
+
+	//フィールドを生成
+	setField1();
+
+}
+
+void SceneField::update(float delta_time)
+{
+	GameManager* mgr = GameManager::GetInstance();
+
+	//カメラ制御
+	moveCamera();
+
+	//スプライト制御
+	updateSprites(delta_time);
+
+	//モデル制御
+	updateModels(delta_time);
+
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		mgr->chengeScene(new SceneMap());
+	}
+}
+
+void SceneField::render()
+{
+	camera_->update();
+
+	DrawGridGround(camera_, 50, 20);
+
+	DrawRotaGraph(DXE_WINDOW_WIDTH / 2, DXE_WINDOW_HEIGHT / 2, 2.5f, 0, img_back_, true); //背景の描画
+	field_->render(camera_); //床の描画
+
+	for (auto model : models_) model->render(); //モデルの描画
+	for (auto sprite : sprites_) sprite->render(); //スプライトの描画
+}
+
+void SceneField::moveCamera() {
+	tnl::Vector3 rot[4] = {
+		{ 0, tnl::ToRadian(CAM_ROT_SPEED_), 0 },
+		{ 0, -tnl::ToRadian(CAM_ROT_SPEED_), 0 },
+		{ tnl::ToRadian(CAM_ROT_SPEED_), 0, 0 },
+		{ -tnl::ToRadian(CAM_ROT_SPEED_), 0, 0 } };
+	tnl::Input::RunIndexKeyDown([&](uint32_t idx) {
+		camera_->free_look_angle_xy_ += rot[idx];
+		}, eKeys::KB_LEFT, eKeys::KB_RIGHT, eKeys::KB_UP, eKeys::KB_DOWN);
+	//カメラ上下回転の上限
+	camera_->free_look_angle_xy_.x = std::clamp(camera_->free_look_angle_xy_.x, tnl::ToRadian(CAM_ROT_MIN_), tnl::ToRadian(CAM_ROT_MAX_));
+
+	if (tnl::Input::IsKeyDown(eKeys::KB_Z)) {
+		camera_->target_distance_ += CAM_ZOOM_SPEED_;
+	}
+	if (tnl::Input::IsKeyDown(eKeys::KB_X)) {
+		camera_->target_distance_ -= CAM_ZOOM_SPEED_;
+	}
+	//カメラズームの上限・下限
+	camera_->target_distance_ = std::clamp(camera_->target_distance_, CAM_ZOOM_MIN_, CAM_ZOOM_MAX_);
+	//カメラターゲット
+	camera_->target_ = player_->sprite_->pos_;
+}
+
+void SceneField::updateSprites(float delta_time) {
+	//全てのスプライトのアップデート
+	for (auto sprite : sprites_) sprite->update(delta_time);
+
+	//カメラに近い順にソート(近いオブジェクトから描画するため)
+	sprites_.sort([&](const SpriteBase* l, const SpriteBase* r) {
+		float ld = 0;
+		float rd = 0;
+		if (l->sprite_ != nullptr) ld = (camera_->pos_ - l->sprite_->pos_).length();
+		if (r->sprite_ != nullptr) rd = (camera_->pos_ - r->sprite_->pos_).length();
+		return ld > rd;
+		});
+
+	//スプライトの生存フラグがfalseになったらデリート
+	auto it_sprite = sprites_.begin();
+	while (it_sprite != sprites_.end()) {
+		if (!(*it_sprite)->alive_) {
+			delete (*it_sprite);
+			it_sprite = sprites_.erase(it_sprite);
+			continue;
+		}
+		it_sprite++;
+	}
+}
+
+void SceneField::updateModels(float delta_time) {
+	//全てのモデルのアップデート
+	for (auto model : models_) model->update(delta_time);
+
+	//モデルの生存フラグがfalseになったらデリート
+	auto it_model = models_.begin();
+	while (it_model != models_.end()) {
+		if (!(*it_model)->alive_) {
+			delete (*it_model);
+			it_model = models_.erase(it_model);
+			continue;
+		}
+		it_model++;
+	}
+}
+
+void SceneField::setField1() {
+	//家
+	models_.emplace_back(new ModelHouse(this, { -300,0,0 }, { 0,tnl::ToRadian(0),0 }));
+	models_.emplace_back(new ModelHouse(this, { -200,0,250 }, { 0,tnl::ToRadian(45),0 }));
+	models_.emplace_back(new ModelHouse(this, { -200,0,-250 }, { 0,tnl::ToRadian(-45),0 }));
+	models_.emplace_back(new ModelHouse(this, { 200,0,150 }, { 0,tnl::ToRadian(150),0 }));
+	models_.emplace_back(new ModelHouse(this, { 200,0,-150 }, { 0,tnl::ToRadian(-150),0 }));
+
+	//床
+	field_ = dxe::Mesh::CreateDisk(FIELD_R_);
+	field_->setTexture(dxe::Texture::CreateFromFile("graphics/base/ground.png"));
+	field_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(90));
+	field_->pos_ = { 0, FIELD_H_, 0 };
+
+	//背景
+	img_back_ = LoadGraph("graphics/base/sky.jpg");
+
+	//木
+	for (int i = 0; i < 30; ++i) {
+		double th = ((double)i / (double)30) * 3.14f * 2;
+		float x = 380.0f * cos(th);
+		float y = 380.0f * sin(th);
+		sprites_.emplace_back(new SpriteTree(this, { x,25,y }));
+	}
+}

@@ -34,6 +34,8 @@
     <ClCompile Include="program\dxlib_ext\dxlib_ext_mesh.cpp" />
     <ClCompile Include="program\dxlib_ext\dxlib_ext_texture.cpp" />
     <ClCompile Include="program\dxlib_ext\OBJLoader.cpp" />
+    <ClCompile Include="program\game\3d_object\gm_3d_model.cpp" />
+    <ClCompile Include="program\game\3d_object\gm_3d_sprite.cpp" />
     <ClCompile Include="program\game\gm_bgm.cpp" />
     <ClCompile Include="program\game\gm_boss.cpp" />
     <ClCompile Include="program\game\gm_camera.cpp" />
@@ -54,6 +56,7 @@
     <ClCompile Include="program\game\object\gm_object_ground.cpp" />
     <ClCompile Include="program\game\object\gm_object_actor.cpp" />
     <ClCompile Include="program\game\object\gm_object_player.cpp" />
+    <ClCompile Include="program\game\scene\gm_scene_field.cpp" />
     <ClCompile Include="program\game\scene\gm_scene_map.cpp" />
     <ClCompile Include="program\game\scene\gm_scene_play.cpp" />
     <ClCompile Include="program\game\scene\gm_scene_result.cpp" />
@@ -77,6 +80,8 @@
     <ClInclude Include="program\dxlib_ext\dxlib_ext_mesh.h" />
     <ClInclude Include="program\dxlib_ext\dxlib_ext_texture.h" />
     <ClInclude Include="program\dxlib_ext\OBJLoader.h" />
+    <ClInclude Include="program\game\3d_object\gm_3d_model.h" />
+    <ClInclude Include="program\game\3d_object\gm_3d_sprite.h" />
     <ClInclude Include="program\game\gm_bgm.h" />
     <ClInclude Include="program\game\gm_boss.h" />
     <ClInclude Include="program\game\gm_camera.h" />
@@ -99,6 +104,7 @@
     <ClInclude Include="program\game\object\gm_object_player.h" />
     <ClInclude Include="program\game\object\gm_object_skill_map.h" />
     <ClInclude Include="program\game\scene\gm_scene_base.h" />
+    <ClInclude Include="program\game\scene\gm_scene_field.h" />
     <ClInclude Include="program\game\scene\gm_scene_map.h" />
     <ClInclude Include="program\game\scene\gm_scene_play.h" />
     <ClInclude Include="program\game\scene\gm_scene_result.h" />

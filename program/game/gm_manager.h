@@ -71,6 +71,9 @@ public :
 	//進行フラグ(クリアフラグ)
 	int flag_stage_ = 6;
 	int max_score_[6] = { 0,0,0,0,0,0 };
+
+	//ハイスコア
+	int best_score_[6] = { 0,0,0,0,0,0 };
 };
 
 

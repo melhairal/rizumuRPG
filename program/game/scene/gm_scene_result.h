@@ -12,6 +12,7 @@ public:
 	// =========== 関数 ==========
 
 	void getScore(); //スコアを取得
+	void setScore(); //スコアを記憶
 	void drawWindow(int x, int y, int width, int height); //ウィンドウを描画
 
 	// ========== 基本ステータス ==========

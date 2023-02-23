@@ -37,6 +37,8 @@ void ScenePlay::initialzie() {
 	//乱数シード値の取得
 	srand((unsigned int)time(NULL));
 
+	SetUseLighting(TRUE);
+
 	//ステータスの取得
 	getStatus();
 

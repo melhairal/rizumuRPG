@@ -32,6 +32,9 @@
     <Filter Include="program\game\object">
       <UniqueIdentifier>{9653e660-5572-498b-abc7-63be5ab63396}</UniqueIdentifier>
     </Filter>
+    <Filter Include="program\game\3d_object">
+      <UniqueIdentifier>{71122d7f-1f5a-4d6f-9f0b-02525918e7e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="program\system\sys_main.cpp">
@@ -208,6 +211,15 @@
     <ClCompile Include="program\game\scene\gm_scene_map.cpp">
       <Filter>program\game\scene</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\scene\gm_scene_field.cpp">
+      <Filter>program\game\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\3d_object\gm_3d_model.cpp">
+      <Filter>program\game\3d_object</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\3d_object\gm_3d_sprite.cpp">
+      <Filter>program\game\3d_object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="program\library\picojson.h">
@@ -365,6 +377,15 @@
     </ClInclude>
     <ClInclude Include="program\game\scene\gm_scene_map.h">
       <Filter>program\game\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\scene\gm_scene_field.h">
+      <Filter>program\game\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\3d_object\gm_3d_model.h">
+      <Filter>program\game\3d_object</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\3d_object\gm_3d_sprite.h">
+      <Filter>program\game\3d_object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

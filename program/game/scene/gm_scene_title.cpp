@@ -1,5 +1,6 @@
 #include "../gm_manager.h"
 #include "gm_scene_title.h"
+#include "gm_scene_field.h"
 #include "gm_scene_map.h"
 
 
@@ -37,6 +38,7 @@ void SceneTitle::update(float delta_time)
 		case 1:
 			break;
 		case 2:
+			mgr->chengeScene(new SceneField());
 			break;
 		}
 	}
