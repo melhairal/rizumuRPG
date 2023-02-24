@@ -70,8 +70,20 @@ public:
 		"大海を往く",
 		"闇の森"
 	};
-	const char* title_village_[1] = { 
-		"はじまりの村" 
+	const char* title_village_[1] = {
+		"はじまりの村"
+	};
+	//ステージコメント
+	const char* comment_[6]{
+		"難易度☆☆☆☆★　　　HIGHSCORE:",
+		"難易度☆☆☆★★　　　HIGHSCORE:",
+		"難易度☆☆★★★　　　HIGHSCORE:",
+		"難易度☆★★★★　　　HIGHSCORE:",
+		"難易度☆★★★★　　　HIGHSCORE:",
+		"難易度★★★★★　　　HIGHSCORE:"
+	};
+	const char* comment_village_[1] = {
+		"冒険の最初に訪れる始まりの村"
 	};
 
 	const char* label_[2]{
@@ -110,7 +122,7 @@ public:
 	const float TITLE_SEL_X_ = TITLE_DEF_X_ + 20;
 	float title_x_[6] = { TITLE_DEF_X_,TITLE_DEF_X_,TITLE_DEF_X_,TITLE_DEF_X_,TITLE_DEF_X_,TITLE_DEF_X_ };
 	float title_y_[6] = { DXE_WINDOW_HEIGHT * 0.15f, DXE_WINDOW_HEIGHT * 0.15f + 40, DXE_WINDOW_HEIGHT * 0.15f + 80,
-		DXE_WINDOW_HEIGHT * 0.15f + 120, DXE_WINDOW_HEIGHT * 0.15f + 160, DXE_WINDOW_HEIGHT * 0.15f + 200};
+		DXE_WINDOW_HEIGHT * 0.15f + 120, DXE_WINDOW_HEIGHT * 0.15f + 160, DXE_WINDOW_HEIGHT * 0.15f + 200 };
 	int title_color_[6] = { BROWN,BROWN,BROWN,BROWN,BROWN,BROWN };
 
 	const float LABEL_X_ = WINDOW_X_ - 65;
@@ -118,6 +130,12 @@ public:
 	const float LEFT_X_ = LABEL_X_ - 30;
 	const float RIGHT_X_ = LABEL_X_ + 160;
 	const float LR_Y_ = LABEL_Y_ + 16;
+
+	//説明文座標
+	const float COMMENT_X_ = DXE_WINDOW_WIDTH * 0.1f;
+	const float COMMENT_Y_ = SUB_Y_ - 16;
+	const float SCORE_X_ = DXE_WINDOW_WIDTH * 0.7f;
+	const float SCORE_Y_ = COMMENT_Y_;
 
 	//プレイヤー座標
 	float player_x_ = 500;

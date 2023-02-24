@@ -386,3 +386,58 @@ void SpriteKazi::eventAction() {
 	sprite_->update(0);
 	scene_->ui_->sprite_ = this;
 }
+
+SpriteShop::SpriteShop(SceneField* scene, tnl::Vector3 pos, int look) {
+	scene_ = scene;
+	pos_ = pos;
+	look_ = look;
+	sprite_ = new AnimSprite3D(scene_->camera_);
+	sprite_->regist(32, 32, "walk_front", "graphics/chara/human/shop/shop_004.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 32, 0);
+	sprite_->regist(32, 32, "walk_back", "graphics/chara/human/shop/shop_001.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 32, 0);
+	sprite_->regist(32, 32, "walk_left", "graphics/chara/human/shop/shop_002.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 32, 0);
+	sprite_->regist(32, 32, "walk_right", "graphics/chara/human/shop/shop_003.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 32, 0);
+	sprite_->setCurrentAnim("walk_front");
+	sprite_->pos_ = pos_;
+	sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + dir_[look_]);
+	sprite_->update(0);
+	prev_pos_ = sprite_->pos_;
+	getComment();
+}
+
+void SpriteShop::update(float delta_time) {
+	if (!move_) return;
+	if (isComment_) {
+		getSurface(size_);
+		sprite_->update(delta_time);
+		return;
+	}
+	if (isEvent_) {
+		sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + dir_[look_]);
+		getSurface(size_);
+		sprite_->update(delta_time);
+		isEvent_ = false;
+		return;
+	}
+
+	//“–‚½‚è”»’è
+	hitPlayer(size_);
+
+	//ƒJƒƒ‰‚ÌŒü‚«‚É‘Î‚µ‚Ä‚Ç‚Ì–Ê‚ª‚±‚¿‚ç‚ðŒü‚¢‚Ä‚¢‚é‚©
+	getSurface(size_);
+
+	sprite_->update(delta_time);
+}
+
+void SpriteShop::render() {
+	sprite_->render(scene_->camera_);
+}
+
+void SpriteShop::eventAction() {
+	isComment_ = true;
+	next_x_ = sprite_->pos_.x;
+	next_z_ = sprite_->pos_.z;
+	sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, scene_->player_->sprite_->pos_);
+	getSurface(size_);
+	sprite_->update(0);
+	scene_->ui_->sprite_ = this;
+}

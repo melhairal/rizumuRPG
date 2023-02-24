@@ -54,6 +54,12 @@ void SceneField::update(float delta_time)
 	//ui制御
 	ui_->update(delta_time);
 
+	//メニュー制御
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE)) {
+		isMenu_ = true;
+		player_->move_ = false;
+	}
+
 	//フィールドから出る処理
 	outField();
 
@@ -151,7 +157,6 @@ void SceneField::setField1() {
 	//家
 	models_.emplace_back(new ModelHouse(this, { -300,0,0 }, 0));
 	models_.emplace_back(new ModelHouse(this, { -200,0,250 }, 45));
-	//models_.emplace_back(new ModelHouse(this, { -200,0,-250 }, -45));
 	models_.emplace_back(new ModelHouse(this, { 200,0,150 }, 150));
 	models_.emplace_back(new ModelHouse(this, { 200,0,-150 }, -150));
 
@@ -191,5 +196,6 @@ void SceneField::setField1() {
 	sprites_.emplace_back(new SpriteMurabitoF(this, { -200,0,-250 }));
 	sprites_.emplace_back(new SpriteHeisi(this, { 60,0,370 }, 2));
 	sprites_.emplace_back(new SpriteKazi(this, { -210,0,-20 }, 1));
+	sprites_.emplace_back(new SpriteShop(this, { 110,0,-90 }, 3));
 
 }

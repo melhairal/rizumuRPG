@@ -127,7 +127,7 @@ public:
 		// ====================================
 		comment_.emplace_back("...");
 		comment_.emplace_back("ここは始まりの村");
-		comment_.emplace_back("雑貨屋や装備屋もあるよ");
+		comment_.emplace_back("雑貨屋や装備屋があるよ");
 		it = comment_.begin();
 	}
 };
@@ -211,6 +211,33 @@ public:
 		comment_.emplace_back("...");
 		comment_.emplace_back("ここは装備屋だ");
 		comment_.emplace_back("武器や防具を着けると強くなるぞ");
+		it = comment_.begin();
+	}
+};
+
+class SpriteShop : public SpriteNpc {
+public:
+	SpriteShop(SceneField* scene, tnl::Vector3 pos, int look);
+	~SpriteShop() {}
+	void update(float delta_time);
+	void render();
+
+	// =========== 関数 ==========
+
+	void eventAction(); //イベント
+
+	// =========== 基本ステータス ==========
+
+	tnl::Vector3 size_ = { 32,32,32 }; //当たり判定用サイズ
+	int look_ = 0; //向いてる向き
+
+	void getComment() override {
+		// ====================================
+		//  ここにセリフを並べる
+		// ====================================
+		comment_.emplace_back("...");
+		comment_.emplace_back("ここは雑貨屋よ");
+		comment_.emplace_back("旅のお供に回復アイテムはいかが？");
 		it = comment_.begin();
 	}
 };

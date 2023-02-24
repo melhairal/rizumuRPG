@@ -12,6 +12,9 @@ public:
 
 	// =========== 関数 ==========
 
+	void getFont(); //フォント読み込み
+	void getWindow(); //ウィンドウ画像読み込み
+	void drawWindow(int x, int y, int width, int height); //可変ウィンドウ描画
 
 	// ========== 基本ステータス ==========
 
@@ -35,12 +38,32 @@ public:
 
 	int img_message_ = 0;
 
+	//ウィンドウ画像
+	int window_top_left_ = 0;
+	int window_top_center_ = 0;
+	int window_top_right_ = 0;
+	int window_left_ = 0;
+	int window_center_ = 0;
+	int window_right_ = 0;
+	int window_bot_left_ = 0;
+	int window_bot_center_ = 0;
+	int window_bot_right_ = 0;
+
 	//座標
 	const float MESSAGE_WIN_X_ = DXE_WINDOW_WIDTH / 2;
 	const float MESSAGE_WIN_Y_ = DXE_WINDOW_HEIGHT * 0.85f;
 	const float MESSAGE_X_ = DXE_WINDOW_WIDTH * 0.1f;
 	const float MESSAGE_Y_ = MESSAGE_WIN_Y_ - 16;
 
+	const float WINDOW_LABEL_X_ = DXE_WINDOW_WIDTH * 0.2f;
+	const float WINDOW_LABEL_Y_ = DXE_WINDOW_HEIGHT / 2;
+	const float WINDOW_LABEL_W_ = DXE_WINDOW_WIDTH * 0.2f;
+	const float WINDOW_LABEL_H_ = DXE_WINDOW_HEIGHT * 0.6f;
+
+	const float WINDOW_MAIN_X_ = DXE_WINDOW_WIDTH * 0.6f;
+	const float WINDOW_MAIN_Y_ = DXE_WINDOW_HEIGHT / 2;
+	const float WINDOW_MAIN_W_ = DXE_WINDOW_WIDTH * 0.6f;
+	const float WINDOW_MAIN_H_ = DXE_WINDOW_HEIGHT * 0.6f;
 
 
 };

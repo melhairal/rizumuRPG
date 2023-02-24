@@ -48,4 +48,6 @@ public:
 	const float FIELD_H_ = -15.0f; //地面の高さ座標
 	const int FIELD_R_ = 800; //フィールドの半径
 
+	bool isMenu_ = false; //メニューフラグ
+
 };

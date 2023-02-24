@@ -157,12 +157,15 @@ void SceneMap::drawTitle() {
 		for (int i = 0; i < max_index_; i++) {
 			DrawStringToHandle(title_x_[i], title_y_[i], title_[i], title_color_[i], font_rondo_32_);
 		}
+		DrawStringToHandle(COMMENT_X_, COMMENT_Y_, comment_[sel_], BROWN, font_rondo_32_);
+		DrawFormatStringToHandle(SCORE_X_, SCORE_Y_, BROWN, font_rondo_32_, "%8.0d", best_score_[sel_]);
 		DrawRotaGraph(RIGHT_X_, LR_Y_, 0.5f, 0, right_, true);
 		break;
 	case 1:
 		for (int i = 0; i < MAX_INDEX_VILLAGE_; i++) {
 			DrawStringToHandle(title_x_[i], title_y_[i], title_village_[i], title_color_[i], font_rondo_32_);
 		}
+		DrawStringToHandle(COMMENT_X_, COMMENT_Y_, comment_village_[sel_], BROWN, font_rondo_32_);
 		DrawRotaGraph(LEFT_X_, LR_Y_, 0.5f, 0, left_, true);
 		break;
 	}
