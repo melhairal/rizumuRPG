@@ -18,7 +18,6 @@ SceneField::~SceneField() {
 	for (auto model : models_) delete model;
 }
 
-
 void SceneField::initialzie() {
 	SetUseLighting(FALSE);
 
@@ -42,6 +41,13 @@ void SceneField::update(float delta_time)
 {
 	GameManager* mgr = GameManager::GetInstance();
 
+	//メニュー制御
+	if (!isMenu_ && tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE)) {
+		isMenu_ = true;
+		player_->move_ = false;
+		ui_->menu_depth_ = 1;
+	}
+
 	//カメラ制御
 	if (player_->move_) moveCamera();
 
@@ -53,12 +59,6 @@ void SceneField::update(float delta_time)
 
 	//ui制御
 	ui_->update(delta_time);
-
-	//メニュー制御
-	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE)) {
-		isMenu_ = true;
-		player_->move_ = false;
-	}
 
 	//フィールドから出る処理
 	outField();

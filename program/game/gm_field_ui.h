@@ -16,10 +16,26 @@ public:
 	void getWindow(); //ウィンドウ画像読み込み
 	void drawWindow(int x, int y, int width, int height); //可変ウィンドウ描画
 
+	void updateComment(); //コメント制御
+	void updateMenu(); //メニュー制御
+
 	// ========== 基本ステータス ==========
 
 	SceneField* scene_ = nullptr; //シーンの変数を取得するためのポインタ
 	SpriteBase* sprite_ = nullptr; //セリフを呼び出したスプライト情報を格納
+
+	int menu_depth_ = 1; //メニューのどの段階にいるか
+
+
+	int sel_label_ = 0; //選択中のラベル
+	const int LABEL_INDEX_MAX_ = 4; //ラベルのインデックス最大数
+	const char* label_[4] = {
+		"スキル",
+		"どうぐ",
+		"オプション",
+		"おわる"
+	};
+	int label_color_[4] = { BROWN,BROWN,BROWN,BROWN };
 
 	//色 RGB(B,G,R)
 	const int RED = RGB(0, 0, 255);
@@ -64,6 +80,14 @@ public:
 	const float WINDOW_MAIN_Y_ = DXE_WINDOW_HEIGHT / 2;
 	const float WINDOW_MAIN_W_ = DXE_WINDOW_WIDTH * 0.6f;
 	const float WINDOW_MAIN_H_ = DXE_WINDOW_HEIGHT * 0.6f;
+
+	const float LABEL_X_ = DXE_WINDOW_WIDTH * 0.13f;
+	const float LABEL_Y_[4] = {
+		 DXE_WINDOW_HEIGHT * 0.25f,
+		 DXE_WINDOW_HEIGHT * 0.25f + 50,
+		 DXE_WINDOW_HEIGHT * 0.25f + 100,
+		 DXE_WINDOW_HEIGHT * 0.25f + 150
+	};
 
 
 };

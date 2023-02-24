@@ -16,18 +16,16 @@ FieldUi::FieldUi(SceneField* scene) {
 }
 
 void FieldUi::update(float delta_time) {
+	//セリフ制御
 	if (sprite_ != nullptr) {
-		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
-			sprite_->it++;
-			if (sprite_->it == sprite_->comment_.end()) {
-				sprite_->it = sprite_->comment_.begin();
-				sprite_->isComment_ = false;
-				sprite_->isEvent_ = true;
-				scene_->player_->isComment_ = false;
-				sprite_ = nullptr;
-			}
-		}
+		updateComment();
 	}
+
+	//メニュー画面制御
+	if (scene_->isMenu_) {
+		updateMenu();
+	}
+
 }
 
 void FieldUi::render() {
@@ -41,6 +39,9 @@ void FieldUi::render() {
 	if (scene_->isMenu_) {
 		drawWindow(WINDOW_LABEL_X_, WINDOW_LABEL_Y_, WINDOW_LABEL_W_, WINDOW_LABEL_H_);
 		drawWindow(WINDOW_MAIN_X_, WINDOW_MAIN_Y_, WINDOW_MAIN_W_, WINDOW_MAIN_H_);
+		for (int i = 0; i < LABEL_INDEX_MAX_; ++i) {
+			DrawStringToHandle(LABEL_X_, LABEL_Y_[i], label_[i], label_color_[i], font_pop_32_);
+		}
 	}
 }
 
@@ -79,4 +80,49 @@ void FieldUi::drawWindow(int x, int y, int width, int height) {
 	DrawExtendGraph(center_x2, center_y1 - 20, center_x2 + 20, center_y1, window_top_right_, true); //右上
 	DrawExtendGraph(center_x1 - 20, center_y2, center_x1, center_y2 + 20, window_bot_left_, true); //左下
 	DrawExtendGraph(center_x2, center_y2, center_x2 + 20, center_y2 + 20, window_bot_right_, true); //右下
+}
+
+void FieldUi::updateComment() {
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		sprite_->it++;
+		if (sprite_->it == sprite_->comment_.end()) {
+			sprite_->it = sprite_->comment_.begin();
+			sprite_->isComment_ = false;
+			sprite_->isEvent_ = true;
+			scene_->player_->isComment_ = false;
+			sprite_ = nullptr;
+		}
+	}
+}
+
+void FieldUi::updateMenu() {
+	//項目選択
+	if (menu_depth_ == 0) {
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
+			sel_label_--;
+		}
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
+			sel_label_++;
+		}
+		sel_label_ = std::clamp(sel_label_, 0, LABEL_INDEX_MAX_ - 1);
+	}
+
+	for (int i = 0; i < LABEL_INDEX_MAX_; ++i) {
+		label_color_[i] = BROWN;
+	}
+	label_color_[sel_label_] = YELLOW;
+
+
+	//項目選択、メニュー閉じる
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE)) {
+		menu_depth_--;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		menu_depth_++;
+	}
+	menu_depth_ = std::clamp(menu_depth_, -1, 1);
+	if (menu_depth_ == -1) {
+		scene_->isMenu_ = false;
+		scene_->player_->move_ = true;
+	}
 }
