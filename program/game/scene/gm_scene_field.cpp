@@ -5,11 +5,13 @@
 #include "gm_scene_map.h"
 #include "../3d_object/gm_3d_model.h"
 #include "../3d_object/gm_3d_sprite.h"
+#include "../gm_field_ui.h"
 
 extern tnl::Quaternion fix_rot;
 
 SceneField::~SceneField() {
 	delete camera_;
+	delete ui_;
 	delete field_;
 	delete load_;
 	for (auto sprite : sprites_) delete sprite;
@@ -28,6 +30,9 @@ void SceneField::initialzie() {
 	//プレイヤー
 	player_ = sprites_.emplace_back(new SpritePlayer(this));
 
+	//UI
+	ui_ = new FieldUi(this);
+
 	//フィールドを生成
 	setField1();
 
@@ -38,13 +43,16 @@ void SceneField::update(float delta_time)
 	GameManager* mgr = GameManager::GetInstance();
 
 	//カメラ制御
-	moveCamera();
+	if (player_->move_) moveCamera();
 
 	//スプライト制御
 	updateSprites(delta_time);
 
 	//モデル制御
 	updateModels(delta_time);
+
+	//ui制御
+	ui_->update(delta_time);
 
 	//フィールドから出る処理
 	outField();
@@ -63,6 +71,8 @@ void SceneField::render()
 
 	for (auto model : models_) model->render(); //モデルの描画
 	for (auto sprite : sprites_) sprite->render(); //スプライトの描画
+
+	ui_->render(); //UI描画
 }
 
 void SceneField::moveCamera() {

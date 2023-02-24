@@ -11,9 +11,12 @@ public:
 	}
 	virtual void update(float delta_time) {}
 	virtual void render() {}
+	virtual void getComment() {} //セリフセット
 
 	// =========== 関数 ==========
 
+	void getSurface(tnl::Vector3 size); //カメラに対する面を取得
+	virtual void eventAction() {} //イベント
 	void hitPlayer(tnl::Vector3 size); //プレイヤーとの衝突判定
 
 	// =========== 基本ステータス ==========
@@ -23,7 +26,13 @@ public:
 	AnimSprite3D* sprite_ = nullptr; //スプライト情報
 	tnl::Vector3 pos_ = { 0,0,0 }; //座標
 	tnl::Vector3 prev_pos_ = { 0,0,0 }; //座標
+	tnl::Vector3 look_ = { 0,0,0 }; //見ている方向ベクトル
 
+	std::list<const char*> comment_; //セリフリスト
+	std::list<const char*>::iterator it; //セリフリスト用イテレータ
+
+	bool isComment_ = false; //セリフ中フラグ
+	bool isEvent_ = false; //イベント中フラグ
 	bool move_ = true; //動作フラグ
 	bool alive_ = true; //生存フラグ
 };
@@ -37,10 +46,16 @@ public:
 
 	// =========== 関数 ==========
 
+	void movePlayer(); //移動制御
+	void getEvent(); //イベント制御(エンターキーでイベントを起こす)
 
 	// =========== 基本ステータス ==========
 
 	float speed_ = 2.0f; //移動速度
+
+	tnl::Vector3 size_ = { 32,32,32 }; //当たり判定用サイズ
+
+	
 };
 
 class SpriteTree : public SpriteBase {
@@ -64,10 +79,11 @@ public:
 	virtual ~SpriteNpc() {}
 	virtual void update(float delta_time) {}
 	virtual void render() {}
+	virtual void getComment() {} //セリフセット
 
 	// =========== 関数 ==========
 
-	void getSurface(tnl::Vector3 size); //カメラに対する面を取得
+	virtual void eventAction() {} //イベント
 	void randomWalk(int range, int speed); //ランダムで歩く
 
 	// =========== 基本ステータス ==========
@@ -96,12 +112,24 @@ public:
 	void render();
 
 	// =========== 関数 ==========
+	
+	void eventAction(); //イベント
 
 	// =========== 基本ステータス ==========
 
 	tnl::Vector3 size_ = { 32,32,32 }; //当たり判定用サイズ
 	int range_ = 120; //移動範囲
 	int speed_ = 2; //移動速度
+
+	void getComment() override {
+		// ====================================
+		//  ここにセリフを並べる
+		// ====================================
+		comment_.emplace_back("...");
+		comment_.emplace_back("ここは始まりの村");
+		comment_.emplace_back("雑貨屋や装備屋もあるよ");
+		it = comment_.begin();
+	}
 };
 
 class SpriteMurabitoF : public SpriteNpc {
@@ -113,11 +141,24 @@ public:
 
 	// =========== 関数 ==========
 
+	void eventAction(); //イベント
+
 	// =========== 基本ステータス ==========
 
 	tnl::Vector3 size_ = { 32,32,32 }; //当たり判定用サイズ
 	int range_ = 100; //移動範囲
 	int speed_ = 2; //移動速度
+
+	void getComment() override {
+		// ====================================
+		//  ここにセリフを並べる
+		// ====================================
+		comment_.emplace_back("...");
+		comment_.emplace_back("知ってる？");
+		comment_.emplace_back("モンスターの攻撃をタイミング良く避けると、");
+		comment_.emplace_back("スコアとコンボがボーナスで加算されるんだって！");
+		it = comment_.begin();
+	}
 };
 
 class SpriteHeisi : public SpriteNpc {
@@ -129,9 +170,22 @@ public:
 
 	// =========== 関数 ==========
 
+	void eventAction(); //イベント
+
 	// =========== 基本ステータス ==========
 
 	tnl::Vector3 size_ = { 32,32,32 }; //当たり判定用サイズ
+	int look_ = 0; //向いてる向き
+
+	void getComment() override {
+		// ====================================
+		//  ここにセリフを並べる
+		// ====================================
+		comment_.emplace_back("...");
+		comment_.emplace_back("外に出るとモンスターがいるぞ");
+		comment_.emplace_back("しっかり準備してから行くんだ");
+		it = comment_.begin();
+	}
 };
 
 class SpriteKazi : public SpriteNpc {
@@ -143,7 +197,20 @@ public:
 
 	// =========== 関数 ==========
 
+	void eventAction(); //イベント
+
 	// =========== 基本ステータス ==========
 
 	tnl::Vector3 size_ = { 32,32,32 }; //当たり判定用サイズ
+	int look_ = 0; //向いてる向き
+
+	void getComment() override {
+		// ====================================
+		//  ここにセリフを並べる
+		// ====================================
+		comment_.emplace_back("...");
+		comment_.emplace_back("ここは装備屋だ");
+		comment_.emplace_back("武器や防具を着けると強くなるぞ");
+		it = comment_.begin();
+	}
 };

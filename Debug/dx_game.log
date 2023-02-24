@@ -1,7 +1,18 @@
-﻿  gm_scene_field.cpp
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(149,33): warning C4244: '引数': 'const int' から 'const float' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(167,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(168,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(174,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(175,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+﻿  gm_3d_sprite.cpp
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\3d_object\gm_3d_sprite.h(10,1): warning C4150: 'AnimSprite3D' 型を削除するため delete 演算子が呼び出されましたが、定義がありません。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\3d_object\gm_3d_sprite.h(4): message : 'AnimSprite3D' の宣言を確認してください
+  gm_field_ui.cpp
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\3d_object\gm_3d_sprite.h(10,1): warning C4150: 'AnimSprite3D' 型を削除するため delete 演算子が呼び出されましたが、定義がありません。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\3d_object\gm_3d_sprite.h(4): message : 'AnimSprite3D' の宣言を確認してください
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_field_ui.cpp(37,33): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_field_ui.cpp(37,17): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_field_ui.cpp(38,34): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\gm_field_ui.cpp(38,22): warning C4244: '引数': 'const float' から 'int' への変換です。データが失われる可能性があります。
+  gm_scene_field.cpp
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(159,33): warning C4244: '引数': 'const int' から 'const float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(177,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(178,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(184,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\vantan\Documents\GitHub\rizumuRPG\program\game\scene\gm_scene_field.cpp(185,11): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+  コードを生成中...
   dx_game.vcxproj -> C:\Users\vantan\Documents\GitHub\rizumuRPG\Debug\dx_game.exe

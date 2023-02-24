@@ -2,6 +2,21 @@
 #include "../gm_camera.h"
 #include "../model/gm_anim_sprite3d.h"
 #include "../scene/gm_scene_field.h"
+#include "../gm_field_ui.h"
+
+void SpriteBase::getSurface(tnl::Vector3 size) {
+	//カメラの向きに対してどの面がこちらを向いているか
+	int t = tnl::GetXzRegionPointAndOBB(
+		scene_->camera_->pos_
+		, sprite_->pos_
+		, size
+		, sprite_->rot_);
+
+	std::string anim_names[4] = {
+		"walk_back", "walk_right", "walk_front", "walk_left"
+	};
+	sprite_->setCurrentAnim(anim_names[t]);
+}
 
 void SpriteBase::hitPlayer(tnl::Vector3 size) {
 	if (tnl::IsIntersectAABB(sprite_->pos_, size, scene_->player_->sprite_->pos_, { 32,32,32 })) {
@@ -22,18 +37,29 @@ SpritePlayer::SpritePlayer(SceneField* scene) {
 
 void SpritePlayer::update(float delta_time) {
 	if (!move_) return;
+	if (isComment_) {
+		getSurface(size_);
+		sprite_->update(delta_time);
+		return;
+	}
+
+	//カメラに対する向きを取得
+	getSurface(size_);
+
 	// 移動制御
-	int t = tnl::GetXzRegionPointAndOBB(
-		scene_->camera_->pos_
-		, sprite_->pos_
-		, { 32, 48, 32 }
-	, sprite_->rot_);
+	movePlayer();
+	
+	//イベント制御
+	getEvent();
 
-	std::string anim_names[4] = {
-		"walk_back", "walk_right", "walk_front", "walk_left"
-	};
-	sprite_->setCurrentAnim(anim_names[t]);
+	sprite_->update(delta_time);
+}
 
+void SpritePlayer::render() {
+	sprite_->render(scene_->camera_);
+}
+
+void SpritePlayer::movePlayer() {
 	tnl::Vector3 move_v = { 0,0,0 };
 	tnl::Vector3 dir[4] = {
 		scene_->camera_->front().xz(),
@@ -50,12 +76,22 @@ void SpritePlayer::update(float delta_time) {
 		sprite_->rot_.slerp(tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + move_v), 0.3f);
 		prev_pos_ = sprite_->pos_;
 		sprite_->pos_ += move_v * speed_;
+		look_ = move_v;
 	}
-	sprite_->update(delta_time);
 }
 
-void SpritePlayer::render() {
-	sprite_->render(scene_->camera_);
+void SpritePlayer::getEvent() {
+	tnl::Vector3 eventPos = sprite_->pos_ + look_ * 32;
+	for (auto sprite : scene_->sprites_) {
+		if (sprite == this) continue;
+		if (tnl::IsIntersectAABB(sprite->sprite_->pos_, size_, eventPos, size_)) {
+			if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+				sprite->eventAction();
+				isComment_ = true;
+				return;
+			}
+		}
+	}
 }
 
 SpriteTree::SpriteTree(SceneField* scene, tnl::Vector3 pos) {
@@ -76,20 +112,6 @@ void SpriteTree::update(float delta_time) {
 
 void SpriteTree::render() {
 	sprite_->render(scene_->camera_);
-}
-
-void SpriteNpc::getSurface(tnl::Vector3 size) {
-	//カメラの向きに対してどの面がこちらを向いているか
-	int t = tnl::GetXzRegionPointAndOBB(
-		scene_->camera_->pos_
-		, sprite_->pos_
-		, size
-		, sprite_->rot_);
-
-	std::string anim_names[4] = {
-		"walk_back", "walk_right", "walk_front", "walk_left"
-	};
-	sprite_->setCurrentAnim(anim_names[t]);
 }
 
 void SpriteNpc::randomWalk(int range, int speed) {
@@ -159,10 +181,22 @@ SpriteMurabito::SpriteMurabito(SceneField* scene, tnl::Vector3 pos) {
 	sprite_->pos_ = pos_;
 	sprite_->update(0);
 	prev_pos_ = sprite_->pos_;
+	getComment();
 }
 
 void SpriteMurabito::update(float delta_time) {
 	if (!move_) return;
+	if (isComment_) {
+		getSurface(size_);
+		sprite_->update(delta_time);
+		return;
+	}
+	if (isEvent_) {
+		isEvent_ = false;
+		return;
+	}
+
+	//当たり判定
 	hitPlayer(size_);
 
 	//カメラの向きに対してどの面がこちらを向いているか
@@ -179,6 +213,16 @@ void SpriteMurabito::render() {
 	sprite_->render(scene_->camera_);
 }
 
+void SpriteMurabito::eventAction() {
+	isComment_ = true;
+	next_x_ = sprite_->pos_.x;
+	next_z_ = sprite_->pos_.z;
+	sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, scene_->player_->sprite_->pos_);
+	getSurface(size_);
+	sprite_->update(0);
+	scene_->ui_->sprite_ = this;
+}
+
 SpriteMurabitoF::SpriteMurabitoF(SceneField* scene, tnl::Vector3 pos) {
 	scene_ = scene;
 	pos_ = pos;
@@ -191,10 +235,22 @@ SpriteMurabitoF::SpriteMurabitoF(SceneField* scene, tnl::Vector3 pos) {
 	sprite_->pos_ = pos_;
 	sprite_->update(0);
 	prev_pos_ = sprite_->pos_;
+	getComment();
 }
 
 void SpriteMurabitoF::update(float delta_time) {
 	if (!move_) return;
+	if (isComment_) {
+		getSurface(size_);
+		sprite_->update(delta_time);
+		return;
+	}
+	if (isEvent_) {
+		isEvent_ = false;
+		return;
+	}
+
+	//当たり判定
 	hitPlayer(size_);
 
 	//カメラの向きに対してどの面がこちらを向いているか
@@ -211,9 +267,20 @@ void SpriteMurabitoF::render() {
 	sprite_->render(scene_->camera_);
 }
 
+void SpriteMurabitoF::eventAction() {
+	isComment_ = true;
+	next_x_ = sprite_->pos_.x;
+	next_z_ = sprite_->pos_.z;
+	sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, scene_->player_->sprite_->pos_);
+	getSurface(size_);
+	sprite_->update(0);
+	scene_->ui_->sprite_ = this;
+}
+
 SpriteHeisi::SpriteHeisi(SceneField* scene, tnl::Vector3 pos, int look) {
 	scene_ = scene;
 	pos_ = pos;
+	look_ = look;
 	sprite_ = new AnimSprite3D(scene_->camera_);
 	sprite_->regist(32, 32, "walk_front", "graphics/chara/human/heisi/heisi_004.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 32, 0);
 	sprite_->regist(32, 32, "walk_back", "graphics/chara/human/heisi/heisi_001.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 32, 0);
@@ -221,13 +288,28 @@ SpriteHeisi::SpriteHeisi(SceneField* scene, tnl::Vector3 pos, int look) {
 	sprite_->regist(32, 32, "walk_right", "graphics/chara/human/heisi/heisi_003.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 32, 0);
 	sprite_->setCurrentAnim("walk_front");
 	sprite_->pos_ = pos_;
-	sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + dir_[look]);
+	sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + dir_[look_]);
 	sprite_->update(0);
 	prev_pos_ = sprite_->pos_;
+	getComment();
 }
 
 void SpriteHeisi::update(float delta_time) {
 	if (!move_) return;
+	if (isComment_) {
+		getSurface(size_);
+		sprite_->update(delta_time);
+		return;
+	}
+	if (isEvent_) {
+		sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + dir_[look_]);
+		getSurface(size_);
+		sprite_->update(delta_time);
+		isEvent_ = false;
+		return;
+	}
+
+	//当たり判定
 	hitPlayer(size_);
 
 	//カメラの向きに対してどの面がこちらを向いているか
@@ -240,9 +322,20 @@ void SpriteHeisi::render() {
 	sprite_->render(scene_->camera_);
 }
 
+void SpriteHeisi::eventAction() {
+	isComment_ = true;
+	next_x_ = sprite_->pos_.x;
+	next_z_ = sprite_->pos_.z;
+	sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, scene_->player_->sprite_->pos_);
+	getSurface(size_);
+	sprite_->update(0);
+	scene_->ui_->sprite_ = this;
+}
+
 SpriteKazi::SpriteKazi(SceneField* scene, tnl::Vector3 pos, int look) {
 	scene_ = scene;
 	pos_ = pos;
+	look_ = look;
 	sprite_ = new AnimSprite3D(scene_->camera_);
 	sprite_->regist(32, 32, "walk_front", "graphics/chara/human/kazi/kazi_004.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 32, 0);
 	sprite_->regist(32, 32, "walk_back", "graphics/chara/human/kazi/kazi_001.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 32, 0);
@@ -250,13 +343,28 @@ SpriteKazi::SpriteKazi(SceneField* scene, tnl::Vector3 pos, int look) {
 	sprite_->regist(32, 32, "walk_right", "graphics/chara/human/kazi/kazi_003.png", tnl::SeekUnit::ePlayMode::REPEAT, 1.0f, 3, 32, 0);
 	sprite_->setCurrentAnim("walk_front");
 	sprite_->pos_ = pos_;
-	sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + dir_[look]);
+	sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + dir_[look_]);
 	sprite_->update(0);
 	prev_pos_ = sprite_->pos_;
+	getComment();
 }
 
 void SpriteKazi::update(float delta_time) {
 	if (!move_) return;
+	if (isComment_) {
+		getSurface(size_);
+		sprite_->update(delta_time);
+		return;
+	}
+	if (isEvent_) {
+		sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + dir_[look_]);
+		getSurface(size_);
+		sprite_->update(delta_time);
+		isEvent_ = false;
+		return;
+	}
+
+	//当たり判定
 	hitPlayer(size_);
 
 	//カメラの向きに対してどの面がこちらを向いているか
@@ -267,4 +375,14 @@ void SpriteKazi::update(float delta_time) {
 
 void SpriteKazi::render() {
 	sprite_->render(scene_->camera_);
+}
+
+void SpriteKazi::eventAction() {
+	isComment_ = true;
+	next_x_ = sprite_->pos_.x;
+	next_z_ = sprite_->pos_.z;
+	sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, scene_->player_->sprite_->pos_);
+	getSurface(size_);
+	sprite_->update(0);
+	scene_->ui_->sprite_ = this;
 }

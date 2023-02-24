@@ -5,6 +5,7 @@ class GmCamera;
 class AnimSprite3D;
 class SpriteBase;
 class ModelBase;
+class FieldUi;
 
 class SceneField : public SceneBase {
 public:
@@ -31,6 +32,7 @@ public:
 	SpriteBase* player_ = nullptr; //プレイヤー
 	std::list<SpriteBase*> sprites_; //スプライトリスト
 	std::list<ModelBase*> models_; //3Dモデルリスト
+	FieldUi* ui_ = nullptr; //UI
 
 	int img_back_ = 0; //背景画像
 	dxe::Mesh* field_ = nullptr; //床
