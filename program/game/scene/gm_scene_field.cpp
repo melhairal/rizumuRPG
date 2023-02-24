@@ -175,4 +175,11 @@ void SceneField::setField1() {
 		float y = 450.0f * sin(th);
 		sprites_.emplace_back(new SpriteTree(this, { x,25,y }));
 	}
+
+	//NPC
+	sprites_.emplace_back(new SpriteMurabito(this, { 0,0,100 }));
+	sprites_.emplace_back(new SpriteMurabitoF(this, { -200,0,-250 }));
+	sprites_.emplace_back(new SpriteHeisi(this, { 60,0,370 }, 2));
+	sprites_.emplace_back(new SpriteKazi(this, { -210,0,-20 }, 1));
+
 }

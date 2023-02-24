@@ -57,3 +57,93 @@ public:
 	tnl::Vector3 size_ = { 50,50,50 }; //当たり判定用サイズ
 
 };
+
+class SpriteNpc : public SpriteBase {
+public:
+	SpriteNpc() {}
+	virtual ~SpriteNpc() {}
+	virtual void update(float delta_time) {}
+	virtual void render() {}
+
+	// =========== 関数 ==========
+
+	void getSurface(tnl::Vector3 size); //カメラに対する面を取得
+	void randomWalk(int range, int speed); //ランダムで歩く
+
+	// =========== 基本ステータス ==========
+
+	tnl::Vector3 dir_[4] = {
+		{0,0,1}, //上
+		{1,0,0}, //右
+		{0,0,-1}, //下
+		{-1,0,0} //左
+	};
+
+	bool isWalk_ = false; //移動中フラグ
+	float next_x_ = 0; //移動先のX座標
+	float next_z_ = 0; //移動先のZ座標
+
+	bool isWait_ = false; //待機中フラグ
+	int elapsed_ = 0; //時間計測
+	int wait_time_ = 0; //待機時間
+};
+
+class SpriteMurabito : public SpriteNpc {
+public:
+	SpriteMurabito(SceneField* scene, tnl::Vector3 pos);
+	~SpriteMurabito() {}
+	void update(float delta_time);
+	void render();
+
+	// =========== 関数 ==========
+
+	// =========== 基本ステータス ==========
+
+	tnl::Vector3 size_ = { 32,32,32 }; //当たり判定用サイズ
+	int range_ = 120; //移動範囲
+	int speed_ = 2; //移動速度
+};
+
+class SpriteMurabitoF : public SpriteNpc {
+public:
+	SpriteMurabitoF(SceneField* scene, tnl::Vector3 pos);
+	~SpriteMurabitoF() {}
+	void update(float delta_time);
+	void render();
+
+	// =========== 関数 ==========
+
+	// =========== 基本ステータス ==========
+
+	tnl::Vector3 size_ = { 32,32,32 }; //当たり判定用サイズ
+	int range_ = 100; //移動範囲
+	int speed_ = 2; //移動速度
+};
+
+class SpriteHeisi : public SpriteNpc {
+public:
+	SpriteHeisi(SceneField* scene, tnl::Vector3 pos, int look);
+	~SpriteHeisi() {}
+	void update(float delta_time);
+	void render();
+
+	// =========== 関数 ==========
+
+	// =========== 基本ステータス ==========
+
+	tnl::Vector3 size_ = { 32,32,32 }; //当たり判定用サイズ
+};
+
+class SpriteKazi : public SpriteNpc {
+public:
+	SpriteKazi(SceneField* scene, tnl::Vector3 pos, int look);
+	~SpriteKazi() {}
+	void update(float delta_time);
+	void render();
+
+	// =========== 関数 ==========
+
+	// =========== 基本ステータス ==========
+
+	tnl::Vector3 size_ = { 32,32,32 }; //当たり判定用サイズ
+};
