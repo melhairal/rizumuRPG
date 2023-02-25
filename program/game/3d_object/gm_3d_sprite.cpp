@@ -76,12 +76,12 @@ void SpritePlayer::movePlayer() {
 		sprite_->rot_.slerp(tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + move_v), 0.3f);
 		prev_pos_ = sprite_->pos_;
 		sprite_->pos_ += move_v * speed_;
-		look_ = move_v;
+		looking_ = move_v;
 	}
 }
 
 void SpritePlayer::getEvent() {
-	tnl::Vector3 eventPos = sprite_->pos_ + look_ * 32;
+	tnl::Vector3 eventPos = sprite_->pos_ + looking_ * 32;
 	for (auto sprite : scene_->sprites_) {
 		if (sprite == this) continue;
 		if (tnl::IsIntersectAABB(sprite->sprite_->pos_, size_, eventPos, size_)) {
@@ -412,10 +412,9 @@ void SpriteShop::update(float delta_time) {
 		return;
 	}
 	if (isEvent_) {
-		sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_->pos_, sprite_->pos_ + dir_[look_]);
-		getSurface(size_);
-		sprite_->update(delta_time);
-		isEvent_ = false;
+		scene_->isShop_ = true;
+		scene_->player_->move_ = false;
+		scene_->ui_->sprite_shop_ = this;
 		return;
 	}
 

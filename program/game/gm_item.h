@@ -10,4 +10,6 @@ public:
 	std::string ex2_ = "-"; //à–¾•¶
 	int type_ = 0; //ƒ^ƒCƒv
 	int num_ = 0; //‰ñ•œ—Ê
+	int buy_ = 0; //w“üŠz
+	int sell_ = 0; //”„‹pŠz
 };

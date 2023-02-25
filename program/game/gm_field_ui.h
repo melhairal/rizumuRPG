@@ -18,15 +18,15 @@ public:
 
 	void updateComment(); //コメント制御
 	void updateMenu(); //メニュー制御
+	void updateShop(); //ショップ制御
 
 	// ========== 基本ステータス ==========
 
 	SceneField* scene_ = nullptr; //シーンの変数を取得するためのポインタ
 	SpriteBase* sprite_ = nullptr; //セリフを呼び出したスプライト情報を格納
+	SpriteBase* sprite_shop_ = nullptr; //ショップを呼び出したスプライト情報を格納
 
 	int menu_depth_ = 1; //メニューのどの段階にいるか
-
-
 	int sel_label_ = 0; //選択中のラベル
 	const int LABEL_INDEX_MAX_ = 5; //ラベルのインデックス最大数
 	const char* label_[5] = {
@@ -37,13 +37,24 @@ public:
 		"おわる"
 	};
 	int label_color_[5] = { BROWN,BROWN,BROWN,BROWN,BROWN };
-
 	int sel_index_ = 0; //選択中のインデックス
 	int sel_list_ = 0; //リストのスクロール
 	const int INDEX_MAX_ = 5; //インデックスの最大数
 	int index_color_[5] = { BROWN,BROWN,BROWN,BROWN,BROWN };
 
 	int item_num_ = 0; //アイテム所持数
+
+	int shop_depth_ = 0; //ショップメニューのどの段階にいるか
+	int shop_sel_label_ = 0; //選択中のラベル
+	const int SHOP_LABEL_INDEX_MAX_ = 2; //ラベルのインデックス最大数
+	const char* shop_label_[2] = {
+		"買う",
+		"売る"
+	};
+	int shop_label_color_[2] = { BROWN,BROWN };
+	int shop_sel_index_ = 0; //選択中のインデックス
+	const int SHOP_INDEX_MAX_ = 8; //インデックスの最大数
+	int shop_index_color_[8] = { BROWN,BROWN,BROWN,BROWN,BROWN,BROWN,BROWN,BROWN };
 
 	//色 RGB(B,G,R)
 	const int RED = RGB(0, 0, 255);

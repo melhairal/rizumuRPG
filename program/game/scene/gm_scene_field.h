@@ -91,5 +91,6 @@ public:
 	const int FIELD_R_ = 800; //フィールドの半径
 
 	bool isMenu_ = false; //メニューフラグ
+	bool isShop_ = false; //ショップフラグ
 
 };

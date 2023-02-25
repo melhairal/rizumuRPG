@@ -58,7 +58,7 @@ void SceneField::update(float delta_time)
 	playSe();
 
 	//ƒƒjƒ…[§Œä
-	if (!isMenu_ && tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE)) {
+	if (!isMenu_ && tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE) && !isShop_) {
 		isMenu_ = true;
 		player_->move_ = false;
 		ui_->menu_depth_ = 1;
@@ -133,6 +133,8 @@ void SceneField::getItem() {
 		item_[i]->ex2_ = csv_skill_[i + 1][4].c_str();
 		item_[i]->type_ = std::atoi(csv_skill_[i + 1][1].c_str());
 		item_[i]->num_ = std::atoi(csv_skill_[i + 1][2].c_str());
+		item_[i]->buy_ = std::atoi(csv_skill_[i + 1][5].c_str());
+		item_[i]->sell_ = std::atoi(csv_skill_[i + 1][6].c_str());
 	}
 }
 

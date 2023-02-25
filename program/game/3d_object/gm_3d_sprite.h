@@ -26,10 +26,18 @@ public:
 	AnimSprite3D* sprite_ = nullptr; //スプライト情報
 	tnl::Vector3 pos_ = { 0,0,0 }; //座標
 	tnl::Vector3 prev_pos_ = { 0,0,0 }; //座標
-	tnl::Vector3 look_ = { 0,0,0 }; //見ている方向ベクトル
+	tnl::Vector3 looking_ = { 0,0,0 }; //見ている方向ベクトル
+	int look_ = 0; //向いてる向き
 
 	std::list<const char*> comment_; //セリフリスト
 	std::list<const char*>::iterator it; //セリフリスト用イテレータ
+
+	tnl::Vector3 dir_[4] = {
+	{0,0,1}, //上
+	{1,0,0}, //右
+	{0,0,-1}, //下
+	{-1,0,0} //左
+	};
 
 	bool isComment_ = false; //セリフ中フラグ
 	bool isEvent_ = false; //イベント中フラグ
@@ -87,13 +95,6 @@ public:
 	void randomWalk(int range, int speed); //ランダムで歩く
 
 	// =========== 基本ステータス ==========
-
-	tnl::Vector3 dir_[4] = {
-		{0,0,1}, //上
-		{1,0,0}, //右
-		{0,0,-1}, //下
-		{-1,0,0} //左
-	};
 
 	bool isWalk_ = false; //移動中フラグ
 	float next_x_ = 0; //移動先のX座標
@@ -175,7 +176,6 @@ public:
 	// =========== 基本ステータス ==========
 
 	tnl::Vector3 size_ = { 32,32,32 }; //当たり判定用サイズ
-	int look_ = 0; //向いてる向き
 
 	void getComment() override {
 		// ====================================
@@ -202,7 +202,6 @@ public:
 	// =========== 基本ステータス ==========
 
 	tnl::Vector3 size_ = { 32,32,32 }; //当たり判定用サイズ
-	int look_ = 0; //向いてる向き
 
 	void getComment() override {
 		// ====================================
@@ -229,7 +228,6 @@ public:
 	// =========== 基本ステータス ==========
 
 	tnl::Vector3 size_ = { 32,32,32 }; //当たり判定用サイズ
-	int look_ = 0; //向いてる向き
 
 	void getComment() override {
 		// ====================================

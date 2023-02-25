@@ -3,6 +3,7 @@
 #include "3d_object/gm_3d_sprite.h"
 #include "object/gm_object_attack.h"
 #include "gm_item.h"
+#include "model/gm_anim_sprite3d.h"
 
 FieldUi::FieldUi(SceneField* scene) {
 	scene_ = scene;
@@ -26,6 +27,11 @@ void FieldUi::update(float delta_time) {
 	//メニュー画面制御
 	if (scene_->isMenu_) {
 		updateMenu();
+	}
+
+	//ショップ制御
+	if (scene_->isShop_) {
+		updateShop();
 	}
 
 }
@@ -91,6 +97,38 @@ void FieldUi::render() {
 				DrawStringToHandle(COMMENT_X_, COMMENT_Y_[1], scene_->item_[scene_->items_[sel_index_ + sel_list_]]->ex2_.c_str(), BROWN, font_rondo_32_);
 			}
 			if (item_num_ == 0) DrawStringToHandle(STATUS_X_[0], STATUS_Y_[0], "なし", index_color_[0], font_rondo_32_);
+		}
+	}
+
+	//ショップ画面表示
+	if (scene_->isShop_) {
+		drawWindow(WINDOW_LABEL_X_, WINDOW_LABEL_Y_, WINDOW_LABEL_W_, WINDOW_LABEL_H_);
+		drawWindow(WINDOW_MAIN_X_, WINDOW_MAIN_Y_, WINDOW_MAIN_W_, WINDOW_MAIN_H_);
+		for (int i = 0; i < SHOP_LABEL_INDEX_MAX_; ++i) {
+			DrawStringToHandle(LABEL_X_, LABEL_Y_[i], shop_label_[i], shop_label_color_[i], font_rondo_32_);
+		}
+		//購入
+		if (shop_sel_label_ == 0) {
+			for (int i = 0; i < 5; ++i) {
+				DrawStringToHandle(STATUS_X_[0], STATUS_Y_[i], scene_->item_[i]->name_.c_str(), shop_index_color_[i], font_rondo_32_);
+				DrawFormatStringToHandle(NUM_X_, STATUS_Y_[i], shop_index_color_[i], font_rondo_32_, "%d G", scene_->item_[i]->buy_);
+			}
+			//説明文
+			drawWindow(WINDOW_SUB_X_, WINDOW_SUB_Y_, WINDOW_SUB_W_, WINDOW_SUB_H_);
+			DrawStringToHandle(COMMENT_X_, COMMENT_Y_[0], scene_->item_[shop_sel_index_]->ex1_.c_str(), BROWN, font_rondo_32_);
+			DrawStringToHandle(COMMENT_X_, COMMENT_Y_[1], scene_->item_[shop_sel_index_]->ex2_.c_str(), BROWN, font_rondo_32_);
+		}
+		//売却
+		if (shop_sel_label_ == 1) {
+			for (int i = 0; i < 8; i++) {
+				if (item_num_ >= i + 1) {
+					DrawStringToHandle(STATUS_X_[0], STATUS_Y_[i], scene_->item_[scene_->items_[i]]->name_.c_str(), shop_index_color_[i], font_rondo_32_);
+					DrawFormatStringToHandle(NUM_X_, STATUS_Y_[i], shop_index_color_[i], font_rondo_32_, "%d G", scene_->item_[i]->sell_);
+				}
+			}
+			if (item_num_ == 0) {
+				DrawStringToHandle(STATUS_X_[0], STATUS_Y_[0], "なし", shop_index_color_[0], font_rondo_32_);
+			}
 		}
 	}
 }
@@ -217,6 +255,7 @@ void FieldUi::updateMenu() {
 			break;
 		default:
 			sel_index_ = std::clamp(sel_index_, 0, 0);
+			break;
 		}
 	}
 
@@ -247,5 +286,83 @@ void FieldUi::updateMenu() {
 	if (menu_depth_ == -1) {
 		scene_->isMenu_ = false;
 		scene_->player_->move_ = true;
+	}
+}
+
+void FieldUi::updateShop() {
+	//持ってるアイテムの数を取得
+	item_num_ = 0;
+	for (int i = 0; i < 8; i++) {
+		if (scene_->items_[i] != -1) {
+			item_num_++;
+		}
+	}
+	//項目選択
+	if (shop_depth_ == 0) {
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
+			shop_sel_label_--;
+		}
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
+			shop_sel_label_++;
+		}
+		shop_sel_label_ = std::clamp(shop_sel_label_, 0, SHOP_LABEL_INDEX_MAX_ - 1);
+	}
+	//選択してる項目の色を更新
+	for (int i = 0; i < SHOP_LABEL_INDEX_MAX_; ++i) {
+		shop_label_color_[i] = BROWN;
+	}
+	shop_label_color_[shop_sel_label_] = YELLOW;
+
+	//項目の中での選択
+	if (shop_depth_ == 1) {
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
+			shop_sel_index_--;
+		}
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
+			shop_sel_index_++;
+		}
+		switch (shop_sel_label_) {
+		case 0:
+			shop_sel_index_ = std::clamp(shop_sel_index_, 0, 4);
+			break;
+		case 1:
+			if (item_num_ == 0) {
+				shop_sel_index_ = std::clamp(shop_sel_index_, 0, 0);
+			}
+			else {
+				shop_sel_index_ = std::clamp(shop_sel_index_, 0, item_num_ - 1);
+			}
+			break;
+		default:
+			shop_sel_index_ = std::clamp(shop_sel_index_, 0, 0);
+			break;
+		}
+	}
+	//選択してる項目の色を更新
+	for (int i = 0; i < SHOP_INDEX_MAX_; ++i) {
+		shop_index_color_[i] = BROWN;
+	}
+	shop_index_color_[shop_sel_index_] = YELLOW;
+
+	//ショップ終了処理
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE)) {
+		shop_depth_--;
+		shop_sel_index_ = 0;
+	}
+	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		shop_depth_++;
+	}
+	shop_depth_ = std::clamp(shop_depth_, -1, 1);
+	if (shop_depth_ == -1) {
+		sprite_shop_->sprite_->rot_ = tnl::Quaternion::LookAtAxisY(sprite_shop_->sprite_->pos_, sprite_shop_->sprite_->pos_ + sprite_shop_->dir_[sprite_shop_->look_]);
+		sprite_shop_->getSurface({ 32,32,32 });
+		sprite_shop_->sprite_->update(0);
+		sprite_shop_->isEvent_ = false;
+		sprite_shop_ = nullptr;
+		scene_->player_->move_ = true;
+		shop_depth_ = 0;
+		shop_sel_index_ = 0;
+		shop_sel_label_ = 0;
+		scene_->isShop_ = false;
 	}
 }
