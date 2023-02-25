@@ -119,8 +119,8 @@ void Ui::render() {
 			case 1:
 				DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[0], scene_->skill_[2 + 0 + scene_->boss_->index_sub_list_]->name_.c_str(), command_sub_color_[0], font_rondo_32_);
 				DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[1], scene_->skill_[2 + 1 + scene_->boss_->index_sub_list_]->name_.c_str(), command_sub_color_[1], font_rondo_32_);
-				DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[2], scene_->skill_[2 + 2 + scene_->boss_->index_sub_list_]->name_.c_str(), command_sub_color_[2], font_rondo_32_);
-				DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[3], scene_->skill_[2 + 3 + scene_->boss_->index_sub_list_]->name_.c_str(), command_sub_color_[3], font_rondo_32_);
+				if (scene_->player_skills_ >= 3) DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[2], scene_->skill_[2 + 2 + scene_->boss_->index_sub_list_]->name_.c_str(), command_sub_color_[2], font_rondo_32_);
+				if (scene_->player_skills_ >= 4) DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[3], scene_->skill_[2 + 3 + scene_->boss_->index_sub_list_]->name_.c_str(), command_sub_color_[3], font_rondo_32_);
 				if (!scene_->boss_->main_command_) {
 					//à–¾•¶
 					DrawStringToHandle(COMMAND_EXP_X_, COMMAND_LIST_Y_[0], scene_->skill_[2 + scene_->boss_->index_sub_ + scene_->boss_->index_sub_list_]->exp1_.c_str(), BROWN, font_rondo_32_);

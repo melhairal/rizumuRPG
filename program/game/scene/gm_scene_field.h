@@ -17,6 +17,8 @@ public:
 	void render() override;
 
 	// =========== 関数 ==========
+	
+	void getStatus(); //ステータスを取得
 
 	void moveCamera(); //カメラ制御
 	void updateSprites(float delta_time); //スプライト制御
@@ -37,6 +39,13 @@ public:
 	int img_back_ = 0; //背景画像
 	dxe::Mesh* field_ = nullptr; //床
 	dxe::Mesh* load_ = nullptr; //道
+
+	//プレイヤーステータス
+	int player_lv_ = 0;
+	int player_hp_ = 0;
+	int player_atk_ = 0;
+	int player_exp_ = 0;
+	int player_monney_ = 0;
 
 	const float CAM_ROT_SPEED_ = 1.0f; //カメラ回転速度
 	const float CAM_ROT_MAX_ = 60.0f; //カメラ回転上限

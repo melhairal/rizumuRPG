@@ -1,6 +1,7 @@
 #include "../gm_manager.h"
 #include "gm_scene_map.h"
 #include "gm_scene_play.h"
+#include "gm_scene_field.h"
 
 
 void SceneMap::initialzie() {
@@ -74,6 +75,7 @@ void SceneMap::update(float delta_time)
 			mgr->chengeScene(new ScenePlay());
 			break;
 		case 1:
+			mgr->chengeScene(new SceneField());
 			break;
 		}
 	}

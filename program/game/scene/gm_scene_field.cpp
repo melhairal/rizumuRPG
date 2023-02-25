@@ -21,6 +21,9 @@ SceneField::~SceneField() {
 void SceneField::initialzie() {
 	SetUseLighting(FALSE);
 
+	//ステータス取得
+	getStatus();
+
 	//カメラ
 	camera_ = new GmCamera();
 	camera_->pos_ = { 0, 150, -300 };
@@ -79,6 +82,16 @@ void SceneField::render()
 	for (auto sprite : sprites_) sprite->render(); //スプライトの描画
 
 	ui_->render(); //UI描画
+}
+
+void SceneField::getStatus() {
+
+	GameManager* mgr = GameManager::GetInstance();
+
+	player_lv_ = mgr->player_lv_;
+	player_hp_ = mgr->player_hp_;
+	player_atk_ = mgr->player_atk_;
+	player_exp_ = mgr->player_exp_;
 }
 
 void SceneField::moveCamera() {

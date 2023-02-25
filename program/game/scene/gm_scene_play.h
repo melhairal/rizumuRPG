@@ -101,6 +101,7 @@ public :
 	int hp_ = 0; //プレイヤーHP
 	int mp_ = 0; //プレイヤーMP
 	int atk_ = 0; //プレイヤー攻撃力
+	int player_skills_ = 2; //覚えてるスキルの数
 
 	bool score_judge_ = true; //勝ったかどうか
 	int score_perfect_ = 0; //パーフェクト数

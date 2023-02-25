@@ -290,6 +290,7 @@ void ScenePlay::getStatus() {
 	atk_ = mgr->player_atk_;
 	mp_ = mgr->player_mp_;
 	stage_ = mgr->now_stage_;
+	player_skills_ = mgr->player_skills_;
 }
 
 void ScenePlay::getSkill() {

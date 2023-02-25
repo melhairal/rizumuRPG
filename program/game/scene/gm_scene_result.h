@@ -47,7 +47,7 @@ public:
 
 	int stage_ = 0; //ステージ
 
-		//ステージタイトル
+	//ステージタイトル
 	const char* title_[6]{
 		"旅立ちの平原",
 		"竜の住む丘",
@@ -57,6 +57,33 @@ public:
 		"闇の森"
 	};
 
+	//賞金
+	const int MONNEY_[6] = {
+		100,
+		300,
+		500,
+		1000,
+		2000,
+		3000
+	};
+
+	//経験値テーブル
+	const int UP_EXP_[9] = {
+		1000,
+		2000,
+		3000,
+		5000,
+		10000,
+		20000,
+		30000,
+		40000,
+		50000
+	};
+
+	//レベル毎のステータス
+	const int up_atk_ = 2;
+	const int up_hp_ = 100;
+
 	bool score_judge_ = true; //勝ったかどうか
 	int score_ = 0; //スコア
 	int draw_score_ = 0; //スコア演出用
@@ -64,6 +91,8 @@ public:
 	int score_good_ = 0; //グッド数
 	int score_miss_ = 0; //ミス数
 	int score_max_combo_ = 0; //最大コンボ数
+	int now_exp_ = 0; //経験値
+	int now_lv_ = 0; //レベル
 
 	bool finish_ = false; //演出がおわったかどうか
 	int elapsed_ = 0; //時間計測用
@@ -72,14 +101,19 @@ public:
 
 	//座標
 	const int TITLE_X_ = 250;
-	const int TITLE_Y_ = 100;
+	const int TITLE_Y_ = 80;
 
-	const int SCORE_X_ = 100;
-	const int SCORE_Y_ = 200;
-	const int SCORE_SUB_Y_[4] = { 350,420,490,560 };
+	const int SCORE_X_[2] = { 100, 400 };
+	const int SCORE_Y_ = 180;
+	const int SCORE_SUB_Y_[4] = { 330,400,470,540 };
 
-	const int RESULT_X_ = 500;
-	const int RESULT_Y_ = 500;
+	const int RESULT_X_ = 580;
+	const int RESULT_Y_ = 480;
+
+	const int EXP_X_ = 200;
+	const int EXP_Y_ = 660;
+	const int LV_X_ = EXP_X_;
+	const int LV_Y_ = EXP_Y_ + 50;
 
 
 

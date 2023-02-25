@@ -3,7 +3,7 @@
 
 class SceneBase;
 class GameManager {
-private :
+private:
 	GameManager();
 	~GameManager();
 
@@ -14,16 +14,16 @@ private :
 	// 画面遷移演出の時間
 	const float SCENE_TRANSITION_FIX_TIME = 0.5f;
 	float scene_transition_time_ = 0;
-	float scene_transition_alpha_ = 1.0f ;
+	float scene_transition_alpha_ = 1.0f;
 
-	tnl::Sequence<GameManager> sequence_ = 
+	tnl::Sequence<GameManager> sequence_ =
 		tnl::Sequence<GameManager>(this, &GameManager::seqSceneInTransition);
 
 	// 画面遷移( フェードインプロセス )
 	bool seqSceneInTransition(const float delta_time);
 
 	// ゲームプロセス
-	bool seqGameProcess( const float delta_time );
+	bool seqGameProcess(const float delta_time);
 
 	// 画面遷移( フェードアウトプロセス )
 	bool seqSceneOutTransition(const float delta_time);
@@ -33,7 +33,7 @@ private :
 	// 予約シーン
 	SceneBase* scene_next_ = nullptr;
 
-public :
+public:
 
 	// インスタンスの取得
 	static GameManager* GetInstance();
@@ -48,15 +48,18 @@ public :
 	// arg1... SceneBase を継承したクラスインスタンス
 	void chengeScene(SceneBase* next);
 
-public :
+public:
 
 	// ゲーム全体で参照したい変数はここで用意
 
 	//プレイヤーステータス
-	int player_atk_ = 20;
-	int player_hp_ = 2000;
+	int player_lv_ = 1; //デフォルト1
+	int player_atk_ = 10; //デフォルト10
+	int player_hp_ = 1000; //デフォルト1000
 	int player_mp_ = 0;
 	int player_exp_ = 0;
+	int player_monney_ = 0;
+	int player_skills_ = 2; //デフォルト値は2
 
 	//リザルト画面用
 	bool result_judge_ = true;

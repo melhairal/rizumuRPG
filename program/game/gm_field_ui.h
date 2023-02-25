@@ -89,5 +89,7 @@ public:
 		 DXE_WINDOW_HEIGHT * 0.25f + 150
 	};
 
+	const float STATUS_X_[2] = { 350,500 };
+	const float STATUS_Y_[6] = { 200,250,300,350,400,450 };
 
 };

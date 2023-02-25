@@ -42,6 +42,16 @@ void FieldUi::render() {
 		for (int i = 0; i < LABEL_INDEX_MAX_; ++i) {
 			DrawStringToHandle(LABEL_X_, LABEL_Y_[i], label_[i], label_color_[i], font_pop_32_);
 		}
+		if (menu_depth_ == 0) {
+			DrawFormatStringToHandle(STATUS_X_[0], STATUS_Y_[0], BROWN, font_rondo_32_, "Lv");
+			DrawFormatStringToHandle(STATUS_X_[0], STATUS_Y_[1], BROWN, font_rondo_32_, "HP");
+			DrawFormatStringToHandle(STATUS_X_[0], STATUS_Y_[2], BROWN, font_rondo_32_, "ATK");
+			DrawFormatStringToHandle(STATUS_X_[0], STATUS_Y_[3], BROWN, font_rondo_32_, "EXP");
+			DrawFormatStringToHandle(STATUS_X_[1], STATUS_Y_[0], BROWN, font_rondo_32_, "%6.0d", scene_->player_lv_);
+			DrawFormatStringToHandle(STATUS_X_[1], STATUS_Y_[1], BROWN, font_rondo_32_, "%6.0d", scene_->player_hp_);
+			DrawFormatStringToHandle(STATUS_X_[1], STATUS_Y_[2], BROWN, font_rondo_32_, "%6.0d", scene_->player_atk_);
+			DrawFormatStringToHandle(STATUS_X_[1], STATUS_Y_[3], BROWN, font_rondo_32_, "%6.0d", scene_->player_exp_);
+		}
 	}
 }
 

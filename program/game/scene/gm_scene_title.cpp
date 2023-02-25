@@ -33,12 +33,11 @@ void SceneTitle::update(float delta_time)
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		switch (sel_) {
 		case 0:
-			mgr->chengeScene(new SceneMap());
+			mgr->chengeScene(new SceneField());
 			break;
 		case 1:
 			break;
 		case 2:
-			mgr->chengeScene(new SceneField());
 			break;
 		}
 	}

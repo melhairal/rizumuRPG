@@ -134,12 +134,12 @@ void Boss::getBossClass() {
 	switch (scene_->stage_) {
 	case 0:
 		enemy_ = scene_->actors_.emplace_back(new BossGorem(scene_));
-		hp_max_ = 500;
+		hp_max_ = 700;
 		hp_ = hp_max_;
 		break;
 	case 1:
 		enemy_ = scene_->actors_.emplace_back(new BossDragon(scene_));
-		hp_max_ = 1000;
+		hp_max_ = 1300;
 		hp_ = hp_max_;
 		break;
 	case 2:
@@ -326,8 +326,14 @@ void Boss::command() {
 		index_sub_list_ = std::clamp(index_sub_list_, 0, 0);
 		break;
 	case 1:
-		index_sub_ = std::clamp(index_sub_, 0, 4);
-		index_sub_list_ = std::clamp(index_sub_list_, 0, 4);
+		if (scene_->player_skills_ <= 4) {
+			index_sub_ = std::clamp(index_sub_, 0, scene_->player_skills_ - 1);
+			index_sub_list_ = std::clamp(index_sub_list_, 0, 0);
+		}
+		else {
+			index_sub_ = std::clamp(index_sub_, 0, 3);
+			index_sub_list_ = std::clamp(index_sub_list_, 0, scene_->player_skills_ - 4);
+		}
 		break;
 	case 2:
 		index_sub_ = std::clamp(index_sub_, 0, 0);
