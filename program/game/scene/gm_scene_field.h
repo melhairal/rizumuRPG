@@ -7,6 +7,7 @@ class SpriteBase;
 class ModelBase;
 class FieldUi;
 class SkillList;
+class ItemList;
 
 class SceneField : public SceneBase {
 public:
@@ -21,6 +22,8 @@ public:
 	
 	void getStatus(); //ステータスを取得
 	void getSkill(); //スキル情報を取得
+	void getItem(); //アイテム情報を取得
+	void setItem(); //アイテム情報を登録
 
 	void moveCamera(); //カメラ制御
 	void updateSprites(float delta_time); //スプライト制御
@@ -54,6 +57,10 @@ public:
 
 	std::vector<std::vector<std::string>> csv_skill_; //スキル情報csv
 	SkillList* skill_[10] = { nullptr }; //スキルリスト
+
+	std::vector<std::vector<std::string>> csv_item_; //スキル情報csv
+	ItemList* item_[5] = { nullptr }; //アイテムリスト
+	int items_[8] = { -1,-1,-1,-1,-1,-1,-1,-1 };
 
 	//経験値テーブル
 	const int UP_EXP_[9] = {

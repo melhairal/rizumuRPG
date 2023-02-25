@@ -43,6 +43,8 @@ public:
 	const int INDEX_MAX_ = 5; //インデックスの最大数
 	int index_color_[5] = { BROWN,BROWN,BROWN,BROWN,BROWN };
 
+	int item_num_ = 0; //アイテム所持数
+
 	//色 RGB(B,G,R)
 	const int RED = RGB(0, 0, 255);
 	const int GREEN = RGB(0, 255, 0);

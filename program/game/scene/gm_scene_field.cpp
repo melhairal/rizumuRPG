@@ -8,6 +8,7 @@
 #include "../3d_object/gm_3d_sprite.h"
 #include "../gm_field_ui.h"
 #include "../object/gm_object_attack.h"
+#include "../gm_item.h"
 
 extern tnl::Quaternion fix_rot;
 
@@ -26,6 +27,7 @@ void SceneField::initialzie() {
 	//ステータス取得
 	getStatus();
 	getSkill();
+	getItem();
 
 	//カメラ
 	camera_ = new GmCamera();
@@ -97,6 +99,9 @@ void SceneField::getStatus() {
 	player_exp_ = mgr->player_exp_;
 	player_monney_ = mgr->player_monney_;
 	player_skills_ = mgr->player_skills_ + 2;
+	for (int i = 0; i < 8; ++i) {
+		items_[i] = mgr->have_items_[i];
+	}
 }
 
 void SceneField::getSkill() {
@@ -109,6 +114,25 @@ void SceneField::getSkill() {
 		skill_[i]->exp2_ = csv_skill_[i + 1][3].c_str();
 		skill_[i]->exp3_ = csv_skill_[i + 1][4].c_str();
 		skill_[i]->class_name_ = csv_skill_[i + 1][5].c_str();
+	}
+}
+
+void SceneField::getItem() {
+	for (int i = 0; i < 5; ++i) {
+		csv_skill_ = tnl::LoadCsv("csv/item.csv");
+		item_[i] = new ItemList();
+		item_[i]->name_ = csv_skill_[i + 1][0].c_str();
+		item_[i]->ex1_ = csv_skill_[i + 1][3].c_str();
+		item_[i]->ex2_ = csv_skill_[i + 1][4].c_str();
+		item_[i]->type_ = std::atoi(csv_skill_[i + 1][1].c_str());
+		item_[i]->num_ = std::atoi(csv_skill_[i + 1][2].c_str());
+	}
+}
+
+void SceneField::setItem() {
+	GameManager* mgr = GameManager::GetInstance();
+	for (int i = 0; i < 8; ++i) {
+		mgr->have_items_[i] = items_[i];
 	}
 }
 
@@ -180,6 +204,7 @@ void SceneField::updateModels(float delta_time) {
 void SceneField::outField() {
 	if (player_->sprite_->pos_.z > 410 || player_->sprite_->pos_.z < -410) {
 		GameManager* mgr = GameManager::GetInstance();
+		setItem();
 		mgr->chengeScene(new SceneMap());
 	}
 }

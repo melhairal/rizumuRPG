@@ -2,6 +2,7 @@
 #include "scene/gm_scene_field.h"
 #include "3d_object/gm_3d_sprite.h"
 #include "object/gm_object_attack.h"
+#include "gm_item.h"
 
 FieldUi::FieldUi(SceneField* scene) {
 	scene_ = scene;
@@ -76,6 +77,18 @@ void FieldUi::render() {
 			DrawStringToHandle(COMMENT_X_, COMMENT_Y_[1], scene_->skill_[sel_index_ + sel_list_]->exp2_.c_str(), BROWN, font_rondo_32_);
 			DrawStringToHandle(COMMENT_X_, COMMENT_Y_[2], scene_->skill_[sel_index_ + sel_list_]->exp3_.c_str(), BROWN, font_rondo_32_);
 		}
+		//アイテム一覧
+		if (menu_depth_ == 1 && sel_label_ == 1) {
+			if (item_num_ >= 1) DrawStringToHandle(STATUS_X_[0], STATUS_Y_[0], scene_->item_[scene_->items_[sel_list_]]->name_.c_str(), index_color_[0], font_rondo_32_);
+			if (item_num_ >= 2) DrawStringToHandle(STATUS_X_[0], STATUS_Y_[1], scene_->item_[scene_->items_[sel_list_ + 1]]->name_.c_str(), index_color_[1], font_rondo_32_);
+			if (item_num_ >= 3) DrawStringToHandle(STATUS_X_[0], STATUS_Y_[2], scene_->item_[scene_->items_[sel_list_ + 2]]->name_.c_str(), index_color_[2], font_rondo_32_);
+			if (item_num_ >= 4) DrawStringToHandle(STATUS_X_[0], STATUS_Y_[3], scene_->item_[scene_->items_[sel_list_ + 3]]->name_.c_str(), index_color_[3], font_rondo_32_);
+			if (item_num_ >= 5) DrawStringToHandle(STATUS_X_[0], STATUS_Y_[4], scene_->item_[scene_->items_[sel_list_ + 4]]->name_.c_str(), index_color_[4], font_rondo_32_);
+			//説明文
+			drawWindow(WINDOW_SUB_X_, WINDOW_SUB_Y_, WINDOW_SUB_W_, WINDOW_SUB_H_);
+			DrawStringToHandle(COMMENT_X_, COMMENT_Y_[0], scene_->item_[scene_->items_[sel_index_ + sel_list_]]->ex1_.c_str(), BROWN, font_rondo_32_);
+			DrawStringToHandle(COMMENT_X_, COMMENT_Y_[1], scene_->item_[scene_->items_[sel_index_ + sel_list_]]->ex2_.c_str(), BROWN, font_rondo_32_);
+		}
 	}
 }
 
@@ -140,12 +153,23 @@ void FieldUi::updateMenu() {
 		}
 		sel_label_ = std::clamp(sel_label_, 0, LABEL_INDEX_MAX_ - 1);
 	}
-
+	//選択してる項目の色を更新
 	for (int i = 0; i < LABEL_INDEX_MAX_; ++i) {
 		label_color_[i] = BROWN;
 	}
 	label_color_[sel_label_] = YELLOW;
 
+	//持ってるアイテムの数を取得
+	if (menu_depth_ == 1 && sel_label_ == 1) {
+		item_num_ = 0;
+		for (int i = 0; i < 8; i++) {
+			if (scene_->items_[i] != -1) {
+				item_num_++;
+			}
+		}
+	}
+
+	//項目の中での選択
 	if (menu_depth_ == 1) {
 		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
 			if (sel_index_ > 0) {
@@ -175,13 +199,21 @@ void FieldUi::updateMenu() {
 			}
 			break;
 		case 1:
-			sel_index_ = std::clamp(sel_index_, 0, INDEX_MAX_ - 1);
+			if (item_num_ < INDEX_MAX_) {
+				sel_index_ = std::clamp(sel_index_, 0, item_num_ - 1);
+				sel_list_ = std::clamp(sel_list_, 0, 0);
+			}
+			else {
+				sel_index_ = std::clamp(sel_index_, 0, INDEX_MAX_ - 1);
+				sel_list_ = std::clamp(sel_list_, 0, item_num_ - INDEX_MAX_);
+			}
 			break;
 		default:
-			sel_index_ = std::clamp(sel_index_, 0, INDEX_MAX_ - 1);
+			sel_index_ = std::clamp(sel_index_, 0, 0);
 		}
 	}
 
+	//選択してる項目の色を更新
 	for (int i = 0; i < INDEX_MAX_; ++i) {
 		index_color_[i] = BROWN;
 	}

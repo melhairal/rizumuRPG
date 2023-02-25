@@ -40,6 +40,7 @@
     <ClCompile Include="program\game\gm_boss.cpp" />
     <ClCompile Include="program\game\gm_camera.cpp" />
     <ClCompile Include="program\game\gm_field_ui.cpp" />
+    <ClCompile Include="program\game\gm_item.cpp" />
     <ClCompile Include="program\game\gm_main.cpp" />
     <ClCompile Include="program\game\gm_make_sheet.cpp" />
     <ClCompile Include="program\game\gm_manager.cpp" />
@@ -87,6 +88,7 @@
     <ClInclude Include="program\game\gm_boss.h" />
     <ClInclude Include="program\game\gm_camera.h" />
     <ClInclude Include="program\game\gm_field_ui.h" />
+    <ClInclude Include="program\game\gm_item.h" />
     <ClInclude Include="program\game\gm_main.h" />
     <ClInclude Include="program\game\gm_make_sheet.h" />
     <ClInclude Include="program\game\gm_manager.h" />
