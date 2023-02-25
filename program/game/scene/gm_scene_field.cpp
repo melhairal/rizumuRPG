@@ -3,9 +3,11 @@
 #include "../model/gm_anim_sprite3d.h"
 #include "gm_scene_field.h"
 #include "gm_scene_map.h"
+#include "gm_scene_title.h"
 #include "../3d_object/gm_3d_model.h"
 #include "../3d_object/gm_3d_sprite.h"
 #include "../gm_field_ui.h"
+#include "../object/gm_object_attack.h"
 
 extern tnl::Quaternion fix_rot;
 
@@ -23,6 +25,7 @@ void SceneField::initialzie() {
 
 	//ステータス取得
 	getStatus();
+	getSkill();
 
 	//カメラ
 	camera_ = new GmCamera();
@@ -92,6 +95,21 @@ void SceneField::getStatus() {
 	player_hp_ = mgr->player_hp_;
 	player_atk_ = mgr->player_atk_;
 	player_exp_ = mgr->player_exp_;
+	player_monney_ = mgr->player_monney_;
+	player_skills_ = mgr->player_skills_ + 2;
+}
+
+void SceneField::getSkill() {
+	for (int i = 0; i < 10; ++i) {
+		csv_skill_ = tnl::LoadCsv("csv/skill.csv");
+		skill_[i] = new SkillList();
+		skill_[i]->name_ = csv_skill_[i + 1][0].c_str();
+		skill_[i]->mp_ = std::atoi(csv_skill_[i + 1][1].c_str());
+		skill_[i]->exp1_ = csv_skill_[i + 1][2].c_str();
+		skill_[i]->exp2_ = csv_skill_[i + 1][3].c_str();
+		skill_[i]->exp3_ = csv_skill_[i + 1][4].c_str();
+		skill_[i]->class_name_ = csv_skill_[i + 1][5].c_str();
+	}
 }
 
 void SceneField::moveCamera() {
@@ -211,4 +229,9 @@ void SceneField::setField1() {
 	sprites_.emplace_back(new SpriteKazi(this, { -210,0,-20 }, 1));
 	sprites_.emplace_back(new SpriteShop(this, { 110,0,-90 }, 3));
 
+}
+
+void SceneField::finishGame() {
+	GameManager* mgr = GameManager::GetInstance();
+	mgr->chengeScene(new SceneTitle());
 }

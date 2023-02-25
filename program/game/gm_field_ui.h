@@ -28,14 +28,20 @@ public:
 
 
 	int sel_label_ = 0; //選択中のラベル
-	const int LABEL_INDEX_MAX_ = 4; //ラベルのインデックス最大数
-	const char* label_[4] = {
+	const int LABEL_INDEX_MAX_ = 5; //ラベルのインデックス最大数
+	const char* label_[5] = {
 		"スキル",
 		"どうぐ",
 		"オプション",
+		"セーブ",
 		"おわる"
 	};
-	int label_color_[4] = { BROWN,BROWN,BROWN,BROWN };
+	int label_color_[5] = { BROWN,BROWN,BROWN,BROWN,BROWN };
+
+	int sel_index_ = 0; //選択中のインデックス
+	int sel_list_ = 0; //リストのスクロール
+	const int INDEX_MAX_ = 5; //インデックスの最大数
+	int index_color_[5] = { BROWN,BROWN,BROWN,BROWN,BROWN };
 
 	//色 RGB(B,G,R)
 	const int RED = RGB(0, 0, 255);
@@ -81,15 +87,25 @@ public:
 	const float WINDOW_MAIN_W_ = DXE_WINDOW_WIDTH * 0.6f;
 	const float WINDOW_MAIN_H_ = DXE_WINDOW_HEIGHT * 0.6f;
 
+	const float WINDOW_SUB_X_ = WINDOW_MAIN_X_;
+	const float WINDOW_SUB_Y_ = DXE_WINDOW_HEIGHT * 0.7f;
+	const float WINDOW_SUB_W_ = WINDOW_MAIN_W_;
+	const float WINDOW_SUB_H_ = DXE_WINDOW_HEIGHT * 0.2f;
+
 	const float LABEL_X_ = DXE_WINDOW_WIDTH * 0.13f;
-	const float LABEL_Y_[4] = {
+	const float LABEL_Y_[5] = {
 		 DXE_WINDOW_HEIGHT * 0.25f,
 		 DXE_WINDOW_HEIGHT * 0.25f + 50,
 		 DXE_WINDOW_HEIGHT * 0.25f + 100,
-		 DXE_WINDOW_HEIGHT * 0.25f + 150
+		 DXE_WINDOW_HEIGHT * 0.25f + 150,
+		 DXE_WINDOW_HEIGHT * 0.25f + 200
 	};
 
-	const float STATUS_X_[2] = { 350,500 };
+	const float STATUS_X_[2] = { 350,550 };
 	const float STATUS_Y_[6] = { 200,250,300,350,400,450 };
+
+	const float COMMENT_X_ = 350;
+	const float COMMENT_Y_[3] = { 480,520,560 };
+	const float NUM_X_ = 760;
 
 };

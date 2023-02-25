@@ -59,7 +59,7 @@ public:
 	int player_mp_ = 0;
 	int player_exp_ = 0;
 	int player_monney_ = 0;
-	int player_skills_ = 2; //デフォルト値は2
+	int player_skills_ = 8; //デフォルト値は2
 
 	//リザルト画面用
 	bool result_judge_ = true;

@@ -6,6 +6,7 @@ class AnimSprite3D;
 class SpriteBase;
 class ModelBase;
 class FieldUi;
+class SkillList;
 
 class SceneField : public SceneBase {
 public:
@@ -19,6 +20,7 @@ public:
 	// =========== 関数 ==========
 	
 	void getStatus(); //ステータスを取得
+	void getSkill(); //スキル情報を取得
 
 	void moveCamera(); //カメラ制御
 	void updateSprites(float delta_time); //スプライト制御
@@ -27,6 +29,8 @@ public:
 	void outField(); //フィールドから出る処理
 
 	void setField1(); //フィールド1番を生成
+
+	void finishGame(); //ゲーム終了
 
 	// ========== 基本ステータス ==========
 
@@ -46,6 +50,23 @@ public:
 	int player_atk_ = 0;
 	int player_exp_ = 0;
 	int player_monney_ = 0;
+	int player_skills_ = 4;
+
+	std::vector<std::vector<std::string>> csv_skill_; //スキル情報csv
+	SkillList* skill_[10] = { nullptr }; //スキルリスト
+
+	//経験値テーブル
+	const int UP_EXP_[9] = {
+		1000,
+		2000,
+		3000,
+		5000,
+		10000,
+		20000,
+		30000,
+		40000,
+		50000
+	};
 
 	const float CAM_ROT_SPEED_ = 1.0f; //カメラ回転速度
 	const float CAM_ROT_MAX_ = 60.0f; //カメラ回転上限
