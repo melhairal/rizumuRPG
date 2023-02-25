@@ -8,6 +8,11 @@ void SceneTitle::initialzie() {
 	img_title_ = LoadGraph("graphics/title/title.jpg");
 	font_rondo_32_ = LoadFontDataToHandle("font/Rondo32.dft", 0);
 
+	//BGMŽæ“¾
+	bgm_ = LoadSoundMem("sound/title.mp3");
+	se_select_ = LoadSoundMem("sound/select.mp3");
+	PlaySoundMem(bgm_, DX_PLAYTYPE_LOOP);
+
 }
 
 void SceneTitle::update(float delta_time)
@@ -15,9 +20,11 @@ void SceneTitle::update(float delta_time)
 	GameManager* mgr = GameManager::GetInstance();
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
+		PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
 		sel_--;
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
+		PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
 		sel_++;
 	}
 	sel_ = std::clamp(sel_, 0, MAX_INDEX_ - 1);
@@ -31,8 +38,10 @@ void SceneTitle::update(float delta_time)
 
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
 		switch (sel_) {
 		case 0:
+			StopSoundMem(bgm_);
 			mgr->chengeScene(new SceneField());
 			break;
 		case 1:

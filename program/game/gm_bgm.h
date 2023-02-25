@@ -17,6 +17,7 @@ public:
 	int se_notes_ = 0; //ノーツ音
 	int se_perfect_ = 0; //パーフェクト音
 	int se_hit_ = 0; //被弾音
+	int se_heal_ = 0; //回復音
 
 	int se_select_ = 0; //コマンド選択音
 	int se_esc_ = 0; //キャンセル音

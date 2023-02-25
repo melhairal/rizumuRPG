@@ -43,11 +43,19 @@ void SceneField::initialzie() {
 	//フィールドを生成
 	setField1();
 
+	//BGM取得
+	bgm_ = LoadSoundMem("sound/village_1.mp3");
+	se_select_ = LoadSoundMem("sound/select.mp3");
+	se_esc_ = LoadSoundMem("sound/escape.mp3");
+	PlaySoundMem(bgm_, DX_PLAYTYPE_LOOP);
 }
 
 void SceneField::update(float delta_time)
 {
 	GameManager* mgr = GameManager::GetInstance();
+
+	//se処理
+	playSe();
 
 	//メニュー制御
 	if (!isMenu_ && tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE)) {
@@ -70,7 +78,6 @@ void SceneField::update(float delta_time)
 
 	//フィールドから出る処理
 	outField();
-
 }
 
 void SceneField::render()
@@ -205,6 +212,7 @@ void SceneField::outField() {
 	if (player_->sprite_->pos_.z > 410 || player_->sprite_->pos_.z < -410) {
 		GameManager* mgr = GameManager::GetInstance();
 		setItem();
+		StopSoundMem(bgm_);
 		mgr->chengeScene(new SceneMap());
 	}
 }
@@ -258,5 +266,33 @@ void SceneField::setField1() {
 
 void SceneField::finishGame() {
 	GameManager* mgr = GameManager::GetInstance();
+	StopSoundMem(bgm_);
 	mgr->chengeScene(new SceneTitle());
+}
+
+void SceneField::playSe() {
+	if (isMenu_) {
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+			PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
+		}
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
+			PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
+		}
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
+			PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
+		}
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE)) {
+			PlaySoundMem(se_esc_, DX_PLAYTYPE_BACK);
+		}
+	}
+	else {
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE)) {
+			PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
+		}
+	}
+	if (player_->isComment_) {
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+			PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
+		}
+	}
 }

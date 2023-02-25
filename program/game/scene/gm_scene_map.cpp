@@ -24,6 +24,11 @@ void SceneMap::initialzie() {
 	img_player_[0] = LoadGraph(img_player_pass_[0]);
 	img_player_[1] = LoadGraph(img_player_pass_[1]);
 	img_player_[2] = LoadGraph(img_player_pass_[2]);
+
+	//BGMŽæ“¾
+	bgm_ = LoadSoundMem("sound/map.mp3");
+	se_select_ = LoadSoundMem("sound/select.mp3");
+	PlaySoundMem(bgm_, DX_PLAYTYPE_LOOP);
 }
 
 void SceneMap::update(float delta_time)
@@ -32,9 +37,11 @@ void SceneMap::update(float delta_time)
 
 	//‘I‘ð‚·‚é
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
+		PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
 		sel_--;
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
+		PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
 		sel_++;
 	}
 	switch (sel_label_) {
@@ -47,10 +54,12 @@ void SceneMap::update(float delta_time)
 	}
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT)) {
+		PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
 		sel_label_--;
 		sel_ = 0;
 	}
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RIGHT)) {
+		PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
 		sel_label_++;
 		sel_ = 0;
 	}
@@ -69,12 +78,15 @@ void SceneMap::update(float delta_time)
 	movePlayer();
 
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+		PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
 		switch (sel_label_) {
 		case 0:
 			mgr->now_stage_ = sel_;
+			StopSoundMem(bgm_);
 			mgr->chengeScene(new ScenePlay());
 			break;
 		case 1:
+			StopSoundMem(bgm_);
 			mgr->chengeScene(new SceneField());
 			break;
 		}

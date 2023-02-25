@@ -13,6 +13,7 @@
 #include "../object/gm_object_enemy.h"
 #include "../object/gm_object_attack.h"
 #include "../gm_boss.h"
+#include "../gm_item.h"
 
 tnl::Quaternion	fix_rot;
 
@@ -41,6 +42,7 @@ void ScenePlay::initialzie() {
 
 	//ステータスの取得
 	getStatus();
+	getItem();
 
 	//カメラの生成
 	camera_ = new GmCamera();
@@ -291,6 +293,9 @@ void ScenePlay::getStatus() {
 	mp_ = mgr->player_mp_;
 	stage_ = mgr->now_stage_;
 	player_skills_ = mgr->player_skills_;
+	for (int i = 0; i < 8; ++i) {
+		have_item_[i] = mgr->have_items_[i];
+	}
 }
 
 void ScenePlay::getSkill() {
@@ -306,6 +311,18 @@ void ScenePlay::getSkill() {
 	}
 }
 
+void ScenePlay::getItem() {
+	for (int i = 0; i < 5; ++i) {
+		csv_skill_ = tnl::LoadCsv("csv/item.csv");
+		item_[i] = new ItemList();
+		item_[i]->name_ = csv_skill_[i + 1][0].c_str();
+		item_[i]->ex1_ = csv_skill_[i + 1][3].c_str();
+		item_[i]->ex2_ = csv_skill_[i + 1][4].c_str();
+		item_[i]->type_ = std::atoi(csv_skill_[i + 1][1].c_str());
+		item_[i]->num_ = std::atoi(csv_skill_[i + 1][2].c_str());
+	}
+}
+
 void ScenePlay::setScore() {
 	GameManager* mgr = GameManager::GetInstance();
 	mgr->result_judge_ = score_judge_;
@@ -314,6 +331,9 @@ void ScenePlay::setScore() {
 	mgr->result_perfect_ = score_perfect_;
 	mgr->result_good_ = score_good_;
 	mgr->result_miss_ = score_miss_;
+	for (int i = 0; i < 8; ++i) {
+		mgr->have_items_[i] = have_item_[i];
+	}
 }
 
 

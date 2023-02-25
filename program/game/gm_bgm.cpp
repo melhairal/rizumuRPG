@@ -7,6 +7,7 @@ Bgm::Bgm(ScenePlay* scene) {
 	se_notes_ = LoadSoundMem("sound/notes.mp3");
 	se_perfect_ = LoadSoundMem("sound/perfect.wav");
 	se_hit_ = LoadSoundMem("sound/hit.mp3");
+	se_heal_ = LoadSoundMem("sound/heal.mp3");
 
 	se_select_ = LoadSoundMem("sound/select.mp3");
 	se_esc_ = LoadSoundMem("sound/escape.mp3");

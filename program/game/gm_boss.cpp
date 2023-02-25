@@ -9,6 +9,7 @@
 #include "object/gm_object_skill_map.h"
 #include "gm_ui.h"
 #include "gm_bgm.h"
+#include "gm_item.h"
 
 Boss::~Boss() {
 	delete field_l1_;
@@ -237,6 +238,14 @@ void Boss::battle() {
 }
 
 void Boss::command() {
+	//持ってるアイテムの数を取得
+	scene_->item_num_ = 0;
+	for (int i = 0; i < 8; i++) {
+		if (scene_->have_item_[i] != -1) {
+			scene_->item_num_++;
+		}
+	}
+
 	//上キーを入力したとき
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
 		if (main_command_) {
@@ -268,7 +277,9 @@ void Boss::command() {
 	if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
 		if (main_command_) {
 			if (index_main_ != 3) {
-				main_command_ = false; //メインコマンドならサブコマンドに移る
+				if (index_main_ != 2 || (scene_->item_num_ > 0 && !use_item_)) {
+					main_command_ = false; //メインコマンドならサブコマンドに移る
+				}
 			}
 			else {
 				command_ = false;
@@ -291,13 +302,39 @@ void Boss::command() {
 						select_num_--;
 					}
 					break;
-				case 3:
+				case 2:
+					if (scene_->item_[scene_->have_item_[index_sub_ + index_sub_list_]]->type_ == 1) {
+						scene_->hp_ += scene_->item_[scene_->have_item_[index_sub_ + index_sub_list_]]->num_;
+					}
+					else {
+						scene_->mp_ += scene_->item_[scene_->have_item_[index_sub_ + index_sub_list_]]->num_;
+					}
+					if (index_sub_ + index_sub_list_ == scene_->item_num_ - 1) {
+						scene_->have_item_[index_sub_ + index_sub_list_] = -1;
+						scene_->item_num_--;
+					}
+					else {
+						int i = 0;
+						while (index_sub_ + index_sub_list_ + i < scene_->item_num_ - 1) {
+							scene_->have_item_[index_sub_ + index_sub_list_ + i] = scene_->have_item_[index_sub_ + index_sub_list_ + i + 1];
+							i++;
+						}
+						scene_->have_item_[index_sub_ + index_sub_list_ + i] = -1;
+						scene_->item_num_--;
+					}
+					PlaySoundMem(scene_->bgm_->se_heal_, DX_PLAYTYPE_BACK);
+					select_num_--;
+					use_item_ = true;
+					index_sub_ = 0;
+					index_sub_list_ = 0;
+					main_command_ = true; //メインコマンドに戻る
 					break;
 				}
 				select_num_++;
 			}
 			if (select_num_ == 3) {
 				//アクション開始
+				use_item_ = false;
 				command_ = false;
 				progress_ = true;
 			}
@@ -336,8 +373,18 @@ void Boss::command() {
 		}
 		break;
 	case 2:
-		index_sub_ = std::clamp(index_sub_, 0, 0);
-		index_sub_list_ = std::clamp(index_sub_list_, 0, 0);
+		if (scene_->item_num_ == 0) {
+			index_sub_ = std::clamp(index_sub_, 0, 0);
+			index_sub_list_ = std::clamp(index_sub_list_, 0, 0);
+		}
+		else if (scene_->item_num_ <= 4) {
+			index_sub_ = std::clamp(index_sub_, 0, scene_->item_num_ - 1);
+			index_sub_list_ = std::clamp(index_sub_list_, 0, 0);
+		}
+		else {
+			index_sub_ = std::clamp(index_sub_, 0, 3);
+			index_sub_list_ = std::clamp(index_sub_list_, 0, scene_->item_num_ - 4);
+		}
 		break;
 	}
 }

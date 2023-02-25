@@ -3,6 +3,7 @@
 #include "gm_sheet_music.h"
 #include "gm_boss.h"
 #include "object/gm_object_attack.h"
+#include "gm_item.h"
 
 Ui::Ui(ScenePlay* scene) {
 	scene_ = scene;
@@ -130,7 +131,18 @@ void Ui::render() {
 				}
 				break;
 			case 2:
-
+				if (scene_->item_num_ >= 1) DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[0], scene_->item_[scene_->have_item_[scene_->boss_->index_sub_list_]]->name_.c_str(), command_sub_color_[0], font_rondo_32_);
+				if (scene_->item_num_ >= 2) DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[1], scene_->item_[scene_->have_item_[scene_->boss_->index_sub_list_ + 1]]->name_.c_str(), command_sub_color_[1], font_rondo_32_);
+				if (scene_->item_num_ >= 3) DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[2], scene_->item_[scene_->have_item_[scene_->boss_->index_sub_list_ + 2]]->name_.c_str(), command_sub_color_[2], font_rondo_32_);
+				if (scene_->item_num_ >= 4) DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[3], scene_->item_[scene_->have_item_[scene_->boss_->index_sub_list_ + 3]]->name_.c_str(), command_sub_color_[3], font_rondo_32_);
+				if (!scene_->boss_->main_command_ && scene_->item_num_ >= 1) {
+					//à–¾•¶
+					DrawStringToHandle(COMMAND_EXP_X_, COMMAND_LIST_Y_[0], scene_->item_[scene_->have_item_[scene_->boss_->index_sub_ + scene_->boss_->index_sub_list_]]->ex1_.c_str(), BROWN, font_rondo_32_);
+					DrawStringToHandle(COMMAND_EXP_X_, COMMAND_LIST_Y_[1], scene_->item_[scene_->have_item_[scene_->boss_->index_sub_ + scene_->boss_->index_sub_list_]]->ex2_.c_str(), BROWN, font_rondo_32_);
+				}
+				if (scene_->item_num_ == 0) {
+					DrawStringToHandle(COMMAND_SUB_X_, COMMAND_LIST_Y_[0], "‚È‚µ", command_sub_color_[0], font_rondo_32_);
+				}
 				break;
 			case 3:
 				break;

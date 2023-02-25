@@ -21,6 +21,9 @@ public:
 
 	// ========== 基本ステータス ==========
 
+	int bgm_ = 0; //BGM
+	int se_select_ = 0; //選択音
+
 	//進行度に合わせたワールドマップ画像
 	const char* map_[6] = {
 		"graphics/world/map_1.png",

@@ -14,6 +14,9 @@ public:
 
 
 	// ========== 基本ステータス ==========
+	
+	int bgm_ = 0; //BGM
+	int se_select_ = 0; //選択音
 
 	int img_title_ = 0; //タイトル画像
 	int font_rondo_32_ = 0; //フォント

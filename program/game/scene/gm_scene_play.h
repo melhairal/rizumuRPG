@@ -11,6 +11,7 @@ class Sheet;
 class MakeSheet;
 class Boss;
 class SkillList;
+class ItemList;
 
 class ScenePlay : public SceneBase {
 public :
@@ -26,6 +27,7 @@ public :
 	void getStatus(); //ステータス取得
 	void getSkill(); //スキル情報取得
 	void setScore(); //スコア情報を記録
+	void getItem();
 	void getSheet(); //ステージを取得
 
 	void updateObject(float delta_time); //オブジェクト制御
@@ -52,6 +54,11 @@ public :
 	Boss* boss_ = nullptr; //ボス戦クラス用ポインタ
 	std::vector<std::vector<std::string>> csv_skill_; //スキル情報csv
 	SkillList* skill_[10] = { nullptr }; //スキルリスト
+	std::vector<std::vector<std::string>> csv_item_; //アイテム情報csv
+	ItemList* item_[10] = { nullptr }; //アイテムリスト
+
+	int have_item_[8] = { -1,-1,-1,-1,-1,-1,-1,-1 }; //持ってるアイテム
+	int item_num_ = 0; //持ってるアイテムの数
 
 	const float FIELD_H_ = 450.0f; //床の縦幅
 	const float FIELD_W_ = 300.0f; //床の横幅

@@ -28,6 +28,7 @@ public:
 	void moveCamera(); //カメラ制御
 	void updateSprites(float delta_time); //スプライト制御
 	void updateModels(float delta_time); //モデル制御
+	void playSe(); //SE制御
 
 	void outField(); //フィールドから出る処理
 
@@ -46,6 +47,10 @@ public:
 	int img_back_ = 0; //背景画像
 	dxe::Mesh* field_ = nullptr; //床
 	dxe::Mesh* load_ = nullptr; //道
+
+	int bgm_ = 0; //BGM
+	int se_select_ = 0; //選択音
+	int se_esc_ = 0; //キャンセル音
 
 	//プレイヤーステータス
 	int player_lv_ = 0;

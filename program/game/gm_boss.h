@@ -69,6 +69,7 @@ public:
 	int action_num_ = -1; //アクション回数
 	int player_action_[3] = { -1,-1,-1 }; //プレイヤーの行動を予約
 	int enemy_action_[3] = { -1,-1,-1 }; //エネミーの行動を予約
+	bool use_item_ = false; //アイテム使用フラグ
 
 	const int INDEX_MAX_ = 3; //インデックス最大数
 	int index_main_ = 0; //メインコマンド選択用インデックス

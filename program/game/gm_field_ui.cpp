@@ -85,9 +85,12 @@ void FieldUi::render() {
 			if (item_num_ >= 4) DrawStringToHandle(STATUS_X_[0], STATUS_Y_[3], scene_->item_[scene_->items_[sel_list_ + 3]]->name_.c_str(), index_color_[3], font_rondo_32_);
 			if (item_num_ >= 5) DrawStringToHandle(STATUS_X_[0], STATUS_Y_[4], scene_->item_[scene_->items_[sel_list_ + 4]]->name_.c_str(), index_color_[4], font_rondo_32_);
 			//à–¾•¶
-			drawWindow(WINDOW_SUB_X_, WINDOW_SUB_Y_, WINDOW_SUB_W_, WINDOW_SUB_H_);
-			DrawStringToHandle(COMMENT_X_, COMMENT_Y_[0], scene_->item_[scene_->items_[sel_index_ + sel_list_]]->ex1_.c_str(), BROWN, font_rondo_32_);
-			DrawStringToHandle(COMMENT_X_, COMMENT_Y_[1], scene_->item_[scene_->items_[sel_index_ + sel_list_]]->ex2_.c_str(), BROWN, font_rondo_32_);
+			if (item_num_ >= 1) {
+				drawWindow(WINDOW_SUB_X_, WINDOW_SUB_Y_, WINDOW_SUB_W_, WINDOW_SUB_H_);
+				DrawStringToHandle(COMMENT_X_, COMMENT_Y_[0], scene_->item_[scene_->items_[sel_index_ + sel_list_]]->ex1_.c_str(), BROWN, font_rondo_32_);
+				DrawStringToHandle(COMMENT_X_, COMMENT_Y_[1], scene_->item_[scene_->items_[sel_index_ + sel_list_]]->ex2_.c_str(), BROWN, font_rondo_32_);
+			}
+			if (item_num_ == 0) DrawStringToHandle(STATUS_X_[0], STATUS_Y_[0], "‚È‚µ", index_color_[0], font_rondo_32_);
 		}
 	}
 }
@@ -199,7 +202,11 @@ void FieldUi::updateMenu() {
 			}
 			break;
 		case 1:
-			if (item_num_ < INDEX_MAX_) {
+			if (item_num_ == 0) {
+				sel_index_ = std::clamp(sel_index_, 0, 0);
+				sel_list_ = std::clamp(sel_list_, 0, 0);
+			}
+			else if (item_num_ < INDEX_MAX_) {
 				sel_index_ = std::clamp(sel_index_, 0, item_num_ - 1);
 				sel_list_ = std::clamp(sel_list_, 0, 0);
 			}
