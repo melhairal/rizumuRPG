@@ -55,6 +55,16 @@ public:
 	int shop_sel_index_ = 0; //選択中のインデックス
 	const int SHOP_INDEX_MAX_ = 8; //インデックスの最大数
 	int shop_index_color_[8] = { BROWN,BROWN,BROWN,BROWN,BROWN,BROWN,BROWN,BROWN };
+	const char* shop_coment_[4] = {
+		"購入しますか？",
+		"所持金が足りません",
+		"所持品がいっぱいです",
+		"売却しますか？"
+	};
+	int shop_check_ = 0; //コメント用フラグ
+	int shop_sel_check_ = 0; //最終確認チェック用
+	int shop_check_color_[2] = { -1,-1 };
+
 
 	//色 RGB(B,G,R)
 	const int RED = RGB(0, 0, 255);
@@ -72,6 +82,7 @@ public:
 	int font_pop_32_ = 0;
 
 	int img_message_ = 0;
+	int img_button_[2] = { 0,0 };
 
 	//ウィンドウ画像
 	int window_top_left_ = 0;
@@ -115,10 +126,23 @@ public:
 	};
 
 	const float STATUS_X_[2] = { 350,550 };
-	const float STATUS_Y_[6] = { 200,250,300,350,400,450 };
+	const float STATUS_Y_[8] = { 200,250,300,350,400,450,500,550 };
 
 	const float COMMENT_X_ = 350;
 	const float COMMENT_Y_[3] = { 480,520,560 };
 	const float NUM_X_ = 760;
+
+	const float WINDOW_MONEY_X_ = DXE_WINDOW_WIDTH * 0.7f;
+	const float WINDOW_MONEY_Y_ = DXE_WINDOW_HEIGHT * 0.1f;
+	const float WINDOW_MONEY_W_ = DXE_WINDOW_WIDTH * 0.3f;
+	const float WINDOW_MONEY_H_ = DXE_WINDOW_HEIGHT * 0.1f;
+
+	const float MONEY_X_ = WINDOW_MONEY_X_;
+	const float MONEY_Y_ = WINDOW_MONEY_Y_ - 16;
+
+	const float WINDOW_CHECK_X_[2] = { DXE_WINDOW_WIDTH * 0.6f,DXE_WINDOW_WIDTH * 0.8f };
+	const float WINDOW_CHECK_Y_ = DXE_WINDOW_HEIGHT * 0.7f;
+	const float CHECK_X_[2] = { WINDOW_CHECK_X_[0] - 35,WINDOW_CHECK_X_[1] - 50 };
+	const float CHECK_Y_ = WINDOW_CHECK_Y_ - 16;
 
 };

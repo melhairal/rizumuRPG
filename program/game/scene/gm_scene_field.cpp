@@ -143,6 +143,7 @@ void SceneField::setItem() {
 	for (int i = 0; i < 8; ++i) {
 		mgr->have_items_[i] = items_[i];
 	}
+	mgr->player_monney_ = player_monney_;
 }
 
 void SceneField::moveCamera() {
@@ -153,7 +154,7 @@ void SceneField::moveCamera() {
 		{ -tnl::ToRadian(CAM_ROT_SPEED_), 0, 0 } };
 	tnl::Input::RunIndexKeyDown([&](uint32_t idx) {
 		camera_->free_look_angle_xy_ += rot[idx];
-		}, eKeys::KB_LEFT, eKeys::KB_RIGHT, eKeys::KB_UP, eKeys::KB_DOWN);
+		}, eKeys::KB_RIGHT, eKeys::KB_LEFT, eKeys::KB_UP, eKeys::KB_DOWN);
 	//ƒJƒƒ‰ã‰º‰ñ“]‚ÌãŒÀ
 	camera_->free_look_angle_xy_.x = std::clamp(camera_->free_look_angle_xy_.x, tnl::ToRadian(CAM_ROT_MIN_), tnl::ToRadian(CAM_ROT_MAX_));
 
@@ -285,6 +286,28 @@ void SceneField::playSe() {
 		}
 		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE)) {
 			PlaySoundMem(se_esc_, DX_PLAYTYPE_BACK);
+		}
+	}
+	else if (isShop_) {
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RETURN)) {
+			PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
+		}
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_UP)) {
+			PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
+		}
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_DOWN)) {
+			PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
+		}
+		if (tnl::Input::IsKeyDownTrigger(eKeys::KB_ESCAPE)) {
+			PlaySoundMem(se_esc_, DX_PLAYTYPE_BACK);
+		}
+		if (ui_->shop_depth_ == 2) {
+			if (tnl::Input::IsKeyDownTrigger(eKeys::KB_RIGHT)) {
+				PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
+			}
+			if (tnl::Input::IsKeyDownTrigger(eKeys::KB_LEFT)) {
+				PlaySoundMem(se_select_, DX_PLAYTYPE_BACK);
+			}
 		}
 	}
 	else {
