@@ -19,6 +19,9 @@ SceneField::~SceneField() {
 	delete load_;
 	for (auto sprite : sprites_) delete sprite;
 	for (auto model : models_) delete model;
+	InitGraph();
+	InitMusicMem();
+	InitFontToHandle();
 }
 
 void SceneField::initialzie() {

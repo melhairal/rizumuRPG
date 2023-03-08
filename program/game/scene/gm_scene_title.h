@@ -3,7 +3,7 @@
 class SceneTitle : public SceneBase {
 public:
 	SceneTitle() {}
-	~SceneTitle() {}
+	~SceneTitle();
 
 	void initialzie() override;
 	void update(float delta_time) override;

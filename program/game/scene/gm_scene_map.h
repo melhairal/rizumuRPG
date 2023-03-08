@@ -4,7 +4,7 @@
 class SceneMap : public SceneBase {
 public:
 	SceneMap() {}
-	~SceneMap() {}
+	~SceneMap();
 
 	void initialzie() override;
 	void update(float delta_time) override;

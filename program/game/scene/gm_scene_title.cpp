@@ -3,6 +3,11 @@
 #include "gm_scene_field.h"
 #include "gm_scene_map.h"
 
+SceneTitle::~SceneTitle() {
+	InitGraph();
+	InitMusicMem();
+	InitFontToHandle();
+}
 
 void SceneTitle::initialzie() {
 	img_title_ = LoadGraph("graphics/title/title.jpg");
@@ -12,7 +17,6 @@ void SceneTitle::initialzie() {
 	bgm_ = LoadSoundMem("sound/title.mp3");
 	se_select_ = LoadSoundMem("sound/select.mp3");
 	PlaySoundMem(bgm_, DX_PLAYTYPE_LOOP);
-
 }
 
 void SceneTitle::update(float delta_time)

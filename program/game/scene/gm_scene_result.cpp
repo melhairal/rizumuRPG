@@ -2,6 +2,12 @@
 #include "gm_scene_result.h"
 #include "gm_scene_map.h"
 
+SceneResult::~SceneResult() {
+	InitGraph();
+	InitMusicMem();
+	InitFontToHandle();
+}
+
 void SceneResult::initialzie() {
 	//ウィンドウ画像読み込み
 	window_top_left_ = LoadGraph("graphics/ui/window_b/window_b_001.png");

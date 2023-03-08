@@ -31,6 +31,9 @@ ScenePlay::~ScenePlay() {
 	for (auto actor : actors_) delete actor;
 	for (auto ui : subUis_) delete ui;
 	for (auto skill : skill_) delete skill;
+	InitGraph();
+	InitMusicMem();
+	InitFontToHandle();
 }
 
 

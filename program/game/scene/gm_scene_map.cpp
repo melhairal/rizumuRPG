@@ -3,6 +3,11 @@
 #include "gm_scene_play.h"
 #include "gm_scene_field.h"
 
+SceneMap::~SceneMap() {
+	InitGraph();
+	InitMusicMem();
+	InitFontToHandle();
+}
 
 void SceneMap::initialzie() {
 	//ステータス取得
