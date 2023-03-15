@@ -96,7 +96,7 @@ void SceneResult::render()
 		if (score_judge_) {
 			DrawStringToHandle(RESULT_X_, RESULT_Y_, "CLEAR!!", YELLOW, font_rondo_128_);
 			DrawFormatStringToHandle(EXP_X_, EXP_Y_, -1, font_rondo_32_, "%d 経験値と%d ゴールドを獲得！", score_ / 1000, MONNEY_[stage_]);
-			if (now_exp_ + (score_ / 1000) >= UP_EXP_[now_lv_ - 1]) {
+			if (now_lv_ < 10 && now_exp_ + (score_ / 1000) >= UP_EXP_[now_lv_ - 1]) {
 				if (now_lv_ == 4 || now_lv_ == 6 || now_lv_ == 8) {
 					DrawStringToHandle(LV_X_, LV_Y_, "レベルアップ！", -1, font_rondo_32_);
 				}
@@ -108,7 +108,7 @@ void SceneResult::render()
 		else {
 			DrawStringToHandle(RESULT_X_, RESULT_Y_, "FAILED", BLUE, font_rondo_128_);
 			DrawFormatStringToHandle(EXP_X_, EXP_Y_, -1, font_rondo_32_, "%d 経験値を獲得！", score_ / 1000, MONNEY_[stage_]);
-			if (now_exp_ + (score_ / 1000) >= UP_EXP_[now_lv_ - 1]) {
+			if (now_lv_ < 10 && now_exp_ + (score_ / 1000) >= UP_EXP_[now_lv_ - 1]) {
 				if (now_lv_ == 4 || now_lv_ == 6 || now_lv_ == 8) {
 					DrawStringToHandle(LV_X_, LV_Y_, "レベルアップ！", -1, font_rondo_32_);
 				}
@@ -137,15 +137,17 @@ void SceneResult::setScore() {
 	GameManager* mgr = GameManager::GetInstance();
 	//経験値取得
 	mgr->player_exp_ += score_ / 1000;
-	if (mgr->player_exp_ >= UP_EXP_[mgr->player_lv_ - 1]) {
-		mgr->player_lv_++;
-		mgr->player_atk_ += up_atk_;
-		mgr->player_hp_ += up_hp_;
-		//スキル追加
-		if (mgr->player_lv_ == 2 || mgr->player_lv_ == 3 || mgr->player_lv_ == 4 || mgr->player_lv_ == 6 || mgr->player_lv_ == 8 || mgr->player_lv_ == 10) {
-			mgr->player_skills_++;
-			if (mgr->player_skills_ > 8) {
-				mgr->player_skills_ = 8;
+	if (mgr->player_lv_ < 10) {
+		if (mgr->player_exp_ >= UP_EXP_[mgr->player_lv_ - 1]) {
+			mgr->player_lv_++;
+			mgr->player_atk_ += up_atk_;
+			mgr->player_hp_ += up_hp_;
+			//スキル追加
+			if (mgr->player_lv_ == 2 || mgr->player_lv_ == 3 || mgr->player_lv_ == 4 || mgr->player_lv_ == 6 || mgr->player_lv_ == 8 || mgr->player_lv_ == 10) {
+				mgr->player_skills_++;
+				if (mgr->player_skills_ > 8) {
+					mgr->player_skills_ = 8;
+				}
 			}
 		}
 	}

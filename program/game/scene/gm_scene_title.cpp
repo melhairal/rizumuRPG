@@ -10,7 +10,7 @@ SceneTitle::~SceneTitle() {
 }
 
 void SceneTitle::initialzie() {
-	img_title_ = LoadGraph("graphics/title/title.jpg");
+	img_title_ = LoadGraph("graphics/title/title_2.jpg");
 	font_rondo_32_ = LoadFontDataToHandle("font/Rondo32.dft", 0);
 
 	//BGMæ“¾
@@ -46,9 +46,13 @@ void SceneTitle::update(float delta_time)
 		switch (sel_) {
 		case 0:
 			StopSoundMem(bgm_);
+			startFirst();
 			mgr->chengeScene(new SceneField());
 			break;
 		case 1:
+			StopSoundMem(bgm_);
+			startContinue();
+			mgr->chengeScene(new SceneField());
 			break;
 		case 2:
 			break;
@@ -62,4 +66,41 @@ void SceneTitle::render()
 	DrawStringToHandle(start_x_[0], start_y_[0], "‚Í‚¶‚ß‚©‚ç", start_color_[0], font_rondo_32_);
 	DrawStringToHandle(start_x_[1], start_y_[1], "‚Â‚Ã‚«‚©‚ç", start_color_[1], font_rondo_32_);
 	DrawStringToHandle(start_x_[2], start_y_[2], "ƒIƒvƒVƒ‡ƒ“", start_color_[2], font_rondo_32_);
+}
+
+void SceneTitle::startFirst() {
+	GameManager* mgr = GameManager::GetInstance();
+	mgr->player_lv_ = 1;
+	mgr->player_atk_ = 10;
+	mgr->player_hp_ = 1000;
+	mgr->player_mp_ = 0;
+	mgr->player_exp_ = 0;
+	mgr->player_monney_ = 500;
+	mgr->player_skills_ = 2;
+	mgr->flag_stage_ = 1;
+	mgr->have_items_[0] = 0;
+	mgr->have_items_[1] = 3;
+	for (int i = 2; i < 8; i++) {
+		mgr->have_items_[i] = -1;
+	}
+}
+
+void SceneTitle::startContinue() {
+	GameManager* mgr = GameManager::GetInstance();
+	mgr->player_lv_ = 10;
+	mgr->player_atk_ = 30;
+	mgr->player_hp_ = 2000;
+	mgr->player_mp_ = 0;
+	mgr->player_exp_ = 50000;
+	mgr->player_monney_ = 3000;
+	mgr->player_skills_ = 8;
+	mgr->flag_stage_ = 6;
+	mgr->have_items_[0] = 0;
+	mgr->have_items_[1] = 1;
+	mgr->have_items_[2] = 1;
+	mgr->have_items_[3] = 2;
+	mgr->have_items_[4] = 2;
+	mgr->have_items_[5] = 3;
+	mgr->have_items_[6] = 3;
+	mgr->have_items_[7] = 4;
 }

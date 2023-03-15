@@ -31,6 +31,7 @@ ScenePlay::~ScenePlay() {
 	for (auto actor : actors_) delete actor;
 	for (auto ui : subUis_) delete ui;
 	for (auto skill : skill_) delete skill;
+
 	InitGraph();
 	InitMusicMem();
 	InitFontToHandle();
@@ -59,7 +60,7 @@ void ScenePlay::initialzie() {
 	
 	//マスの生成
 	frame_ = dxe::Mesh::CreatePlane({ FIELD_W_,FIELD_H_,0 });
-	frame_->setTexture(dxe::Texture::CreateFromFile("graphics/base/frame.png"));
+	frame_->setTexture(dxe::Texture::CreateFromFile("graphics/base/frame2.png"));
 	frame_->rot_q_ *= tnl::Quaternion::RotationAxis({ 1, 0, 0 }, tnl::ToRadian(90));
 	frame_->pos_ = { 0, 0, FIELD_Z1_ };
 
@@ -181,7 +182,7 @@ void ScenePlay::update(float delta_time)
 
 	// ==================== デバッグ等 ====================
 	
-	Debug(delta_time);
+	//Debug(delta_time);
 
 }
 

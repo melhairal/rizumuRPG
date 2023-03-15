@@ -68,7 +68,7 @@ public:
 	int items_[8] = { -1,-1,-1,-1,-1,-1,-1,-1 };
 
 	//経験値テーブル
-	const int UP_EXP_[9] = {
+	const int UP_EXP_[10] = {
 		1000,
 		2000,
 		3000,
@@ -77,7 +77,8 @@ public:
 		20000,
 		30000,
 		40000,
-		50000
+		50000,
+		0
 	};
 
 	const float CAM_ROT_SPEED_ = 1.0f; //カメラ回転速度

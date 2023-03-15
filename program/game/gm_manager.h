@@ -59,7 +59,7 @@ public:
 	int player_mp_ = 0;
 	int player_exp_ = 0;
 	int player_monney_ = 500; //デフォルト500
-	int player_skills_ = 8; //デフォルト値は2s
+	int player_skills_ = 2; //デフォルト値は2
 	int have_items_[8] = { 0,3,-1,-1,-1,-1,-1,-1 }; //持ってるアイテム(id)
 
 	//リザルト画面用
